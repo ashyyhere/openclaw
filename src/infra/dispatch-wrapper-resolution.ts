@@ -1,4 +1,5 @@
-// infra dispatch wrapper resolution helpers and runtime behavior.
+// Dispatch-wrapper unwrapping for exec policy resolution.
+// Transparent wrappers are peeled away; semantic or unsafe wrappers block safe-bin trust.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { sortUniqueStrings } from "../shared/string-normalization.js";
 import {
@@ -9,10 +10,10 @@ import {
 import { normalizeExecutableToken } from "./exec-wrapper-tokens.js";
 import { parseInlineOptionToken } from "./inline-option-token.js";
 
-/** Re-exported API for src/infra, starting with unwrap Env Invocation. */
+/** Env invocation unwrapping shared with command-carrier analysis. */
 export { unwrapEnvInvocation } from "./command-carriers.js";
 
-/** Reused constant for MAX DISPATCH WRAPPER DEPTH behavior in src/infra. */
+/** Maximum transparent wrapper layers considered before treating the command as blocked. */
 export const MAX_DISPATCH_WRAPPER_DEPTH = 4;
 
 const NICE_OPTIONS_WITH_VALUE = new Set(["-n", "--adjustment", "--priority"]);
@@ -118,7 +119,7 @@ function scanWrapperInvocation(
   return argv.slice(commandIndex);
 }
 
-/** Reused helper for extract Env Assignment Keys From Dispatch Wrappers behavior in src/infra. */
+/** Extract env assignment keys while peeling transparent env dispatch wrappers. */
 export function extractEnvAssignmentKeysFromDispatchWrappers(
   argv: string[],
   maxDepth = MAX_DISPATCH_WRAPPER_DEPTH,
@@ -453,12 +454,12 @@ function unwrapDispatchWrapper(
     : blockDispatchWrapper(wrapper);
 }
 
-/** Reused helper for is Dispatch Wrapper Executable behavior in src/infra. */
+/** Return whether an executable token is a known dispatch wrapper. */
 export function isDispatchWrapperExecutable(token: string): boolean {
   return DISPATCH_WRAPPER_SPEC_BY_NAME.has(normalizeExecutableToken(token));
 }
 
-/** Reused helper for unwrap Known Dispatch Wrapper Invocation behavior in src/infra. */
+/** Unwrap one known dispatch wrapper invocation or report why it blocks trust. */
 export function unwrapKnownDispatchWrapperInvocation(
   argv: string[],
   platform: NodeJS.Platform = process.platform,
@@ -477,7 +478,7 @@ export function unwrapKnownDispatchWrapperInvocation(
     : blockDispatchWrapper(wrapper);
 }
 
-/** Reused helper for unwrap Dispatch Wrappers For Resolution behavior in src/infra. */
+/** Return argv after peeling transparent dispatch wrappers for executable resolution. */
 export function unwrapDispatchWrappersForResolution(
   argv: string[],
   maxDepth = MAX_DISPATCH_WRAPPER_DEPTH,
@@ -516,7 +517,7 @@ function blockedDispatchWrapperPlan(params: {
   };
 }
 
-/** Reused helper for resolve Dispatch Wrapper Trust Plan behavior in src/infra. */
+/** Resolve wrapper chain, effective argv, and whether wrapper semantics block policy trust. */
 export function resolveDispatchWrapperTrustPlan(
   argv: string[],
   maxDepth = MAX_DISPATCH_WRAPPER_DEPTH,
@@ -559,7 +560,7 @@ export function resolveDispatchWrapperTrustPlan(
   return { argv: current, wrappers, policyBlocked: false };
 }
 
-/** Reused helper for has Dispatch Env Manipulation behavior in src/infra. */
+/** Return whether an env wrapper mutates env rather than transparently dispatching. */
 export function hasDispatchEnvManipulation(argv: string[]): boolean {
   const unwrap = unwrapKnownDispatchWrapperInvocation(argv);
   return (

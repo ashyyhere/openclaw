@@ -1,4 +1,5 @@
-// infra/outbound message action runner test helpers helpers and runtime behavior.
+// Test helpers for message action runner routing and target resolution.
+// Fixtures create lightweight channel plugins with predictable dry-run behavior.
 import type {
   ChannelDirectoryEntryKind,
   ChannelMessageActionName,
@@ -10,7 +11,7 @@ import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { createChannelTestPluginBase } from "../../test-utils/channel-plugins.js";
 import { runMessageAction } from "./message-action-runner.js";
 
-/** Reused constant for workspace Config behavior in src/infra/outbound. */
+/** Minimal config enabling the workspace test channel. */
 export const workspaceConfig = {
   channels: {
     workspace: {
@@ -20,7 +21,7 @@ export const workspaceConfig = {
   },
 } as OpenClawConfig;
 
-/** Reused constant for direct Chat Config behavior in src/infra/outbound. */
+/** Minimal config enabling the direct-chat test channel. */
 export const directChatConfig = {
   channels: {
     directchat: {
@@ -29,10 +30,10 @@ export const directChatConfig = {
   },
 } as OpenClawConfig;
 
-/** Reused constant for direct Outbound behavior in src/infra/outbound. */
+/** Direct outbound adapter shared by message-action test plugins. */
 export const directOutbound: ChannelOutboundAdapter = { deliveryMode: "direct" };
 
-/** Reused constant for run Dry Action behavior in src/infra/outbound. */
+/** Run a message action in dry-run mode for tests. */
 export const runDryAction = (params: {
   cfg: OpenClawConfig;
   action: ChannelMessageActionName;
@@ -53,7 +54,7 @@ export const runDryAction = (params: {
     agentId: params.agentId,
   });
 
-/** Reused constant for run Dry Send behavior in src/infra/outbound. */
+/** Run a send action in dry-run mode for tests. */
 export const runDrySend = (params: {
   cfg: OpenClawConfig;
   actionParams: Record<string, unknown>;
@@ -123,7 +124,7 @@ function createConfiguredTestPlugin(params: {
   };
 }
 
-/** Reused constant for workspace Test Plugin behavior in src/infra/outbound. */
+/** Workspace channel plugin fixture with id-like target resolution. */
 export const workspaceTestPlugin = createConfiguredTestPlugin({
   id: "workspace",
   isConfigured: (cfg) => Boolean(cfg.channels?.workspace?.botToken?.trim()),
@@ -141,7 +142,7 @@ export const workspaceTestPlugin = createConfiguredTestPlugin({
   },
 });
 
-/** Reused constant for forum Test Plugin behavior in src/infra/outbound. */
+/** Forum channel plugin fixture with group/user target handling. */
 export const forumTestPlugin = createConfiguredTestPlugin({
   id: "forum",
   isConfigured: (cfg) => Boolean(cfg.channels?.forum?.botToken?.trim()),
@@ -158,7 +159,7 @@ export const forumTestPlugin = createConfiguredTestPlugin({
   },
 });
 
-/** Reused constant for direct Chat Test Plugin behavior in src/infra/outbound. */
+/** Direct chat plugin fixture that classifies group ids by suffix. */
 export const directChatTestPlugin = createConfiguredTestPlugin({
   id: "directchat",
   isConfigured: (cfg) => Boolean(cfg.channels?.directchat),

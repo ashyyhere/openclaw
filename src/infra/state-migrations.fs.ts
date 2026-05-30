@@ -1,14 +1,15 @@
-// infra state migrations fs helpers and runtime behavior.
+// Filesystem helpers shared by state migration scripts.
+// They prefer best-effort reads/checks so migrations can skip missing legacy state.
 import fs from "node:fs";
 import JSON5 from "json5";
 
-/** Shared type for Session Entry Like in src/infra. */
+/** Minimal session entry shape needed by state migrations. */
 export type SessionEntryLike = {
   sessionId?: string;
   updatedAt?: number;
 } & Record<string, unknown>;
 
-/** Reused helper for safe Read Dir behavior in src/infra. */
+/** Read directory entries or return an empty list when unavailable. */
 export function safeReadDir(dir: string): fs.Dirent[] {
   try {
     return fs.readdirSync(dir, { withFileTypes: true });
@@ -17,7 +18,7 @@ export function safeReadDir(dir: string): fs.Dirent[] {
   }
 }
 
-/** Reused helper for exists Dir behavior in src/infra. */
+/** Return whether a path exists and is a directory. */
 export function existsDir(dir: string): boolean {
   try {
     return fs.existsSync(dir) && fs.statSync(dir).isDirectory();
@@ -26,12 +27,12 @@ export function existsDir(dir: string): boolean {
   }
 }
 
-/** Reused helper for ensure Dir behavior in src/infra. */
+/** Ensure a directory exists for migration output. */
 export function ensureDir(dir: string) {
   fs.mkdirSync(dir, { recursive: true });
 }
 
-/** Reused helper for file Exists behavior in src/infra. */
+/** Return whether a path exists and is a regular file. */
 export function fileExists(p: string): boolean {
   try {
     return fs.existsSync(p) && fs.statSync(p).isFile();
@@ -40,7 +41,7 @@ export function fileExists(p: string): boolean {
   }
 }
 
-/** Reused helper for is Legacy Whats App Auth File behavior in src/infra. */
+/** Detect legacy WhatsApp auth shard filenames migrated by state repair. */
 export function isLegacyWhatsAppAuthFile(name: string): boolean {
   if (name === "creds.json" || name === "creds.json.bak") {
     return true;
@@ -51,7 +52,7 @@ export function isLegacyWhatsAppAuthFile(name: string): boolean {
   return /^(app-state-sync|session|sender-key|pre-key)-/.test(name);
 }
 
-/** Reused helper for read Session Store Json5 behavior in src/infra. */
+/** Read a JSON5 session store file, returning ok=false on read/parse failure. */
 export function readSessionStoreJson5(storePath: string): {
   store: Record<string, SessionEntryLike>;
   ok: boolean;
@@ -65,7 +66,7 @@ export function readSessionStoreJson5(storePath: string): {
   return { store: {}, ok: false };
 }
 
-/** Reused helper for parse Session Store Json5 behavior in src/infra. */
+/** Parse JSON5 session store text into a migration-friendly record map. */
 export function parseSessionStoreJson5(raw: string): {
   store: Record<string, SessionEntryLike>;
   ok: boolean;

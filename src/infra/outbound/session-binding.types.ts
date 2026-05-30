@@ -1,17 +1,17 @@
-// Shared types for infra/outbound session binding types behavior.
-/** Shared type for Binding Target Kind in src/infra/outbound. */
+// Session binding contracts shared by channel adapters and outbound routing.
+/** Target kind stored by a conversation binding. */
 export type BindingTargetKind = "subagent" | "session";
-/** Shared type for Binding Status in src/infra/outbound. */
+/** Lifecycle status of a session binding. */
 export type BindingStatus = "active" | "ending" | "ended";
-/** Shared type for Session Binding Placement in src/infra/outbound. */
+/** Where a binding may be created relative to the current conversation. */
 export type SessionBindingPlacement = "current" | "child";
-/** Shared type for Session Binding Error Code in src/infra/outbound. */
+/** Stable error codes returned by binding operations. */
 export type SessionBindingErrorCode =
   | "BINDING_ADAPTER_UNAVAILABLE"
   | "BINDING_CAPABILITY_UNSUPPORTED"
   | "BINDING_CREATE_FAILED";
 
-/** Shared type for Conversation Ref in src/infra/outbound. */
+/** Channel conversation identity used for binding lookups. */
 export type ConversationRef = {
   channel: string;
   accountId: string;
@@ -19,7 +19,7 @@ export type ConversationRef = {
   parentConversationId?: string;
 };
 
-/** Shared type for Session Binding Record in src/infra/outbound. */
+/** Persisted or adapter-provided binding record. */
 export type SessionBindingRecord = {
   bindingId: string;
   targetSessionKey: string;
@@ -31,7 +31,7 @@ export type SessionBindingRecord = {
   metadata?: Record<string, unknown>;
 };
 
-/** Shared type for Session Binding Bind Input in src/infra/outbound. */
+/** Input required to bind a conversation to a target session. */
 export type SessionBindingBindInput = {
   targetSessionKey: string;
   targetKind: BindingTargetKind;
@@ -41,14 +41,14 @@ export type SessionBindingBindInput = {
   ttlMs?: number;
 };
 
-/** Shared type for Session Binding Unbind Input in src/infra/outbound. */
+/** Input used to unbind by binding id or target session key. */
 export type SessionBindingUnbindInput = {
   bindingId?: string;
   targetSessionKey?: string;
   reason: string;
 };
 
-/** Shared type for Session Binding Capabilities in src/infra/outbound. */
+/** Capabilities advertised by a channel binding adapter. */
 export type SessionBindingCapabilities = {
   adapterAvailable: boolean;
   bindSupported: boolean;
