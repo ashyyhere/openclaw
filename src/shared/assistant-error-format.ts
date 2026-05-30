@@ -1,4 +1,4 @@
-// shared assistant error format helpers and runtime behavior.
+// Shared parsing and user-facing formatting for provider/assistant errors.
 const ERROR_PAYLOAD_PREFIX_RE =
   /^(?:error|(?:[a-z][\w-]*\s+)?api\s*error|apierror|openai\s*error|anthropic\s*error|gateway\s*error|codex\s*error)(?:\s+\d{3})?[:\s-]+/i;
 const HTTP_STATUS_DELIMITER_RE = /(?:\s*:\s*|\s+)/;
@@ -20,7 +20,7 @@ const SUPPORT_REQUEST_ID_RE = /(?:request[\s_-]*id)\s*[:#]?\s*([a-z0-9][a-z0-9_-
 const GENERIC_PROVIDER_INTERNAL_ERROR_USER_MESSAGE =
   "The AI service returned an internal error. Please try again in a moment.";
 
-/** Reused constant for MALFORMED STREAMING FRAGMENT ERROR MESSAGE behavior in src/shared. */
+/** Internal transport error marker for malformed streamed LLM fragments. */
 export const MALFORMED_STREAMING_FRAGMENT_ERROR_MESSAGE =
   "OpenClaw transport error: malformed_streaming_fragment";
 const MALFORMED_STREAMING_FRAGMENT_USER_MESSAGE =
@@ -28,7 +28,7 @@ const MALFORMED_STREAMING_FRAGMENT_USER_MESSAGE =
 
 type ErrorPayload = Record<string, unknown>;
 
-/** Shared type for Api Error Info in src/shared. */
+/** Parsed API error details extracted from provider error payloads. */
 export type ApiErrorInfo = {
   httpCode?: string;
   type?: string;
@@ -67,7 +67,7 @@ function isErrorPayloadObject(payload: unknown): payload is ErrorPayload {
   return false;
 }
 
-/** Reused helper for parse Api Error Payload behavior in src/shared. */
+/** Parses JSON provider error payloads from raw error strings. */
 export function parseApiErrorPayload(raw?: string): ErrorPayload | null {
   if (!raw) {
     return null;
@@ -96,7 +96,7 @@ export function parseApiErrorPayload(raw?: string): ErrorPayload | null {
   return null;
 }
 
-/** Reused helper for extract Leading Http Status behavior in src/shared. */
+/** Extracts a leading HTTP status code and remaining message text. */
 export function extractLeadingHttpStatus(raw: string): { code: number; rest: string } | null {
   const match = raw.match(HTTP_STATUS_CODE_PREFIX_RE);
   if (!match) {
@@ -109,7 +109,7 @@ export function extractLeadingHttpStatus(raw: string): { code: number; rest: str
   return { code, rest: (match[2] ?? "").trim() };
 }
 
-/** Reused helper for is Cloudflare Or Html Error Page behavior in src/shared. */
+/** Detects HTML/CDN error pages returned where API JSON was expected. */
 export function isCloudflareOrHtmlErrorPage(raw: string): boolean {
   const trimmed = raw.trim();
   if (!trimmed) {
@@ -138,7 +138,7 @@ export function isCloudflareOrHtmlErrorPage(raw: string): boolean {
   );
 }
 
-/** Reused helper for is Generic Provider Internal Error behavior in src/shared. */
+/** Detects generic provider internal errors that should use simplified copy. */
 export function isGenericProviderInternalError(raw: string): boolean {
   const trimmed = raw.trim();
   if (!trimmed) {
@@ -150,7 +150,7 @@ export function isGenericProviderInternalError(raw: string): boolean {
   );
 }
 
-/** Reused helper for parse Api Error Info behavior in src/shared. */
+/** Extracts HTTP code, provider type, message, and request id from API errors. */
 export function parseApiErrorInfo(raw?: string): ApiErrorInfo | null {
   if (!raw) {
     return null;
@@ -210,7 +210,7 @@ export function parseApiErrorInfo(raw?: string): ApiErrorInfo | null {
   };
 }
 
-/** Reused helper for format Raw Assistant Error For Ui behavior in src/shared. */
+/** Formats raw assistant/provider errors into safe UI-facing text. */
 export function formatRawAssistantErrorForUi(raw?: string): string {
   const trimmed = (raw ?? "").trim();
   if (!trimmed) {

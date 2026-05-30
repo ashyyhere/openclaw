@@ -14,13 +14,13 @@ import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import { ACP_ERROR_CODES, AcpRuntimeError } from "../runtime/errors.js";
 import type { AcpSessionResolution } from "./manager.types.js";
 
-/** Reused helper for resolve Acp Agent From Session Key behavior in src/acp/control-plane. */
+/** Resolves the ACP agent id embedded in a session key with a fallback agent. */
 export function resolveAcpAgentFromSessionKey(sessionKey: string, fallback = "main"): string {
   const parsed = parseAgentSessionKey(sessionKey);
   return normalizeAgentId(parsed?.agentId ?? fallback);
 }
 
-/** Reused helper for resolve Missing Meta Error behavior in src/acp/control-plane. */
+/** Builds the ACP error returned when a session lacks required ACP metadata. */
 export function resolveMissingMetaError(sessionKey: string): AcpRuntimeError {
   return new AcpRuntimeError(
     "ACP_SESSION_INIT_FAILED",
@@ -28,7 +28,7 @@ export function resolveMissingMetaError(sessionKey: string): AcpRuntimeError {
   );
 }
 
-/** Reused helper for resolve Acp Session Resolution Error behavior in src/acp/control-plane. */
+/** Converts a non-ready session resolution into its ACP runtime error. */
 export function resolveAcpSessionResolutionError(
   resolution: AcpSessionResolution,
 ): AcpRuntimeError | null {
@@ -44,7 +44,7 @@ export function resolveAcpSessionResolutionError(
   );
 }
 
-/** Reused helper for require Ready Session Meta behavior in src/acp/control-plane. */
+/** Returns ready ACP metadata or throws the matching resolution error. */
 export function requireReadySessionMeta(resolution: AcpSessionResolution): SessionAcpMeta {
   if (resolution.kind === "ready") {
     return resolution.meta;
@@ -56,7 +56,7 @@ function normalizeSessionKey(sessionKey: string): string {
   return sessionKey.trim();
 }
 
-/** Reused helper for canonicalize Acp Session Key behavior in src/acp/control-plane. */
+/** Canonicalizes ACP session aliases through configured main-session rules. */
 export function canonicalizeAcpSessionKey(params: {
   cfg: OpenClawConfig;
   sessionKey: string;
@@ -84,12 +84,12 @@ export function canonicalizeAcpSessionKey(params: {
   return lowered;
 }
 
-/** Reused helper for normalize Actor Key behavior in src/acp/control-plane. */
+/** Normalizes actor/session keys for ACP control-plane maps. */
 export function normalizeActorKey(sessionKey: string): string {
   return normalizeLowercaseStringOrEmpty(sessionKey);
 }
 
-/** Reused helper for normalize Acp Error Code behavior in src/acp/control-plane. */
+/** Normalizes unknown ACP error codes to the generic turn-failed code. */
 export function normalizeAcpErrorCode(code: string | undefined): AcpRuntimeError["code"] {
   if (!code) {
     return "ACP_TURN_FAILED";
@@ -103,7 +103,7 @@ export function normalizeAcpErrorCode(code: string | undefined): AcpRuntimeError
   return "ACP_TURN_FAILED";
 }
 
-/** Reused helper for create Unsupported Control Error behavior in src/acp/control-plane. */
+/** Builds an ACP error for backend control methods that are unavailable. */
 export function createUnsupportedControlError(params: {
   backend: string;
   control: string;
@@ -114,7 +114,7 @@ export function createUnsupportedControlError(params: {
   );
 }
 
-/** Reused helper for resolve Runtime Idle Ttl Ms behavior in src/acp/control-plane. */
+/** Resolves ACP runtime idle TTL from config minutes into milliseconds. */
 export function resolveRuntimeIdleTtlMs(cfg: OpenClawConfig): number {
   const ttlMinutes = cfg.acp?.runtime?.ttlMinutes;
   if (typeof ttlMinutes !== "number" || !Number.isFinite(ttlMinutes) || ttlMinutes <= 0) {
@@ -123,7 +123,7 @@ export function resolveRuntimeIdleTtlMs(cfg: OpenClawConfig): number {
   return Math.round(ttlMinutes * 60 * 1000);
 }
 
-/** Reused helper for has Legacy Acp Identity Projection behavior in src/acp/control-plane. */
+/** Detects old ACP identity fields that should be migrated to current metadata. */
 export function hasLegacyAcpIdentityProjection(meta: SessionAcpMeta): boolean {
   const raw = meta as Record<string, unknown>;
   return (

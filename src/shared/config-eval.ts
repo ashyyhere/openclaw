@@ -1,8 +1,8 @@
-// shared config eval helpers and runtime behavior.
+// Shared runtime eligibility evaluation for config, env, binary, and OS requirements.
 import fs from "node:fs";
 import path from "node:path";
 
-/** Reused helper for is Truthy behavior in src/shared. */
+/** Applies OpenClaw truthiness rules for config requirement values. */
 export function isTruthy(value: unknown): boolean {
   if (value === undefined || value === null) {
     return false;
@@ -19,7 +19,7 @@ export function isTruthy(value: unknown): boolean {
   return true;
 }
 
-/** Reused helper for resolve Config Path behavior in src/shared. */
+/** Resolves a dotted path from an arbitrary config-like object. */
 export function resolveConfigPath(config: unknown, pathStr: string): unknown {
   const parts = pathStr.split(".").filter(Boolean);
   let current: unknown = config;
@@ -32,7 +32,7 @@ export function resolveConfigPath(config: unknown, pathStr: string): unknown {
   return current;
 }
 
-/** Reused helper for is Config Path Truthy With Defaults behavior in src/shared. */
+/** Checks a config path against authored values with default truthiness fallback. */
 export function isConfigPathTruthyWithDefaults(
   config: unknown,
   pathStr: string,
@@ -45,7 +45,7 @@ export function isConfigPathTruthyWithDefaults(
   return isTruthy(value);
 }
 
-/** Shared type for Runtime Requires in src/shared. */
+/** Runtime prerequisite declaration used by skills and plugin surfaces. */
 export type RuntimeRequires = {
   bins?: string[];
   anyBins?: string[];
@@ -62,7 +62,7 @@ type RuntimeRequirementEvalParams = {
   isConfigPathTruthy: (pathStr: string) => boolean;
 };
 
-/** Reused helper for evaluate Runtime Requires behavior in src/shared. */
+/** Evaluates binary, env, and config prerequisites for a runtime surface. */
 export function evaluateRuntimeRequires(params: RuntimeRequirementEvalParams): boolean {
   const requires = params.requires;
   if (!requires) {
@@ -111,7 +111,7 @@ export function evaluateRuntimeRequires(params: RuntimeRequirementEvalParams): b
   return true;
 }
 
-/** Reused helper for evaluate Runtime Eligibility behavior in src/shared. */
+/** Evaluates platform and prerequisite gates for runtime availability. */
 export function evaluateRuntimeEligibility(
   params: {
     os?: string[];
@@ -141,7 +141,7 @@ export function evaluateRuntimeEligibility(
   });
 }
 
-/** Reused helper for resolve Runtime Platform behavior in src/shared. */
+/** Returns the current Node runtime platform string. */
 export function resolveRuntimePlatform(): string {
   return process.platform;
 }
@@ -157,7 +157,7 @@ let cachedHasBinaryPath: string | undefined;
 let cachedHasBinaryPathExt: string | undefined;
 const hasBinaryCache = new Map<string, boolean>();
 
-/** Reused helper for has Binary behavior in src/shared. */
+/** Checks PATH for an executable binary with a cache keyed by PATH/PATHEXT. */
 export function hasBinary(bin: string): boolean {
   const pathEnv = process.env.PATH ?? "";
   const pathExt = process.platform === "win32" ? (process.env.PATHEXT ?? "") : "";

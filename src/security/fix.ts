@@ -1,4 +1,4 @@
-// security fix helpers and runtime behavior.
+// Security repair helpers for config hardening and local credential permissions.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveDefaultAgentId } from "../agents/agent-scope.js";
@@ -11,7 +11,7 @@ import { runExec } from "../process/exec.js";
 import { normalizeAgentId } from "../routing/session-key.js";
 import { createIcaclsResetCommand, formatIcaclsResetCommand, type ExecFn } from "./windows-acl.js";
 
-/** Shared type for Security Fix Chmod Action in src/security. */
+/** chmod repair result for one file or directory target. */
 export type SecurityFixChmodAction = {
   kind: "chmod";
   path: string;
@@ -21,7 +21,7 @@ export type SecurityFixChmodAction = {
   error?: string;
 };
 
-/** Shared type for Security Fix Icacls Action in src/security. */
+/** Windows icacls repair result for one file or directory target. */
 export type SecurityFixIcaclsAction = {
   kind: "icacls";
   path: string;
@@ -31,10 +31,10 @@ export type SecurityFixIcaclsAction = {
   error?: string;
 };
 
-/** Shared type for Security Fix Action in src/security. */
+/** Permission repair action emitted by security fix. */
 export type SecurityFixAction = SecurityFixChmodAction | SecurityFixIcaclsAction;
 
-/** Shared type for Security Fix Result in src/security. */
+/** Summary returned by the security footgun repair command. */
 export type SecurityFixResult = {
   ok: boolean;
   stateDir: string;
@@ -45,7 +45,7 @@ export type SecurityFixResult = {
   errors: string[];
 };
 
-/** Shared type for Security Permission Target in src/security. */
+/** File or directory whose permissions should be repaired. */
 export type SecurityPermissionTarget = {
   path: string;
   mode: number;
@@ -256,7 +256,7 @@ function applyConfigFixes(params: { cfg: OpenClawConfig; env: NodeJS.ProcessEnv 
   return { cfg: next, changes };
 }
 
-/** Reused helper for apply Security Fix Config Mutations behavior in src/security. */
+/** Applies config-level security hardening without writing the file. */
 export async function applySecurityFixConfigMutations(params: {
   cfg: OpenClawConfig;
   env: NodeJS.ProcessEnv;
@@ -315,7 +315,7 @@ async function collectChannelSecurityConfigFixMutation(params: {
   return { cfg: nextCfg, changes };
 }
 
-/** Reused helper for collect Security Permission Targets behavior in src/security. */
+/** Collects config, credential, auth-profile, and session files needing permission repair. */
 export async function collectSecurityPermissionTargets(params: {
   env: NodeJS.ProcessEnv;
   stateDir: string;
@@ -394,7 +394,7 @@ export async function collectSecurityPermissionTargets(params: {
   return targets;
 }
 
-/** Reused helper for fix Security Footguns behavior in src/security. */
+/** Repairs insecure config values and local credential/session file permissions. */
 export async function fixSecurityFootguns(opts?: {
   env?: NodeJS.ProcessEnv;
   stateDir?: string;

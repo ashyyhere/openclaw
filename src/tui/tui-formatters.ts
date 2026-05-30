@@ -180,7 +180,7 @@ function applyRtlIsolation(text: string): string {
     .join("\n");
 }
 
-/** Reused helper for sanitize Renderable Text behavior in src/tui. */
+/** Sanitizes assistant/user text before rendering it in the terminal UI. */
 export function sanitizeRenderableText(text: string): string {
   if (!text) {
     return text;
@@ -212,7 +212,7 @@ export function sanitizeRenderableText(text: string): string {
   return applyRtlIsolation(tokenSafe);
 }
 
-/** Reused helper for resolve Final Assistant Text behavior in src/tui. */
+/** Chooses final, streamed, or formatted error text for assistant output. */
 export function resolveFinalAssistantText(params: {
   finalText?: string | null;
   streamedText?: string | null;
@@ -233,7 +233,7 @@ export function resolveFinalAssistantText(params: {
   return "(no output)";
 }
 
-/** Reused helper for compose Thinking And Content behavior in src/tui. */
+/** Combines optional thinking text with visible message content. */
 export function composeThinkingAndContent(params: {
   thinkingText?: string;
   contentText?: string;
@@ -393,7 +393,7 @@ function extractTextBlocks(content: unknown, opts?: { includeThinking?: boolean 
   });
 }
 
-/** Reused helper for extract Text From Message behavior in src/tui. */
+/** Extracts renderable text from a chat message record. */
 export function extractTextFromMessage(
   message: unknown,
   opts?: { includeThinking?: boolean },
@@ -424,7 +424,7 @@ export function extractTextFromMessage(
   return errorText;
 }
 
-/** Reused helper for is Command Message behavior in src/tui. */
+/** Detects command messages in TUI history records. */
 export function isCommandMessage(message: unknown): boolean {
   if (!message || typeof message !== "object") {
     return false;
@@ -432,7 +432,7 @@ export function isCommandMessage(message: unknown): boolean {
   return (message as Record<string, unknown>).command === true;
 }
 
-/** Reused helper for format Tokens behavior in src/tui. */
+/** Formats compact token usage for TUI status chips. */
 export function formatTokens(total?: number | null, context?: number | null) {
   if (total == null && context == null) {
     return "tokens ?";
@@ -494,7 +494,7 @@ export function formatContextUsageLine(params: {
   return `tokens ${totalLabel}/${ctxLabel}${extra ? ` (${extra})` : ""}`;
 }
 
-/** Reused helper for as String behavior in src/tui. */
+/** Coerces primitive values into display strings for TUI cells. */
 export function asString(value: unknown, fallback = ""): string {
   if (typeof value === "string") {
     return value;

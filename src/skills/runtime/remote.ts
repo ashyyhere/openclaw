@@ -1,4 +1,4 @@
-// src/skills/runtime remote helpers and runtime behavior.
+// Remote node capability cache used to advertise macOS skills from paired nodes.
 import { listAgentWorkspaceDirs } from "../../agents/workspace-dirs.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { NodeRegistry } from "../../gateway/node-registry.js";
@@ -178,12 +178,12 @@ function clearRemoteNodeBins(nodeId: string): boolean {
   return true;
 }
 
-/** Reused helper for set Skills Remote Registry behavior in src/skills/runtime. */
+/** Installs the node registry used to probe remote skill prerequisites. */
 export function setSkillsRemoteRegistry(registry: NodeRegistry | null) {
   remoteRegistry = registry;
 }
 
-/** Reused helper for prime Remote Skills Cache behavior in src/skills/runtime. */
+/** Loads paired node metadata into the remote skills cache at startup. */
 export async function primeRemoteSkillsCache() {
   try {
     const list = await listNodePairing();
@@ -216,7 +216,7 @@ export async function primeRemoteSkillsCache() {
   }
 }
 
-/** Reused helper for record Remote Node Info behavior in src/skills/runtime. */
+/** Records a connected remote node and marks it available for skill eligibility. */
 export function recordRemoteNodeInfo(node: {
   nodeId: string;
   displayName?: string;
@@ -228,12 +228,12 @@ export function recordRemoteNodeInfo(node: {
   upsertNode({ ...node, connected: true });
 }
 
-/** Reused helper for record Remote Node Bins behavior in src/skills/runtime. */
+/** Records probed binary names for a remote node. */
 export function recordRemoteNodeBins(nodeId: string, bins: string[]) {
   upsertNode({ nodeId, bins });
 }
 
-/** Reused helper for remove Remote Node Info behavior in src/skills/runtime. */
+/** Removes remote node metadata and invalidates skills when needed. */
 export function removeRemoteNodeInfo(nodeId: string) {
   const existing = remoteNodes.get(nodeId);
   remoteNodes.delete(nodeId);
@@ -318,7 +318,7 @@ function areBinSetsEqual(a: Set<string> | undefined, b: Set<string>): boolean {
   return true;
 }
 
-/** Reused helper for refresh Remote Node Bins behavior in src/skills/runtime. */
+/** Coalesces and refreshes required binary probes for one remote node. */
 export async function refreshRemoteNodeBins(params: {
   nodeId: string;
   platform?: string;
@@ -454,7 +454,7 @@ async function refreshRemoteNodeBinsUncoalesced(params: {
   }
 }
 
-/** Reused helper for get Remote Skill Eligibility behavior in src/skills/runtime. */
+/** Builds remote skill eligibility facts from connected macOS node capabilities. */
 export function getRemoteSkillEligibility(options?: {
   advertiseExecNode?: boolean;
 }): SkillEligibilityContext["remote"] | undefined {
@@ -488,7 +488,7 @@ export function getRemoteSkillEligibility(options?: {
   };
 }
 
-/** Reused helper for refresh Remote Bins For Connected Nodes behavior in src/skills/runtime. */
+/** Refreshes remote binary availability for every connected node. */
 export async function refreshRemoteBinsForConnectedNodes(cfg: OpenClawConfig) {
   if (!remoteRegistry) {
     return;
