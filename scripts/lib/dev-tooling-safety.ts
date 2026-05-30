@@ -1,13 +1,15 @@
-// scripts/lib dev tooling safety helpers and runtime behavior.
+// Dev tooling safety helpers redact secrets and normalize previews before logging.
 import path from "node:path";
 import { redactSensitiveText } from "../../src/logging/redact.js";
 
 const REDACT_OPTIONS = { mode: "tools" } as const;
 
+/** Redacts text with the tool-log redaction profile. */
 export function redactForDevToolLog(value: string): string {
   return redactSensitiveText(value, REDACT_OPTIONS);
 }
 
+/** Produces a compact, redacted one-line preview for dev tool logs. */
 export function previewForDevToolLog(value: string, maxChars = 400): string {
   const redacted = redactForDevToolLog(value).replace(/\s+/g, " ").trim();
   if (redacted.length <= maxChars) {
@@ -16,6 +18,7 @@ export function previewForDevToolLog(value: string, maxChars = 400): string {
   return `${redacted.slice(0, Math.max(0, maxChars - 3))}...`;
 }
 
+/** Masks an identifier while preserving enough edge characters for operator correlation. */
 export function maskIdentifier(value: string | undefined, keepStart = 6, keepEnd = 4): string {
   const compact = value?.trim() ?? "";
   if (!compact) {
@@ -27,6 +30,7 @@ export function maskIdentifier(value: string | undefined, keepStart = 6, keepEnd
   return `${compact.slice(0, keepStart)}...${compact.slice(-keepEnd)}`;
 }
 
+/** Replaces paths under the user home with a `~` prefix for safe log output. */
 export function redactHomePath(value: string, home = process.env.HOME ?? ""): string {
   const normalizedHome = home ? path.resolve(home) : "";
   if (!normalizedHome) {
@@ -42,6 +46,7 @@ export function redactHomePath(value: string, home = process.env.HOME ?? ""): st
   return value;
 }
 
+/** Parses an integer option and rejects missing or malformed values outside the allowed range. */
 export function parseStrictIntegerOption(params: {
   fallback: number;
   label: string;
@@ -66,6 +71,7 @@ export function parseStrictIntegerOption(params: {
   return value;
 }
 
+/** Parses common boolean environment variable spellings with a fallback default. */
 export function parseBooleanEnv(params: {
   fallback: boolean;
   name: string;
@@ -86,6 +92,7 @@ export function parseBooleanEnv(params: {
   );
 }
 
+/** Recursively redacts JSON-like values for safe dev tool logging. */
 export function redactJsonValueForDevToolLog(value: unknown): unknown {
   return redactJsonValue(value, new WeakSet<object>(), 0);
 }

@@ -1,4 +1,4 @@
-// scripts/lib bounded response helpers and runtime behavior.
+// Bounded response helpers read fetch bodies without allowing unbounded memory growth.
 type BoundedResponseTextOptions = {
   createTooLargeError?: (message: string) => Error;
   formatTooLargeMessage?: (label: string, maxBytes: number) => string;

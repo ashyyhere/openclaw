@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts plugin clawhub release check helpers and runtime behavior.
+// ClawHub release check validates publishable plugin metadata and changed-version gates.
 
 import { pathToFileURL } from "node:url";
 import {
@@ -9,6 +9,7 @@ import {
   resolveSelectedClawHubPublishablePluginPackages,
 } from "./lib/plugin-clawhub-release.ts";
 
+/** Runs ClawHub metadata and version-gate checks for selected or changed plugins. */
 export async function runPluginClawHubReleaseCheck(argv: string[]) {
   const { selection, selectionMode, baseRef, headRef } = parsePluginReleaseArgs(argv);
   const publishable = collectClawHubPublishablePluginPackages(".", {

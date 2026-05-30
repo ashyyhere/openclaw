@@ -1,4 +1,4 @@
-// scripts/lib plugin clawhub release helpers and runtime behavior.
+// ClawHub plugin release helpers select publishable packages and query registry state.
 import { execFileSync } from "node:child_process";
 import { resolve } from "node:path";
 import { validateExternalCodePluginPackageJson } from "../../packages/plugin-package-contract/src/index.ts";
@@ -17,6 +17,7 @@ import {
   type PluginReleaseSelectionMode,
 } from "./plugin-npm-release.ts";
 
+/** Reuses npm plugin release argument parsing for ClawHub release scripts. */
 export { parsePluginReleaseArgs };
 
 type PluginPackageJson = {
@@ -43,6 +44,7 @@ type PluginPackageJson = {
   };
 };
 
+/** ClawHub-publishable plugin package metadata derived from extension package manifests. */
 export type PublishablePluginPackage = {
   extensionId: string;
   packageDir: string;
@@ -115,6 +117,7 @@ async function readClawHubPackageOwnerDetail(
   ) as ClawHubPackageOwnerDetail;
 }
 
+/** Collects plugin packages marked for ClawHub publishing and validates release metadata. */
 export function collectClawHubPublishablePluginPackages(
   rootDir = resolve("."),
   filters: ClawHubPublishablePluginPackageFilters = {},
@@ -196,6 +199,7 @@ export function collectClawHubPublishablePluginPackages(
   return publishable.toSorted((left, right) => left.packageName.localeCompare(right.packageName));
 }
 
+/** Returns changed extension paths that can affect ClawHub publish selection. */
 export function collectPluginClawHubReleasePathsFromGitRange(params: {
   rootDir?: string;
   gitRange: GitRangeSelection;
@@ -235,6 +239,7 @@ function hasSharedClawHubReleaseInputChanges(changedPaths: readonly string[]) {
   );
 }
 
+/** Filters ClawHub-publishable plugins to those touched by changed extension paths. */
 export function resolveChangedClawHubPublishablePluginPackages(params: {
   plugins: PublishablePluginPackage[];
   changedPaths: readonly string[];
@@ -245,6 +250,7 @@ export function resolveChangedClawHubPublishablePluginPackages(params: {
   });
 }
 
+/** Resolves explicit, all-publishable, or git-range ClawHub package selections. */
 export function resolveSelectedClawHubPublishablePluginPackages(params: {
   plugins: PublishablePluginPackage[];
   selection?: string[];
@@ -296,6 +302,7 @@ function readPackageManifestAtGitRef(params: {
   }
 }
 
+/** Reports changed ClawHub packages whose package versions were not bumped. */
 export function collectClawHubVersionGateErrors(params: {
   plugins: PublishablePluginPackage[];
   gitRange: GitRangeSelection;
@@ -367,6 +374,7 @@ async function isPluginVersionPublishedOnClawHub(
   );
 }
 
+/** Checks that OpenClaw-scoped ClawHub package rows are owned by the expected account. */
 export async function collectClawHubOpenClawOwnerErrors(params: {
   plugins: readonly Pick<PublishablePluginPackage, "packageName">[];
   requiredOwnerHandle?: string;
@@ -420,6 +428,7 @@ export async function collectClawHubOpenClawOwnerErrors(params: {
   return errors.toSorted();
 }
 
+/** Builds a ClawHub publish plan and marks versions already present in the registry. */
 export async function collectPluginClawHubReleasePlan(params?: {
   rootDir?: string;
   selection?: string[];

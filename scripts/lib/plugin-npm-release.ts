@@ -1,4 +1,4 @@
-// scripts/lib plugin npm release helpers and runtime behavior.
+// Plugin npm release helpers select publishable packages, validate metadata, and build plans.
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -8,6 +8,7 @@ import { normalizeOptionalString } from "../../src/shared/string-coerce.ts";
 import { parseReleaseVersion } from "../openclaw-npm-release-check.ts";
 import { resolveNpmPublishPlan } from "./npm-publish-plan.mjs";
 
+/** Package manifest fields required by plugin npm release checks. */
 export type PluginPackageJson = {
   name?: string;
   version?: string;
@@ -39,6 +40,7 @@ export type PluginPackageJson = {
   };
 };
 
+/** npm-publishable plugin package metadata derived from extension package manifests. */
 export type PublishablePluginPackage = {
   extensionId: string;
   packageDir: string;
@@ -49,23 +51,28 @@ export type PublishablePluginPackage = {
   installNpmSpec?: string;
 };
 
+/** Publishable plugin package annotated with npm registry publication state. */
 export type PluginReleasePlanItem = PublishablePluginPackage & {
   alreadyPublished: boolean;
 };
 
+/** Full npm release plan split into publish candidates and already-published skips. */
 export type PluginReleasePlan = {
   all: PluginReleasePlanItem[];
   candidates: PluginReleasePlanItem[];
   skippedPublished: PluginReleasePlanItem[];
 };
 
+/** Release selection mode accepted by plugin release scripts. */
 export type PluginReleaseSelectionMode = "selected" | "all-publishable";
 
+/** Base/head git range used to select changed plugin packages. */
 export type GitRangeSelection = {
   baseRef: string;
   headRef: string;
 };
 
+/** Normalized plugin release CLI arguments. */
 export type ParsedPluginReleaseArgs = {
   selection: string[];
   selectionMode?: PluginReleaseSelectionMode;
@@ -74,6 +81,7 @@ export type ParsedPluginReleaseArgs = {
   headRef?: string;
 };
 
+/** Extension package manifest candidate before publishability validation. */
 export type PublishablePluginPackageCandidate<
   TPackageJson extends PluginPackageJson = PluginPackageJson,
 > = {
@@ -82,6 +90,7 @@ export type PublishablePluginPackageCandidate<
   packageJson: TPackageJson;
 };
 
+/** Repository URL required for npm provenance on official OpenClaw plugin packages. */
 export const OPENCLAW_PLUGIN_NPM_REPOSITORY_URL = "https://github.com/openclaw/openclaw";
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Release helper preserves caller-specific package.json shape.
@@ -91,6 +100,7 @@ function readPluginPackageJson<TPackageJson extends PluginPackageJson = PluginPa
   return JSON.parse(readFileSync(path, "utf8")) as TPackageJson;
 }
 
+/** Reads extension package manifests that may declare publishable plugin packages. */
 export function collectExtensionPackageJsonCandidates<
   TPackageJson extends PluginPackageJson = PluginPackageJson,
 >(rootDir = resolve(".")): PublishablePluginPackageCandidate<TPackageJson>[] {
@@ -118,6 +128,7 @@ export function collectExtensionPackageJsonCandidates<
   return candidates;
 }
 
+/** Parses a package version and records validation errors for unsupported release formats. */
 export function resolvePublishablePluginVersion(params: {
   extensionId: string;
   packageJson: Pick<PluginPackageJson, "version">;
@@ -138,6 +149,7 @@ function normalizeGitDiffPath(path: string): string {
   return path.trim().replaceAll("\\", "/");
 }
 
+/** Parses comma or whitespace separated plugin package selections. */
 export function parsePluginReleaseSelection(value: string | undefined): string[] {
   if (!value?.trim()) {
     return [];
@@ -153,6 +165,7 @@ export function parsePluginReleaseSelection(value: string | undefined): string[]
   ].toSorted();
 }
 
+/** Parses the release selection mode flag. */
 export function parsePluginReleaseSelectionMode(
   value: string | undefined,
 ): PluginReleaseSelectionMode {
@@ -165,6 +178,7 @@ export function parsePluginReleaseSelectionMode(
   );
 }
 
+/** Parses plugin release CLI arguments shared by npm and ClawHub scripts. */
 export function parsePluginReleaseArgs(argv: string[]): ParsedPluginReleaseArgs {
   let selection: string[] = [];
   let selectionMode: PluginReleaseSelectionMode | undefined;
@@ -223,6 +237,7 @@ export function parsePluginReleaseArgs(argv: string[]): ParsedPluginReleaseArgs 
   return { selection, selectionMode, pluginsFlagProvided, baseRef, headRef };
 }
 
+/** Validates metadata required for an extension package to publish to npm. */
 export function collectPublishablePluginPackageErrors(
   candidate: PublishablePluginPackageCandidate,
 ): string[] {
@@ -273,11 +288,13 @@ export function collectPublishablePluginPackageErrors(
   return errors;
 }
 
+/** Filters used when collecting publishable plugin packages from extension manifests. */
 export type PublishablePluginPackageFilters = {
   extensionIds?: readonly string[];
   packageNames?: readonly string[];
 };
 
+/** Collects npm-publishable plugin packages and validates their release metadata. */
 export function collectPublishablePluginPackages(
   rootDir = resolve("."),
   filters: PublishablePluginPackageFilters = {},
@@ -338,6 +355,7 @@ export function collectPublishablePluginPackages(
   return publishable.toSorted((left, right) => left.packageName.localeCompare(right.packageName));
 }
 
+/** Resolves explicit package-name selections against publishable plugin packages. */
 export function resolveSelectedPublishablePluginPackages(params: {
   plugins: PublishablePluginPackage[];
   selection: string[];
@@ -366,6 +384,7 @@ export function resolveSelectedPublishablePluginPackages(params: {
   return selected;
 }
 
+/** Extracts changed extension ids from repository-relative changed paths. */
 export function collectChangedExtensionIdsFromPaths(paths: readonly string[]): string[] {
   const extensionIds = new Set<string>();
 
@@ -400,6 +419,7 @@ function assertSafeGitRef(ref: string, label: string): string {
   return trimmed;
 }
 
+/** Resolves and validates a git ref as a commit SHA for release diffing. */
 export function resolveGitCommitSha(rootDir: string, ref: string, label: string): string {
   const safeRef = assertSafeGitRef(ref, label);
   try {
@@ -413,6 +433,7 @@ export function resolveGitCommitSha(rootDir: string, ref: string, label: string)
   }
 }
 
+/** Collects changed repository paths for a validated git range and pathspecs. */
 export function collectChangedPathsFromGitRange(params: {
   rootDir?: string;
   gitRange: GitRangeSelection;
@@ -443,6 +464,7 @@ export function collectChangedPathsFromGitRange(params: {
     .map((path) => normalizeGitDiffPath(path));
 }
 
+/** Collects extension ids changed within a git range. */
 export function collectChangedExtensionIdsFromGitRange(params: {
   rootDir?: string;
   gitRange: GitRangeSelection;
@@ -456,6 +478,7 @@ export function collectChangedExtensionIdsFromGitRange(params: {
   );
 }
 
+/** Filters publishable plugin packages to extension ids changed in a git range. */
 export function resolveChangedPublishablePluginPackages(params: {
   plugins: PublishablePluginPackage[];
   changedExtensionIds: readonly string[];
@@ -490,6 +513,7 @@ function isPluginVersionPublished(packageName: string, version: string): boolean
   }
 }
 
+/** Builds an npm plugin release plan and marks package versions already on npm. */
 export function collectPluginReleasePlan(params?: {
   rootDir?: string;
   selection?: string[];

@@ -1,4 +1,4 @@
-// scripts check no monolithic plugin sdk entry imports helpers and runtime behavior.
+// Plugin SDK import guard rejects bundled-plugin imports from root and legacy barrels.
 import fs from "node:fs";
 import path from "node:path";
 import { discoverOpenClawPlugins } from "../src/plugins/discovery.js";
