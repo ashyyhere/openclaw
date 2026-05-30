@@ -101,7 +101,7 @@ function redactTranscriptStructuredValue(
   return next ?? value;
 }
 
-/** Reused helper for redact Transcript Message behavior in src/agents. */
+/** Redact one transcript message while preserving unchanged object identity when possible. */
 export function redactTranscriptMessage(message: AgentMessage, cfg?: OpenClawConfig): AgentMessage {
   if (cfg?.logging?.redactSensitive === "off") {
     return message;

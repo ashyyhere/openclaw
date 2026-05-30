@@ -19,7 +19,7 @@ import type {
 } from "./codex-mcp-config.types.js";
 import { shouldCreateBundleMcpRuntimeForAttempt } from "./embedded-agent-runner/run/attempt-tool-construction-plan.js";
 
-/** Re-exported API for src/agents. */
+/** Codex MCP config projection types used by embedded-agent thread setup. */
 export type {
   CodexBundleMcpThreadConfig,
   CodexMcpServersConfig,

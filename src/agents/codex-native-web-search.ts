@@ -6,14 +6,14 @@ import {
 } from "./codex-native-web-search-core.js";
 import { resolveCodexNativeWebSearchConfig } from "./codex-native-web-search.shared.js";
 import { resolveDefaultModelForAgent } from "./model-selection.js";
-/** Re-exported API for src/agents. */
+/** Core Codex native web-search activation and payload patching helpers. */
 export {
   buildCodexNativeWebSearchTool,
   patchCodexNativeWebSearchPayload,
   resolveCodexNativeSearchActivation,
   shouldSuppressManagedWebSearchTool,
 } from "./codex-native-web-search-core.js";
-/** Re-exported API for src/agents. */
+/** Shared config resolver and human-readable description for Codex native search. */
 export {
   describeCodexNativeWebSearch,
   resolveCodexNativeWebSearchConfig,

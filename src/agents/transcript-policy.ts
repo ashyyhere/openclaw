@@ -11,10 +11,10 @@ import { isGoogleModelApi } from "./embedded-agent-helpers/google.js";
 import { normalizeProviderId } from "./model-selection.js";
 import type { ToolCallIdMode } from "./tool-call-id.js";
 
-/** Shared type for Transcript Sanitize Mode in src/agents. */
+/** Amount of transcript content that should be sanitized before provider replay. */
 export type TranscriptSanitizeMode = "full" | "images-only";
 
-/** Shared type for Transcript Policy in src/agents. */
+/** Provider replay policy normalized into the switches used by transcript repair. */
 export type TranscriptPolicy = {
   sanitizeMode: TranscriptSanitizeMode;
   sanitizeToolCallIds: boolean;
@@ -37,12 +37,12 @@ export type TranscriptPolicy = {
 
 const SIGNED_THINKING_PROVIDERS = new Set(["anthropic", "amazon-bedrock", "anthropic-vertex"]);
 
-/** Reused helper for provider Requires Signed Thinking behavior in src/agents. */
+/** Return whether a provider family requires signed thinking blocks for replay. */
 export function providerRequiresSignedThinking(provider?: string | null): boolean {
   return SIGNED_THINKING_PROVIDERS.has(normalizeProviderId(provider ?? ""));
 }
 
-/** Reused helper for should Allow Provider Owned Thinking Replay behavior in src/agents. */
+/** Return whether provider-owned signed thinking may be replayed without stripping. */
 export function shouldAllowProviderOwnedThinkingReplay(params: {
   modelApi?: string | null;
   provider?: string | null;
@@ -282,7 +282,7 @@ function resolveTranscriptPolicyCacheKey(params: {
   });
 }
 
-/** Reused helper for resolve Transcript Policy behavior in src/agents. */
+/** Resolve provider/model transcript policy from plugin hooks or transport fallbacks. */
 export function resolveTranscriptPolicy(params: {
   modelApi?: string | null;
   provider?: string | null;

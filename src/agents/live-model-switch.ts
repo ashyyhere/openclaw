@@ -13,7 +13,7 @@ import {
   resolveDefaultModelForAgent,
   resolvePersistedSelectedModelRef,
 } from "./model-selection.js";
-/** Re-exported API for src/agents, starting with Live Session Model Switch Error. */
+/** Error thrown when a live-session model switch request cannot be accepted. */
 export { LiveSessionModelSwitchError } from "./live-model-switch-error.js";
 /** Selected live provider/model and optional auth profile. */
 export type LiveSessionModelSelection = EmbeddedRunModelSwitchRequest;
