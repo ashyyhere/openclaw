@@ -1,4 +1,5 @@
-// routing session key helpers and runtime behavior.
+// Canonical builders and normalizers for routing session keys across agents,
+// channels, peers, cron runs, and threaded conversations.
 import type { ChatType } from "../channels/chat-type.js";
 import {
   isCronRunSessionKey,
@@ -9,7 +10,7 @@ import {
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { normalizeAccountId } from "./account-id.js";
 
-/** Re-exported API for src/routing. */
+/** Exposes parser helpers from the canonical session-key utility module. */
 export {
   getSubagentDepth,
   isCronSessionKey,
@@ -19,18 +20,18 @@ export {
   parseThreadSessionSuffix,
   type ParsedAgentSessionKey,
 } from "../sessions/session-key-utils.js";
-/** Re-exported API for src/routing. */
+/** Exposes account-id helpers beside routing key builders for callers. */
 export {
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
   normalizeOptionalAccountId,
 } from "./account-id.js";
 
-/** Reused constant for DEFAULT AGENT ID behavior in src/routing. */
+/** Agent id used when callers omit explicit multi-agent routing. */
 export const DEFAULT_AGENT_ID = "main";
-/** Reused constant for DEFAULT MAIN KEY behavior in src/routing. */
+/** Conversation key used for an agent's default wake and store queue. */
 export const DEFAULT_MAIN_KEY = "main";
-/** Shared type for Session Key Shape in src/routing. */
+/** Coarse shape classification for migration and request-boundary handling. */
 export type SessionKeyShape = "missing" | "agent" | "legacy_or_alias" | "malformed_agent";
 
 // Pre-compiled regex
@@ -43,7 +44,7 @@ function normalizeToken(value: string | undefined | null): string {
   return normalizeLowercaseStringOrEmpty(value);
 }
 
-/** Reused helper for scoped Heartbeat Wake Options behavior in src/routing. */
+/** Scopes heartbeat wake options to the queue that can actually drain them. */
 export function scopedHeartbeatWakeOptions<T extends object>(
   sessionKey: string,
   wakeOptions: T,
@@ -70,7 +71,7 @@ export function scopedHeartbeatWakeOptions<T extends object>(
   return { ...wakeOptions, sessionKey };
 }
 
-/** Reused helper for resolve Event Session Key behavior in src/routing. */
+/** Converts cron-run event keys to the persistent queue key used by the agent. */
 export function resolveEventSessionKey(
   sessionKey: string,
   mainKey?: string,
@@ -88,12 +89,12 @@ export function resolveEventSessionKey(
   return buildAgentMainSessionKey({ agentId: parsed.agentId, mainKey });
 }
 
-/** Reused helper for normalize Main Key behavior in src/routing. */
+/** Normalizes the default conversation key while preserving the main fallback. */
 export function normalizeMainKey(value: string | undefined | null): string {
   return normalizeLowercaseStringOrEmpty(value) || DEFAULT_MAIN_KEY;
 }
 
-/** Reused helper for to Agent Request Session Key behavior in src/routing. */
+/** Strips the agent prefix before exposing a store key back to request callers. */
 export function toAgentRequestSessionKey(storeKey: string | undefined | null): string | undefined {
   const raw = (storeKey ?? "").trim();
   if (!raw) {
@@ -102,7 +103,7 @@ export function toAgentRequestSessionKey(storeKey: string | undefined | null): s
   return parseAgentSessionKey(raw)?.rest ?? raw;
 }
 
-/** Reused helper for to Agent Store Session Key behavior in src/routing. */
+/** Converts request-visible keys into canonical agent-prefixed store keys. */
 export function toAgentStoreSessionKey(params: {
   agentId: string;
   requestKey: string | undefined | null;
@@ -124,13 +125,13 @@ export function toAgentStoreSessionKey(params: {
   return `agent:${normalizeAgentId(params.agentId)}:${normalized}`;
 }
 
-/** Reused helper for resolve Agent Id From Session Key behavior in src/routing. */
+/** Reads the owning agent id from a session key, falling back to the main agent. */
 export function resolveAgentIdFromSessionKey(sessionKey: string | undefined | null): string {
   const parsed = parseAgentSessionKey(sessionKey);
   return normalizeAgentId(parsed?.agentId ?? DEFAULT_AGENT_ID);
 }
 
-/** Reused helper for classify Session Key Shape behavior in src/routing. */
+/** Classifies user-provided keys before legacy scoping or malformed-agent checks. */
 export function classifySessionKeyShape(sessionKey: string | undefined | null): SessionKeyShape {
   const raw = (sessionKey ?? "").trim();
   if (!raw) {
@@ -144,13 +145,13 @@ export function classifySessionKeyShape(sessionKey: string | undefined | null): 
     : "legacy_or_alias";
 }
 
-/** Reused helper for is Unscoped Session Key Sentinel behavior in src/routing. */
+/** Detects sentinel queues that are intentionally not scoped to an agent. */
 export function isUnscopedSessionKeySentinel(sessionKey: string | undefined | null): boolean {
   const lowered = normalizeLowercaseStringOrEmpty(sessionKey);
   return lowered === "global" || lowered === "unknown";
 }
 
-/** Reused helper for scope Legacy Session Key To Agent behavior in src/routing. */
+/** Adds an agent prefix to legacy keys without rewriting already-scoped keys. */
 export function scopeLegacySessionKeyToAgent(params: {
   agentId?: string | undefined;
   sessionKey?: string | undefined;
@@ -171,7 +172,7 @@ export function scopeLegacySessionKeyToAgent(params: {
   });
 }
 
-/** Reused helper for normalize Agent Id behavior in src/routing. */
+/** Normalizes agent ids to the path-safe token used in store and queue keys. */
 export function normalizeAgentId(value: string | undefined | null): string {
   const trimmed = (value ?? "").trim();
   if (!trimmed) {
@@ -192,18 +193,18 @@ export function normalizeAgentId(value: string | undefined | null): string {
   );
 }
 
-/** Reused helper for is Valid Agent Id behavior in src/routing. */
+/** Checks whether an agent id already satisfies the routing token contract. */
 export function isValidAgentId(value: string | undefined | null): boolean {
   const trimmed = (value ?? "").trim();
   return Boolean(trimmed) && VALID_ID_RE.test(trimmed);
 }
 
-/** Reused helper for sanitize Agent Id behavior in src/routing. */
+/** Public alias for normalizing user-provided agent ids at config boundaries. */
 export function sanitizeAgentId(value: string | undefined | null): string {
   return normalizeAgentId(value);
 }
 
-/** Reused helper for build Agent Main Session Key behavior in src/routing. */
+/** Builds the canonical queue key for an agent's default conversation. */
 export function buildAgentMainSessionKey(params: {
   agentId: string;
   mainKey?: string | undefined;
@@ -213,7 +214,7 @@ export function buildAgentMainSessionKey(params: {
   return `agent:${agentId}:${mainKey}`;
 }
 
-/** Reused helper for build Agent Peer Session Key behavior in src/routing. */
+/** Builds the agent-scoped key for a DM, group, channel, or peer conversation. */
 export function buildAgentPeerSessionKey(params: {
   agentId: string;
   mainKey?: string | undefined;
@@ -314,7 +315,7 @@ function resolveLinkedPeerId(params: {
   return null;
 }
 
-/** Reused helper for build Group History Key behavior in src/routing. */
+/** Builds the durable history key shared by group/channel backfill lookups. */
 export function buildGroupHistoryKey(params: {
   channel: string;
   accountId?: string | null;
@@ -332,7 +333,7 @@ export function buildGroupHistoryKey(params: {
   return `${channel}:${accountId}:${params.peerKind}:${peerId}`;
 }
 
-/** Reused helper for resolve Thread Session Keys behavior in src/routing. */
+/** Derives child thread keys while keeping the parent key available to callers. */
 export function resolveThreadSessionKeys(params: {
   baseSessionKey: string;
   threadId?: string | null;
