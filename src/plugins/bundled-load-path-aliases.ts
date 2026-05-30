@@ -1,24 +1,25 @@
-// plugins bundled load path aliases helpers and runtime behavior.
+// Bundled plugin load path alias helpers. Maps packaged dist extension paths
+// to legacy source-style extension paths for compatibility diagnostics/loading.
 import path from "node:path";
 import { isPathInside } from "./path-safety.js";
 
-/** Shared type for Bundled Plugin Load Path Alias Kind in src/plugins. */
+/** Whether an alias points at the packaged path or its legacy equivalent. */
 export type BundledPluginLoadPathAliasKind = "current" | "legacy";
 
-/** Shared type for Bundled Plugin Load Path Alias in src/plugins. */
+/** One candidate load path for a bundled plugin. */
 export type BundledPluginLoadPathAlias = {
   kind: BundledPluginLoadPathAliasKind;
   path: string;
 };
 
-/** Shared type for Packaged Bundled Plugin Path in src/plugins. */
+/** Parsed packaged bundled plugin path under dist extension roots. */
 export type PackagedBundledPluginPath = {
   packageRoot: string;
   bundledRoot: string;
   bundledLeaf: string;
 };
 
-/** Shared type for Legacy Bundled Plugin Path in src/plugins. */
+/** Parsed legacy bundled plugin path under the source-style extensions root. */
 export type LegacyBundledPluginPath = {
   packageRoot: string;
   legacyRoot: string;
@@ -30,7 +31,7 @@ const PACKAGED_BUNDLED_ROOTS = [
   path.join("dist-runtime", "extensions"),
 ] as const;
 
-/** Reused helper for normalize Bundled Lookup Path behavior in src/plugins. */
+/** Normalizes bundled lookup paths while trimming trailing separators. */
 export function normalizeBundledLookupPath(targetPath: string): string {
   const normalized = path.normalize(targetPath);
   const root = path.parse(normalized).root;
@@ -64,7 +65,7 @@ function findPackagedBundledRoot(localPath: string): {
   return null;
 }
 
-/** Reused helper for parse Packaged Bundled Plugin Path behavior in src/plugins. */
+/** Parses a packaged bundled plugin path into package root, root, and leaf. */
 export function parsePackagedBundledPluginPath(
   localPath: string,
 ): PackagedBundledPluginPath | null {
@@ -82,7 +83,7 @@ export function parsePackagedBundledPluginPath(
   };
 }
 
-/** Reused helper for build Legacy Bundled Path behavior in src/plugins. */
+/** Builds the legacy extensions path corresponding to a packaged bundled path. */
 export function buildLegacyBundledPath(localPath: string): string | null {
   const packaged = parsePackagedBundledPluginPath(localPath);
   if (!packaged) {
@@ -91,13 +92,13 @@ export function buildLegacyBundledPath(localPath: string): string | null {
   return path.join(packaged.packageRoot, "extensions", packaged.bundledLeaf);
 }
 
-/** Reused helper for build Legacy Bundled Root Path behavior in src/plugins. */
+/** Builds the legacy extensions root corresponding to a packaged bundled root. */
 export function buildLegacyBundledRootPath(localPath: string): string | null {
   const packaged = findPackagedBundledRoot(localPath);
   return packaged ? path.join(packaged.packageRoot, "extensions") : null;
 }
 
-/** Reused helper for parse Legacy Bundled Plugin Path behavior in src/plugins. */
+/** Parses a legacy bundled plugin path into package root, root, and leaf. */
 export function parseLegacyBundledPluginPath(localPath: string): LegacyBundledPluginPath | null {
   const normalized = normalizeBundledLookupPath(localPath);
   const marker = `${path.sep}extensions`;
@@ -116,7 +117,7 @@ export function parseLegacyBundledPluginPath(localPath: string): LegacyBundledPl
   };
 }
 
-/** Reused helper for build Bundled Plugin Load Path Aliases behavior in src/plugins. */
+/** Builds current and legacy load aliases for a packaged bundled plugin path. */
 export function buildBundledPluginLoadPathAliases(localPath: string): BundledPluginLoadPathAlias[] {
   const legacyPath = buildLegacyBundledPath(localPath);
   if (!legacyPath) {
@@ -134,7 +135,7 @@ function isSameOrInside(baseDir: string, targetPath: string): boolean {
   return target === base || isPathInside(base, target);
 }
 
-/** Reused helper for resolve Packaged Bundled Load Path Alias behavior in src/plugins. */
+/** Classifies a load path as current or legacy for a packaged bundled root. */
 export function resolvePackagedBundledLoadPathAlias(params: {
   bundledRoot?: string;
   loadPath: string;

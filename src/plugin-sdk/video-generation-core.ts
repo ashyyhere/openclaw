@@ -1,12 +1,12 @@
 // Shared video-generation implementation helpers for bundled and third-party plugins.
 
-/** Re-exported API for src/plugin-sdk, starting with Auth Profile Store. */
+/** Auth profile store type used by video generation providers. */
 export type { AuthProfileStore } from "../agents/auth-profiles/types.js";
-/** Re-exported API for src/plugin-sdk, starting with Fallback Attempt. */
+/** Fallback attempt metadata shared with capability generation failures. */
 export type { FallbackAttempt } from "../agents/model-fallback.types.js";
-/** Re-exported API for src/plugin-sdk, starting with Video Generation Provider Plugin. */
+/** Plugin registration shape for video generation providers. */
 export type { VideoGenerationProviderPlugin } from "../plugins/types.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Core video generation provider contracts re-exported for plugins. */
 export type {
   GeneratedVideoAsset,
   VideoGenerationIgnoredOverride,
@@ -22,30 +22,30 @@ export type {
   VideoGenerationSourceAsset,
   VideoGenerationTransformCapabilities,
 } from "../video-generation/types.js";
-/** Re-exported API for src/plugin-sdk, starting with Open Claw Config. */
+/** OpenClaw config type passed into provider capability/configuration hooks. */
 export type { OpenClawConfig } from "../config/types.openclaw.js";
 
-/** Re-exported API for src/plugin-sdk, starting with describe Failover Error. */
+/** Failover error helpers used by video generation fallback flows. */
 export { describeFailoverError, isFailoverError } from "../agents/failover-error.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Shared media-generation capability selection and failure helpers. */
 export {
   buildNoCapabilityModelConfiguredMessage,
   resolveCapabilityModelCandidates,
   throwCapabilityGenerationFailure,
 } from "../media-generation/runtime-shared.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Agent model preference helpers for provider/model fallback resolution. */
 export {
   resolveAgentModelFallbackValues,
   resolveAgentModelPrimaryValue,
 } from "../config/model-input.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Video generation provider registry accessors. */
 export {
   getVideoGenerationProvider,
   listVideoGenerationProviders,
 } from "../video-generation/provider-registry.js";
-/** Re-exported API for src/plugin-sdk, starting with parse Video Generation Model Ref. */
+/** Parses provider/model references for video generation models. */
 export { parseVideoGenerationModelRef } from "../video-generation/model-ref.js";
-/** Re-exported API for src/plugin-sdk, starting with create Subsystem Logger. */
+/** Logger factory for video generation provider subsystems. */
 export { createSubsystemLogger } from "../logging/subsystem.js";
-/** Re-exported API for src/plugin-sdk, starting with get Provider Env Vars. */
+/** Provider environment variable resolver for plugin configuration checks. */
 export { getProviderEnvVars } from "../secrets/provider-env-vars.js";

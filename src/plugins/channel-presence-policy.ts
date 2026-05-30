@@ -1,4 +1,5 @@
-// plugins channel presence policy helpers and runtime behavior.
+// Channel presence policy resolver. Combines explicit config, env/auth signals,
+// manifest ownership, trust, and activation state into effective channel visibility.
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import {
   hasMeaningfulChannelConfig,
@@ -29,13 +30,13 @@ import { loadPluginManifestRegistryForPluginRegistry } from "./plugin-registry-c
 
 const IGNORED_CHANNEL_CONFIG_KEYS = new Set(["defaults", "modelByChannel"]);
 
-/** Shared type for Configured Channel Presence Source in src/plugins. */
+/** Source that made a channel appear configured. */
 export type ConfiguredChannelPresenceSource =
   | "explicit-config"
   | Exclude<ChannelPresenceSignalSource, "config">
   | "manifest-env";
 
-/** Shared type for Configured Channel Blocked Reason in src/plugins. */
+/** Reason a configured channel is not effective for scoped discovery. */
 export type ConfiguredChannelBlockedReason =
   | "plugins-disabled"
   | "blocked-by-denylist"
@@ -47,7 +48,7 @@ export type ConfiguredChannelBlockedReason =
   | "no-channel-owner"
   | "not-activated";
 
-/** Shared type for Configured Channel Presence Policy Entry in src/plugins. */
+/** Evaluated presence state for one configured channel. */
 export type ConfiguredChannelPresencePolicyEntry = {
   channelId: string;
   sources: ConfiguredChannelPresenceSource[];
@@ -74,7 +75,7 @@ function hasNonEmptyEnvValue(env: NodeJS.ProcessEnv, key: string): boolean {
   return typeof value === "string" && value.trim().length > 0;
 }
 
-/** Reused helper for has Explicit Channel Config behavior in src/plugins. */
+/** Returns whether a channel has meaningful non-disabled config. */
 export function hasExplicitChannelConfig(params: {
   config: OpenClawConfig;
   channelId: string;
@@ -94,7 +95,7 @@ export function hasExplicitChannelConfig(params: {
   return enabled === true || hasMeaningfulChannelConfig(entry);
 }
 
-/** Reused helper for list Explicit Configured Channel Ids For Config behavior in src/plugins. */
+/** Lists channel ids with explicit meaningful config entries. */
 export function listExplicitConfiguredChannelIdsForConfig(config: OpenClawConfig): string[] {
   const channels = config.channels;
   if (!channels || typeof channels !== "object" || Array.isArray(channels)) {
@@ -325,7 +326,7 @@ function loadInstalledChannelManifestRecords(params: {
   }).plugins;
 }
 
-/** Reused helper for resolve Configured Channel Presence Policy behavior in src/plugins. */
+/** Resolves configured channel visibility after owner trust and activation checks. */
 export function resolveConfiguredChannelPresencePolicy(params: {
   config: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
@@ -413,7 +414,7 @@ export function resolveConfiguredChannelPresencePolicy(params: {
   return entries;
 }
 
-/** Reused helper for list Configured Channel Ids For Read Only Scope behavior in src/plugins. */
+/** Lists effective configured channel ids for read-only scoped access. */
 export function listConfiguredChannelIdsForReadOnlyScope(
   params: Parameters<typeof resolveConfiguredChannelPresencePolicy>[0],
 ): string[] {
@@ -422,14 +423,14 @@ export function listConfiguredChannelIdsForReadOnlyScope(
     .map((entry) => entry.channelId);
 }
 
-/** Reused helper for has Configured Channels For Read Only Scope behavior in src/plugins. */
+/** Returns whether any configured channel is effective for read-only scoped access. */
 export function hasConfiguredChannelsForReadOnlyScope(
   params: Parameters<typeof resolveConfiguredChannelPresencePolicy>[0],
 ): boolean {
   return listConfiguredChannelIdsForReadOnlyScope(params).length > 0;
 }
 
-/** Reused helper for list Configured Announce Channel Ids For Config behavior in src/plugins. */
+/** Lists channel ids that should be announced for config/discovery surfaces. */
 export function listConfiguredAnnounceChannelIdsForConfig(params: {
   config: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
@@ -508,7 +509,7 @@ function resolveScopedChannelOwnerPluginIds(params: {
     .toSorted((left, right) => left.localeCompare(right));
 }
 
-/** Reused helper for resolve Discoverable Scoped Channel Plugin Ids behavior in src/plugins. */
+/** Resolves trusted plugin ids that own the requested discoverable channels. */
 export function resolveDiscoverableScopedChannelPluginIds(params: {
   config: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
@@ -520,7 +521,7 @@ export function resolveDiscoverableScopedChannelPluginIds(params: {
   return resolveScopedChannelOwnerPluginIds(params);
 }
 
-/** Reused helper for resolve Configured Channel Plugin Ids behavior in src/plugins. */
+/** Resolves plugin ids owning channels configured in the current config. */
 export function resolveConfiguredChannelPluginIds(params: {
   config: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
