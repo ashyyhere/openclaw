@@ -1,4 +1,4 @@
-// scripts/lib import cycle graph helpers and runtime behavior.
+// Import cycle graph helpers collect source files, detect SCCs, and render cycle witnesses.
 import { readdirSync, statSync } from "node:fs";
 import path from "node:path";
 
@@ -16,6 +16,7 @@ function cycleSignature(files: readonly string[]): string {
   return files.toSorted((left, right) => left.localeCompare(right)).join("\n");
 }
 
+/** Recursively collects repository-relative source files under a root. */
 export function collectSourceFiles(root: string, options: SourceFileCollectionOptions): string[] {
   const repoPath = normalizeRepoPath(root, options.repoRoot);
   if (options.shouldSkipRepoPath?.(repoPath)) {
@@ -35,6 +36,7 @@ export function collectSourceFiles(root: string, options: SourceFileCollectionOp
     .toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Finds cyclic strongly connected components in an import graph. */
 export function collectStronglyConnectedComponents(
   graph: ReadonlyMap<string, readonly string[]>,
 ): string[][] {
@@ -126,6 +128,7 @@ function findCycleWitness(
   return visit(start) ?? [...component];
 }
 
+/** Formats a representative path through one cyclic component. */
 export function formatCycle(
   component: readonly string[],
   graph: ReadonlyMap<string, readonly string[]>,

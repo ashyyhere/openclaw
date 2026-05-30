@@ -1,4 +1,4 @@
-// scripts/lib/ts-topology context helpers and runtime behavior.
+// TypeScript topology context helpers build program state and symbol usage facts.
 import { execFileSync } from "node:child_process";
 import path from "node:path";
 import ts from "typescript";
@@ -14,6 +14,7 @@ function normalizePath(filePath: string): string {
   return filePath.split(path.sep).join(path.posix.sep);
 }
 
+/** Creates a TypeScript program/checker context rooted at the repository tsconfig. */
 export function createProgramContext(
   repoRoot: string,
   tsconfigName = "tsconfig.json",
@@ -92,6 +93,7 @@ function symbolKind(symbol: ts.Symbol, declaration: ts.Declaration | undefined):
   return "unknown";
 }
 
+/** Resolves aliases and records the canonical declaration identity for a symbol. */
 export function canonicalSymbolInfo(context: ProgramContext, symbol: ts.Symbol): CanonicalSymbol {
   const resolved = comparableSymbol(context.checker, symbol) ?? symbol;
   const declaration =
@@ -110,6 +112,7 @@ export function canonicalSymbolInfo(context: ProgramContext, symbol: ts.Symbol):
   };
 }
 
+/** Counts non-import identifier references to a named import symbol within a source file. */
 export function countIdentifierUsages(
   context: ProgramContext,
   sourceFile: ts.SourceFile,
@@ -135,6 +138,7 @@ export function countIdentifierUsages(
   return count;
 }
 
+/** Counts namespace import property references such as `sdk.foo` for one exported name. */
 export function countNamespacePropertyUsages(
   context: ProgramContext,
   sourceFile: ts.SourceFile,
@@ -163,6 +167,7 @@ export function countNamespacePropertyUsages(
   return count;
 }
 
+/** Returns the current repository commit SHA when git metadata is available. */
 export function getRepoRevision(repoRoot: string): string | null {
   try {
     return execFileSync("git", ["rev-parse", "HEAD"], {

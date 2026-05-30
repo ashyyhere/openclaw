@@ -1,4 +1,4 @@
-// scripts/lib/ts-topology reports helpers and runtime behavior.
+// TypeScript topology report renderer formats analyzer envelopes for CLI output.
 import type { ReportModule, TopologyEnvelope, TopologyRecord } from "./types.js";
 
 function canonicalExportName(record: TopologyRecord): string {
@@ -110,6 +110,7 @@ const reportModules: Record<ReportModule["name"], ReportModule> = {
   },
 };
 
+/** Renders a topology report envelope using the text formatter for its report type. */
 export function renderTextReport(envelope: TopologyEnvelope, limit: number): string {
   const reportModule = reportModules[envelope.report];
   if (!reportModule) {

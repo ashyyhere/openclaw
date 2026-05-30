@@ -1,4 +1,4 @@
-// scripts/lib/ts-topology analyze helpers and runtime behavior.
+// TypeScript topology analyzer ranks public exports by usage and ownership shape.
 import path from "node:path";
 import ts from "typescript";
 import {
@@ -326,6 +326,7 @@ function buildRankedCandidates(records: TopologyRecord[], limit: number): Ranked
   };
 }
 
+/** Analyzes one public topology scope and returns report records plus ranking metadata. */
 export function analyzeTopology(options: {
   repoRoot: string;
   scope: TopologyScope;
@@ -392,6 +393,7 @@ export function analyzeTopology(options: {
   };
 }
 
+/** Selects the topology records relevant to a named report. */
 export function filterRecordsForReport(
   records: TopologyRecord[],
   report: TopologyReportName,

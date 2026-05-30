@@ -1,4 +1,4 @@
-// scripts/lib/ts-topology scope helpers and runtime behavior.
+// TypeScript topology scope helpers define public surfaces and consumer ownership buckets.
 import fs from "node:fs";
 import path from "node:path";
 import { BUNDLED_PLUGIN_PATH_PREFIX } from "../bundled-plugin-paths.mjs";
@@ -121,6 +121,7 @@ function buildScopeFromEntrypoints(
   };
 }
 
+/** Builds the topology scope for public OpenClaw plugin SDK entrypoints. */
 export function createPluginSdkScope(_repoRoot: string): TopologyScope {
   const entrypoints = publicPluginSdkEntrypoints.map((entrypoint) => ({
     entrypoint,
@@ -131,6 +132,7 @@ export function createPluginSdkScope(_repoRoot: string): TopologyScope {
   return buildScopeFromEntrypoints("plugin-sdk", "OpenClaw plugin-sdk public surface", entrypoints);
 }
 
+/** Builds a topology scope from `.ts` files in a public filesystem entrypoint root. */
 export function createFilesystemPublicSurfaceScope(
   repoRoot: string,
   options: {
