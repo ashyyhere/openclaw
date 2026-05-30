@@ -1,17 +1,17 @@
 /** Public SDK protocol helpers for QA channel request and response payloads. */
 import { isRecord } from "../shared/record-coerce.js";
 
-/** Shared type for Qa Bus Conversation Kind in src/plugin-sdk. */
+/** Conversation category used by QA bus messages and search filters. */
 export type QaBusConversationKind = "direct" | "channel" | "group";
 
-/** Shared type for Qa Bus Conversation in src/plugin-sdk. */
+/** QA bus conversation metadata visible to channel tests and fixtures. */
 export type QaBusConversation = {
   id: string;
   kind: QaBusConversationKind;
   title?: string;
 };
 
-/** Shared type for Qa Bus Attachment in src/plugin-sdk. */
+/** Attachment payload carried by synthetic QA bus messages. */
 export type QaBusAttachment = {
   id: string;
   kind: "image" | "video" | "audio" | "file";
@@ -27,13 +27,13 @@ export type QaBusAttachment = {
   transcript?: string;
 };
 
-/** Shared type for Qa Bus Tool Call in src/plugin-sdk. */
+/** Redacted tool-call summary attached to QA bus messages. */
 export type QaBusToolCall = {
   name: string;
   arguments?: Record<string, unknown>;
 };
 
-/** Shared type for Qa Bus Message in src/plugin-sdk. */
+/** Message record stored and emitted by the QA bus. */
 export type QaBusMessage = {
   id: string;
   accountId: string;
@@ -57,7 +57,7 @@ export type QaBusMessage = {
   }>;
 };
 
-/** Shared type for Qa Bus Thread in src/plugin-sdk. */
+/** Thread record created inside a QA bus conversation. */
 export type QaBusThread = {
   id: string;
   accountId: string;
@@ -67,7 +67,7 @@ export type QaBusThread = {
   createdBy: string;
 };
 
-/** Shared type for Qa Bus Event in src/plugin-sdk. */
+/** Cursor-bearing event emitted by QA bus polling. */
 export type QaBusEvent =
   | { cursor: number; kind: "inbound-message"; accountId: string; message: QaBusMessage }
   | { cursor: number; kind: "outbound-message"; accountId: string; message: QaBusMessage }
@@ -83,7 +83,7 @@ export type QaBusEvent =
       senderId: string;
     };
 
-/** Shared type for Qa Bus Inbound Message Input in src/plugin-sdk. */
+/** Input used by tests to inject inbound QA bus messages. */
 export type QaBusInboundMessageInput = {
   accountId?: string;
   conversation: QaBusConversation;
@@ -98,7 +98,7 @@ export type QaBusInboundMessageInput = {
   toolCalls?: QaBusToolCall[];
 };
 
-/** Shared type for Qa Bus Outbound Message Input in src/plugin-sdk. */
+/** Input used by channel code to append outbound QA bus messages. */
 export type QaBusOutboundMessageInput = {
   accountId?: string;
   to: string;
@@ -112,7 +112,7 @@ export type QaBusOutboundMessageInput = {
   toolCalls?: QaBusToolCall[];
 };
 
-/** Shared type for Qa Bus Create Thread Input in src/plugin-sdk. */
+/** Input for creating a QA bus thread in a conversation. */
 export type QaBusCreateThreadInput = {
   accountId?: string;
   conversationId: string;
@@ -121,7 +121,7 @@ export type QaBusCreateThreadInput = {
   timestamp?: number;
 };
 
-/** Shared type for Qa Bus React To Message Input in src/plugin-sdk. */
+/** Input for adding a reaction event to an existing QA bus message. */
 export type QaBusReactToMessageInput = {
   accountId?: string;
   messageId: string;
@@ -130,7 +130,7 @@ export type QaBusReactToMessageInput = {
   timestamp?: number;
 };
 
-/** Shared type for Qa Bus Edit Message Input in src/plugin-sdk. */
+/** Input for editing a stored QA bus message. */
 export type QaBusEditMessageInput = {
   accountId?: string;
   messageId: string;
@@ -138,14 +138,14 @@ export type QaBusEditMessageInput = {
   timestamp?: number;
 };
 
-/** Shared type for Qa Bus Delete Message Input in src/plugin-sdk. */
+/** Input for marking a QA bus message deleted. */
 export type QaBusDeleteMessageInput = {
   accountId?: string;
   messageId: string;
   timestamp?: number;
 };
 
-/** Shared type for Qa Bus Search Messages Input in src/plugin-sdk. */
+/** Search filters for querying QA bus message history. */
 export type QaBusSearchMessagesInput = {
   accountId?: string;
   query?: string;
@@ -154,13 +154,13 @@ export type QaBusSearchMessagesInput = {
   limit?: number;
 };
 
-/** Shared type for Qa Bus Read Message Input in src/plugin-sdk. */
+/** Lookup input for reading one QA bus message by id. */
 export type QaBusReadMessageInput = {
   accountId?: string;
   messageId: string;
 };
 
-/** Shared type for Qa Bus Poll Input in src/plugin-sdk. */
+/** Cursor and timeout options for QA bus event polling. */
 export type QaBusPollInput = {
   accountId?: string;
   cursor?: number;
@@ -168,13 +168,13 @@ export type QaBusPollInput = {
   limit?: number;
 };
 
-/** Shared type for Qa Bus Poll Result in src/plugin-sdk. */
+/** Poll response containing the next cursor and matching events. */
 export type QaBusPollResult = {
   cursor: number;
   events: QaBusEvent[];
 };
 
-/** Shared type for Qa Bus State Snapshot in src/plugin-sdk. */
+/** Complete QA bus state snapshot for deterministic test assertions. */
 export type QaBusStateSnapshot = {
   cursor: number;
   conversations: QaBusConversation[];
@@ -230,7 +230,7 @@ function sanitizeQaBusToolCallValue(value: unknown, depth: number, key?: string)
   return undefined;
 }
 
-/** Reused helper for sanitize Qa Bus Tool Call Arguments behavior in src/plugin-sdk. */
+/** Redacts and bounds arbitrary tool-call arguments before QA bus persistence. */
 export function sanitizeQaBusToolCallArguments(
   value: unknown,
 ): Record<string, unknown> | undefined {
@@ -241,7 +241,7 @@ export function sanitizeQaBusToolCallArguments(
   return isRecord(sanitized) ? sanitized : undefined;
 }
 
-/** Reused helper for sanitize Qa Bus Tool Calls behavior in src/plugin-sdk. */
+/** Normalizes a bounded list of tool-call summaries for QA bus messages. */
 export function sanitizeQaBusToolCalls(value: unknown): QaBusToolCall[] | undefined {
   if (!Array.isArray(value)) {
     return undefined;
@@ -265,7 +265,7 @@ export function sanitizeQaBusToolCalls(value: unknown): QaBusToolCall[] | undefi
   return sanitized.length > 0 ? sanitized : undefined;
 }
 
-/** Shared type for Qa Bus Wait For Input in src/plugin-sdk. */
+/** Wait predicate used by QA tests to block until an event or message appears. */
 export type QaBusWaitForInput =
   | {
       timeoutMs?: number;
