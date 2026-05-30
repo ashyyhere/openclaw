@@ -1,4 +1,4 @@
-// extensions/qa-lab/src node exec helpers and runtime behavior.
+// QA Lab Node exec helpers locate a real Node binary for child process lanes.
 import { execFile } from "node:child_process";
 import path from "node:path";
 import { promisify } from "node:util";
@@ -25,6 +25,7 @@ function isNodeExecPath(execPath: string, platform: NodeJS.Platform): boolean {
   );
 }
 
+/** Resolves the Node executable QA child processes should use, even when launched under Bun. */
 export async function resolveQaNodeExecPath(params?: {
   execPath?: string;
   platform?: NodeJS.Platform;
@@ -43,6 +44,9 @@ export async function resolveQaNodeExecPath(params?: {
   const execFileImpl = params?.execFileImpl ?? execFileAsync;
   let stdout = "";
   try {
+    // Live lanes spawn gateway and CLI subprocesses that rely on Node flags
+    // and module resolution. Under Bun, process.execPath points at Bun, so
+    // locate `node` from PATH instead of reusing the current executable.
     ({ stdout } = await execFileImpl(locator, ["node"], {
       encoding: "utf8",
       env: params?.env,

@@ -1,2 +1,3 @@
-// extensions/qa-lab/src extract tool payload helpers and runtime behavior.
+// QA Lab tool-payload barrel exposes SDK extraction under the QA fixture name.
+/** Tool payload extractor used by QA runtime fixtures. */
 export { extractToolPayload as extractQaToolPayload } from "openclaw/plugin-sdk/tool-payload";
