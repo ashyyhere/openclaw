@@ -1,7 +1,7 @@
 import type { Command } from "commander";
 import type { MessageCliHelpers } from "./helpers.js";
 
-/** Reused helper for register Message Discord Admin Commands behavior in src/cli/program. */
+/** Register Discord role, channel, member, and voice admin message actions. */
 export function registerMessageDiscordAdminCommands(message: Command, helpers: MessageCliHelpers) {
   const role = message.command("role").description("Role actions");
   helpers

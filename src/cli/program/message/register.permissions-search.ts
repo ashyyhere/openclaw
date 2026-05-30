@@ -2,7 +2,7 @@ import type { Command } from "commander";
 import { collectOption } from "../helpers.js";
 import type { MessageCliHelpers } from "./helpers.js";
 
-/** Reused helper for register Message Permissions Command behavior in src/cli/program. */
+/** Register channel permission inspection through the message action runtime. */
 export function registerMessagePermissionsCommand(message: Command, helpers: MessageCliHelpers) {
   helpers
     .withMessageBase(
@@ -15,7 +15,7 @@ export function registerMessagePermissionsCommand(message: Command, helpers: Mes
     });
 }
 
-/** Reused helper for register Message Search Command behavior in src/cli/program. */
+/** Register Discord message search with guild/channel/author filters. */
 export function registerMessageSearchCommand(message: Command, helpers: MessageCliHelpers) {
   helpers
     .withMessageBase(message.command("search").description("Search Discord messages"))

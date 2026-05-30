@@ -1,7 +1,7 @@
 import type { Command } from "commander";
 import type { MessageCliHelpers } from "./helpers.js";
 
-/** Reused helper for register Message Reactions Commands behavior in src/cli/program. */
+/** Register reaction add/remove and reaction-list commands with channel-specific fields. */
 export function registerMessageReactionsCommands(message: Command, helpers: MessageCliHelpers) {
   helpers
     .withMessageBase(

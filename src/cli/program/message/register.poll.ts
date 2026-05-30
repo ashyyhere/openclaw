@@ -2,7 +2,7 @@ import type { Command } from "commander";
 import { collectOption } from "../helpers.js";
 import type { MessageCliHelpers } from "./helpers.js";
 
-/** Reused helper for register Message Poll Command behavior in src/cli/program. */
+/** Register poll creation with channel-specific anonymity, duration, and silent options. */
 export function registerMessagePollCommand(message: Command, helpers: MessageCliHelpers) {
   helpers
     .withMessageBase(

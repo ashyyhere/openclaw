@@ -24,7 +24,7 @@ function resolveThreadCreateRequest(opts: Record<string, unknown>) {
   };
 }
 
-/** Reused helper for register Message Thread Commands behavior in src/cli/program. */
+/** Register thread create/list/reply commands with channel-specific request resolution. */
 export function registerMessageThreadCommands(message: Command, helpers: MessageCliHelpers) {
   const thread = message.command("thread").description("Thread actions");
 

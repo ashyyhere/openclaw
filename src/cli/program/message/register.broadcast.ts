@@ -2,7 +2,7 @@ import type { Command } from "commander";
 import { CHANNEL_TARGETS_DESCRIPTION } from "../../../infra/outbound/channel-target.js";
 import type { MessageCliHelpers } from "./helpers.js";
 
-/** Reused helper for register Message Broadcast Command behavior in src/cli/program. */
+/** Register multi-target message broadcast through the shared outbound action path. */
 export function registerMessageBroadcastCommand(message: Command, helpers: MessageCliHelpers) {
   helpers
     .withMessageBase(

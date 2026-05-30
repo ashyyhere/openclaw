@@ -1,7 +1,7 @@
 import type { Command } from "commander";
 import type { MessageCliHelpers } from "./helpers.js";
 
-/** Reused helper for register Message Read Edit Delete Commands behavior in src/cli/program. */
+/** Register message read, edit, and delete commands with shared channel target handling. */
 export function registerMessageReadEditDeleteCommands(
   message: Command,
   helpers: MessageCliHelpers,
