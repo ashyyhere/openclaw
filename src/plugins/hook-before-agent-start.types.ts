@@ -1,11 +1,11 @@
 // before_model_resolve hook
-/** Shared type for Plugin Hook Before Model Resolve Attachment in src/plugins. */
+/** Attachment metadata passed to model-resolution hooks before session messages exist. */
 export type PluginHookBeforeModelResolveAttachment = {
   kind: "image" | "video" | "audio" | "document" | "other";
   mimeType?: string;
 };
 
-/** Shared type for Plugin Hook Before Model Resolve Event in src/plugins. */
+/** Event payload for hooks that can override provider/model before run startup. */
 export type PluginHookBeforeModelResolveEvent = {
   /** User prompt for this run. No session messages are available yet in this phase. */
   prompt: string;
@@ -13,7 +13,7 @@ export type PluginHookBeforeModelResolveEvent = {
   attachments?: PluginHookBeforeModelResolveAttachment[];
 };
 
-/** Shared type for Plugin Hook Before Model Resolve Result in src/plugins. */
+/** Provider/model override returned by a before-model-resolve hook. */
 export type PluginHookBeforeModelResolveResult = {
   /** Override the model for this agent run. E.g. "llama3.3:8b" */
   modelOverride?: string;
@@ -22,14 +22,14 @@ export type PluginHookBeforeModelResolveResult = {
 };
 
 // before_prompt_build hook
-/** Shared type for Plugin Hook Before Prompt Build Event in src/plugins. */
+/** Event payload for hooks that can mutate prompt context before model invocation. */
 export type PluginHookBeforePromptBuildEvent = {
   prompt: string;
   /** Session messages prepared for this run. */
   messages: unknown[];
 };
 
-/** Shared type for Plugin Hook Before Prompt Build Result in src/plugins. */
+/** Prompt/context mutations returned by a before-prompt-build hook. */
 export type PluginHookBeforePromptBuildResult = {
   systemPrompt?: string;
   prependContext?: string;
@@ -46,7 +46,7 @@ export type PluginHookBeforePromptBuildResult = {
   appendSystemContext?: string;
 };
 
-/** Reused constant for PLUGIN PROMPT MUTATION RESULT FIELDS behavior in src/plugins. */
+/** Fields that legacy hook adapters must strip from model-override results. */
 export const PLUGIN_PROMPT_MUTATION_RESULT_FIELDS = [
   "systemPrompt",
   "prependContext",
@@ -86,7 +86,7 @@ export type PluginHookBeforeAgentStartOverrideResult = Omit<
   keyof PluginHookBeforePromptBuildResult
 >;
 
-/** Reused constant for strip Prompt Mutation Fields From Legacy Hook Result behavior in src/plugins. */
+/** Strip prompt-mutation fields from a legacy before-agent-start hook result. */
 export const stripPromptMutationFieldsFromLegacyHookResult = (
   result: PluginHookBeforeAgentStartResult | void,
 ): PluginHookBeforeAgentStartOverrideResult | void => {

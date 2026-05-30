@@ -1,15 +1,15 @@
-// plugins memory state helpers and runtime behavior.
+// Plugin extension points for memory prompt sections, corpus supplements, and runtime state.
 import type { MemoryCitationsMode } from "../config/types.memory.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { MemorySearchManager } from "../memory-host-sdk/host/types.js";
 
-/** Shared type for Memory Prompt Section Builder in src/plugins. */
+/** Builds memory prompt sections from available tool/citation context. */
 export type MemoryPromptSectionBuilder = (params: {
   availableTools: Set<string>;
   citationsMode?: MemoryCitationsMode;
 }) => string[];
 
-/** Shared type for Memory Corpus Search Result in src/plugins. */
+/** Search result returned by a plugin-provided memory corpus supplement. */
 export type MemoryCorpusSearchResult = {
   corpus: string;
   path: string;
@@ -28,7 +28,7 @@ export type MemoryCorpusSearchResult = {
   updatedAt?: string;
 };
 
-/** Shared type for Memory Corpus Get Result in src/plugins. */
+/** Full document slice returned by a plugin-provided memory corpus supplement. */
 export type MemoryCorpusGetResult = {
   corpus: string;
   path: string;
@@ -44,7 +44,7 @@ export type MemoryCorpusGetResult = {
   updatedAt?: string;
 };
 
-/** Shared type for Memory Corpus Supplement in src/plugins. */
+/** Search/get interface exposed by a plugin-provided memory corpus. */
 export type MemoryCorpusSupplement = {
   search(params: {
     query: string;
@@ -59,19 +59,19 @@ export type MemoryCorpusSupplement = {
   }): Promise<MemoryCorpusGetResult | null>;
 };
 
-/** Shared type for Memory Corpus Supplement Registration in src/plugins. */
+/** Registered plugin memory corpus supplement. */
 export type MemoryCorpusSupplementRegistration = {
   pluginId: string;
   supplement: MemoryCorpusSupplement;
 };
 
-/** Shared type for Memory Prompt Supplement Registration in src/plugins. */
+/** Registered plugin memory prompt-section builder. */
 export type MemoryPromptSupplementRegistration = {
   pluginId: string;
   builder: MemoryPromptSectionBuilder;
 };
 
-/** Shared type for Memory Flush Plan in src/plugins. */
+/** Plan describing when and how memory should flush transcript context. */
 export type MemoryFlushPlan = {
   softThresholdTokens: number;
   forceFlushTranscriptBytes: number;
@@ -82,21 +82,21 @@ export type MemoryFlushPlan = {
   relativePath: string;
 };
 
-/** Shared type for Memory Flush Plan Resolver in src/plugins. */
+/** Resolves the current memory flush plan from config and time. */
 export type MemoryFlushPlanResolver = (params: {
   cfg?: OpenClawConfig;
   nowMs?: number;
 }) => MemoryFlushPlan | null;
 
-/** Shared type for Registered Memory Search Manager in src/plugins. */
+/** Registered memory search manager implementation. */
 export type RegisteredMemorySearchManager = MemorySearchManager;
 
-/** Shared type for Memory Runtime Qmd Config in src/plugins. */
+/** Runtime command config for QMD-backed memory. */
 export type MemoryRuntimeQmdConfig = {
   command?: string;
 };
 
-/** Shared type for Memory Runtime Backend Config in src/plugins. */
+/** Runtime backend config for memory services. */
 export type MemoryRuntimeBackendConfig =
   | {
       backend: "builtin";
@@ -106,7 +106,7 @@ export type MemoryRuntimeBackendConfig =
       qmd?: MemoryRuntimeQmdConfig;
     };
 
-/** Shared type for Memory Plugin Runtime in src/plugins. */
+/** Runtime hooks supplied by the active memory plugin. */
 export type MemoryPluginRuntime = {
   getMemorySearchManager(params: {
     cfg: OpenClawConfig;
@@ -124,10 +124,10 @@ export type MemoryPluginRuntime = {
   closeAllMemorySearchManagers?(): Promise<void>;
 };
 
-/** Shared type for Memory Plugin Public Artifact Content Type in src/plugins. */
+/** Content type labels for memory artifacts exposed by a plugin. */
 export type MemoryPluginPublicArtifactContentType = "markdown" | "json" | "text";
 
-/** Shared type for Memory Plugin Public Artifact in src/plugins. */
+/** Public artifact produced by a memory plugin for inspection or export. */
 export type MemoryPluginPublicArtifact = {
   kind: string;
   workspaceDir: string;
@@ -137,12 +137,12 @@ export type MemoryPluginPublicArtifact = {
   contentType: MemoryPluginPublicArtifactContentType;
 };
 
-/** Shared type for Memory Plugin Public Artifacts Provider in src/plugins. */
+/** Provider that lists public artifacts owned by a memory plugin. */
 export type MemoryPluginPublicArtifactsProvider = {
   listArtifacts(params: { cfg: OpenClawConfig }): Promise<MemoryPluginPublicArtifact[]>;
 };
 
-/** Shared type for Memory Plugin Capability in src/plugins. */
+/** Capability bundle registered by the active memory plugin. */
 export type MemoryPluginCapability = {
   promptBuilder?: MemoryPromptSectionBuilder;
   flushPlanResolver?: MemoryFlushPlanResolver;
@@ -150,7 +150,7 @@ export type MemoryPluginCapability = {
   publicArtifacts?: MemoryPluginPublicArtifactsProvider;
 };
 
-/** Shared type for Memory Plugin Capability Registration in src/plugins. */
+/** Registered active memory plugin capability and owner id. */
 export type MemoryPluginCapabilityRegistration = {
   pluginId: string;
   capability: MemoryPluginCapability;
@@ -169,7 +169,7 @@ const memoryPluginState: MemoryPluginState = {
   promptSupplements: [],
 };
 
-/** Reused helper for register Memory Corpus Supplement behavior in src/plugins. */
+/** Register or replace a corpus supplement for a plugin. */
 export function registerMemoryCorpusSupplement(
   pluginId: string,
   supplement: MemoryCorpusSupplement,
@@ -181,7 +181,7 @@ export function registerMemoryCorpusSupplement(
   memoryPluginState.corpusSupplements = next;
 }
 
-/** Reused helper for register Memory Capability behavior in src/plugins. */
+/** Register the active memory plugin capability bundle. */
 export function registerMemoryCapability(
   pluginId: string,
   capability: MemoryPluginCapability,
@@ -211,7 +211,7 @@ function patchMemoryCapability(pluginId: string, patch: MemoryPluginCapability):
   registerMemoryCapability(pluginId, { ...current, ...patch });
 }
 
-/** Reused helper for get Memory Capability Registration behavior in src/plugins. */
+/** Return a copy of the active memory capability registration. */
 export function getMemoryCapabilityRegistration(): MemoryPluginCapabilityRegistration | undefined {
   return memoryPluginState.capability
     ? {
@@ -221,7 +221,7 @@ export function getMemoryCapabilityRegistration(): MemoryPluginCapabilityRegistr
     : undefined;
 }
 
-/** Reused helper for list Memory Corpus Supplements behavior in src/plugins. */
+/** List registered memory corpus supplements. */
 export function listMemoryCorpusSupplements(): MemoryCorpusSupplementRegistration[] {
   return [...memoryPluginState.corpusSupplements];
 }
@@ -231,7 +231,7 @@ export function registerMemoryPromptSection(builder: MemoryPromptSectionBuilder)
   registerMemoryPromptSectionForPlugin(LEGACY_MEMORY_COMPAT_PLUGIN_ID, builder);
 }
 
-/** Reused helper for register Memory Prompt Section For Plugin behavior in src/plugins. */
+/** Register the primary memory prompt section builder for a plugin. */
 export function registerMemoryPromptSectionForPlugin(
   pluginId: string,
   builder: MemoryPromptSectionBuilder,
@@ -239,7 +239,7 @@ export function registerMemoryPromptSectionForPlugin(
   patchMemoryCapability(pluginId, { promptBuilder: builder });
 }
 
-/** Reused helper for register Memory Prompt Supplement behavior in src/plugins. */
+/** Register an additional memory prompt supplement builder for a plugin. */
 export function registerMemoryPromptSupplement(
   pluginId: string,
   builder: MemoryPromptSectionBuilder,
@@ -251,7 +251,7 @@ export function registerMemoryPromptSupplement(
   memoryPluginState.promptSupplements = next;
 }
 
-/** Reused helper for build Memory Prompt Section behavior in src/plugins. */
+/** Build the combined memory prompt section from primary and supplemental builders. */
 export function buildMemoryPromptSection(params: {
   availableTools: Set<string>;
   citationsMode?: MemoryCitationsMode;
@@ -273,12 +273,12 @@ function normalizeMemoryPromptLines(value: unknown): string[] {
   return value.filter((line): line is string => typeof line === "string");
 }
 
-/** Reused helper for get Memory Prompt Section Builder behavior in src/plugins. */
+/** Return the active primary memory prompt section builder. */
 export function getMemoryPromptSectionBuilder(): MemoryPromptSectionBuilder | undefined {
   return memoryPluginState.capability?.capability.promptBuilder;
 }
 
-/** Reused helper for list Memory Prompt Supplements behavior in src/plugins. */
+/** List registered memory prompt supplements. */
 export function listMemoryPromptSupplements(): MemoryPromptSupplementRegistration[] {
   return [...memoryPluginState.promptSupplements];
 }
@@ -288,7 +288,7 @@ export function registerMemoryFlushPlanResolver(resolver: MemoryFlushPlanResolve
   registerMemoryFlushPlanResolverForPlugin(LEGACY_MEMORY_COMPAT_PLUGIN_ID, resolver);
 }
 
-/** Reused helper for register Memory Flush Plan Resolver For Plugin behavior in src/plugins. */
+/** Register the memory flush-plan resolver for a plugin. */
 export function registerMemoryFlushPlanResolverForPlugin(
   pluginId: string,
   resolver: MemoryFlushPlanResolver,
@@ -296,7 +296,7 @@ export function registerMemoryFlushPlanResolverForPlugin(
   patchMemoryCapability(pluginId, { flushPlanResolver: resolver });
 }
 
-/** Reused helper for resolve Memory Flush Plan behavior in src/plugins. */
+/** Resolve the current memory flush plan from the active memory capability. */
 export function resolveMemoryFlushPlan(params: {
   cfg?: OpenClawConfig;
   nowMs?: number;
@@ -304,7 +304,7 @@ export function resolveMemoryFlushPlan(params: {
   return memoryPluginState.capability?.capability.flushPlanResolver?.(params) ?? null;
 }
 
-/** Reused helper for get Memory Flush Plan Resolver behavior in src/plugins. */
+/** Return the active memory flush-plan resolver. */
 export function getMemoryFlushPlanResolver(): MemoryFlushPlanResolver | undefined {
   return memoryPluginState.capability?.capability.flushPlanResolver;
 }
@@ -314,7 +314,7 @@ export function registerMemoryRuntime(runtime: MemoryPluginRuntime): void {
   registerMemoryRuntimeForPlugin(LEGACY_MEMORY_COMPAT_PLUGIN_ID, runtime);
 }
 
-/** Reused helper for register Memory Runtime For Plugin behavior in src/plugins. */
+/** Register memory runtime hooks for a plugin. */
 export function registerMemoryRuntimeForPlugin(
   pluginId: string,
   runtime: MemoryPluginRuntime,
@@ -322,12 +322,12 @@ export function registerMemoryRuntimeForPlugin(
   patchMemoryCapability(pluginId, { runtime });
 }
 
-/** Reused helper for get Memory Runtime behavior in src/plugins. */
+/** Return the active memory runtime hooks. */
 export function getMemoryRuntime(): MemoryPluginRuntime | undefined {
   return memoryPluginState.capability?.capability.runtime;
 }
 
-/** Reused helper for has Memory Runtime behavior in src/plugins. */
+/** Return whether a memory runtime has been registered. */
 export function hasMemoryRuntime(): boolean {
   return getMemoryRuntime() !== undefined;
 }
@@ -341,7 +341,7 @@ function cloneMemoryPublicArtifact(
   };
 }
 
-/** Reused helper for list Active Memory Public Artifacts behavior in src/plugins. */
+/** List public memory artifacts from the active memory plugin in stable order. */
 export async function listActiveMemoryPublicArtifacts(params: {
   cfg: OpenClawConfig;
 }): Promise<MemoryPluginPublicArtifact[]> {
@@ -372,7 +372,7 @@ export async function listActiveMemoryPublicArtifacts(params: {
   });
 }
 
-/** Reused helper for restore Memory Plugin State behavior in src/plugins. */
+/** Restore memory plugin registrations from a captured state object. */
 export function restoreMemoryPluginState(state: MemoryPluginState): void {
   memoryPluginState.capability = state.capability
     ? {
@@ -384,12 +384,12 @@ export function restoreMemoryPluginState(state: MemoryPluginState): void {
   memoryPluginState.promptSupplements = [...state.promptSupplements];
 }
 
-/** Reused helper for clear Memory Plugin State behavior in src/plugins. */
+/** Clear all memory plugin capability and supplement registrations. */
 export function clearMemoryPluginState(): void {
   memoryPluginState.capability = undefined;
   memoryPluginState.corpusSupplements = [];
   memoryPluginState.promptSupplements = [];
 }
 
-/** Reused constant for reset Memory Plugin State behavior in src/plugins. */
+/** Alias for clearing all memory plugin state. */
 export const resetMemoryPluginState = clearMemoryPluginState;

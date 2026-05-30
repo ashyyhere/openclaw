@@ -1,4 +1,4 @@
-// plugins provider auth ref helpers and runtime behavior.
+// Provider setup helpers for storing API keys as secret references.
 import type { OpenClawConfig } from "../config/types.js";
 import { isValidEnvSecretRefId, type SecretRef } from "../config/types.secrets.js";
 import { formatErrorMessage } from "../infra/errors.js";
@@ -27,7 +27,7 @@ const ENV_SOURCE_LABEL_RE = /(?:^|:\s)([A-Z][A-Z0-9_]*)$/;
 
 type SecretRefChoice = "env" | "provider"; // pragma: allowlist secret
 
-/** Shared type for Secret Ref Setup Prompt Copy in src/plugins. */
+/** Optional copy overrides for interactive secret-reference setup prompts. */
 export type SecretRefSetupPromptCopy = {
   sourceMessage?: string;
   envVarMessage?: string;
@@ -39,7 +39,7 @@ export type SecretRefSetupPromptCopy = {
   providerValidatedMessage?: (provider: string, id: string, source: "file" | "exec") => string;
 };
 
-/** Reused helper for extract Env Var From Source Label behavior in src/plugins. */
+/** Extract a trailing environment variable name from a provider source label. */
 export function extractEnvVarFromSourceLabel(source: string): string | undefined {
   const match = ENV_SOURCE_LABEL_RE.exec(source.trim());
   return match?.[1];
@@ -60,7 +60,7 @@ function resolveDefaultFilePointerId(provider: string): string {
   return `/providers/${encodeJsonPointerToken(provider)}/apiKey`;
 }
 
-/** Reused helper for resolve Ref Fallback Input behavior in src/plugins. */
+/** Resolve non-interactive secret-ref input from a provider's environment variable. */
 export function resolveRefFallbackInput(params: {
   config: OpenClawConfig;
   provider: string;
@@ -268,7 +268,7 @@ async function promptProviderSecretRefForSetup(params: {
   }
 }
 
-/** Reused helper for prompt Secret Ref For Setup behavior in src/plugins. */
+/** Prompt for and validate an environment or configured-provider secret reference. */
 export async function promptSecretRefForSetup(params: {
   provider: string;
   config: OpenClawConfig;
