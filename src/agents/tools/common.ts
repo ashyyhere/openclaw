@@ -142,7 +142,6 @@ export function readStringParam(
  * - "default" (case-insensitive) => undefined (sentinel: reset/fallback)
  * - otherwise returns trimmed explicit model string
  */
-/** Normalizes explicit tool model override strings. */
 export function normalizeToolModelOverride(value: string | undefined): string | undefined {
   if (typeof value !== "string") {
     return undefined;
