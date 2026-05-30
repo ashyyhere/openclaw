@@ -1,7 +1,7 @@
 // Shared agent/reply runtime helpers for channel plugins. Keep channel plugins
 // off direct src/auto-reply imports by routing common reply primitives here.
 
-/** Re-exported API for src/plugin-sdk. */
+/** Reply chunking helpers used by channels that split long outbound text. */
 export {
   chunkMarkdownText,
   chunkMarkdownTextWithMode,
@@ -10,81 +10,81 @@ export {
   resolveChunkMode,
   resolveTextChunkLimit,
 } from "../auto-reply/chunk.js";
-/** Re-exported API for src/plugin-sdk, starting with Chunk Mode. */
+/** Chunking mode selected by reply text splitters. */
 export type { ChunkMode } from "../auto-reply/chunk.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Inbound dispatch entrypoints that hand channel messages to the reply loop. */
 export {
   dispatchInboundMessage,
   dispatchInboundMessageWithBufferedDispatcher,
   dispatchInboundMessageWithDispatcher,
   settleReplyDispatcher,
 } from "../auto-reply/dispatch.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Group activation parser and normalizer for opt-in channel threads. */
 export {
   normalizeGroupActivation,
   parseActivationCommand,
 } from "../auto-reply/group-activation.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Heartbeat prompt helpers for liveness acknowledgements in channels. */
 export {
   HEARTBEAT_PROMPT,
   DEFAULT_HEARTBEAT_ACK_MAX_CHARS,
   resolveHeartbeatPrompt,
   stripHeartbeatToken,
 } from "../auto-reply/heartbeat.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Heartbeat Reply Payload. */
+/** Builds the reply payload used for heartbeat acknowledgement messages. */
 export { resolveHeartbeatReplyPayload } from "../auto-reply/heartbeat-reply-payload.js";
-/** Re-exported API for src/plugin-sdk, starting with get Reply From Config. */
+/** Resolves reply behavior from channel config and runtime context. */
 export { getReplyFromConfig } from "../auto-reply/reply/get-reply.js";
-/** Re-exported API for src/plugin-sdk, starting with HEARTBEAT TOKEN. */
+/** Silent and heartbeat reply tokens shared with channel send paths. */
 export { HEARTBEAT_TOKEN, isSilentReplyText, SILENT_REPLY_TOKEN } from "../auto-reply/tokens.js";
-/** Re-exported API for src/plugin-sdk, starting with is Abort Request Text. */
+/** Detects user text that should abort the active reply run. */
 export { isAbortRequestText } from "../auto-reply/reply/abort.js";
-/** Re-exported API for src/plugin-sdk, starting with is Btw Request Text. */
+/** Detects side-channel `btw` reply requests. */
 export { isBtwRequestText } from "../auto-reply/reply/btw-command.js";
-/** Re-exported API for src/plugin-sdk, starting with reset Inbound Dedupe. */
+/** Test/runtime hook for clearing inbound message dedupe state. */
 export { resetInboundDedupe } from "../auto-reply/reply/inbound-dedupe.js";
-/** Re-exported API for src/plugin-sdk, starting with finalize Inbound Context. */
+/** Finalizes inbound message context before reply templating and dispatch. */
 export { finalizeInboundContext } from "../auto-reply/reply/inbound-context.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Inbound debounce helpers for coalescing rapid channel events. */
 export {
   createInboundDebouncer,
   resolveInboundDebounceMs,
 } from "../auto-reply/inbound-debounce.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Provider dispatch helpers that stream reply blocks into channel dispatchers. */
 export {
   dispatchReplyWithBufferedBlockDispatcher,
   dispatchReplyWithDispatcher,
 } from "../auto-reply/reply/provider-dispatcher.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Reply dispatcher factories, including typing-indicator integration. */
 export {
   createReplyDispatcher,
   createReplyDispatcherWithTyping,
 } from "../auto-reply/reply/reply-dispatcher.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Reply dispatcher event and sink contracts. */
 export type {
   ReplyDispatchKind,
   ReplyDispatcher,
 } from "../auto-reply/reply/reply-dispatcher.types.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Options accepted by reply dispatcher factory helpers. */
 export type {
   ReplyDispatcherOptions,
   ReplyDispatcherWithTypingOptions,
 } from "../auto-reply/reply/reply-dispatcher.js";
-/** Re-exported API for src/plugin-sdk, starting with create Reply Reference Planner. */
+/** Plans reply references such as thread quoting and reply-to metadata. */
 export { createReplyReferencePlanner } from "../auto-reply/reply/reply-reference.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Reply request option contracts shared by channel reply providers. */
 export type {
   GetReplyOptions,
   BlockReplyContext,
   SourceReplyDeliveryMode,
 } from "../auto-reply/get-reply-options.types.js";
-/** Re-exported API for src/plugin-sdk, starting with Reply Payload. */
+/** Channel-facing reply payload shape. */
 export type { ReplyPayload } from "./reply-payload.js";
-/** Re-exported API for src/plugin-sdk, starting with Finalized Msg Context. */
+/** Message context shapes used after inbound templating has been finalized. */
 export type { FinalizedMsgContext, MsgContext } from "../auto-reply/templating.js";
-/** Re-exported API for src/plugin-sdk, starting with Command Turn Context. */
+/** Context passed to command turns initiated from channel messages. */
 export type { CommandTurnContext } from "../auto-reply/command-turn-context.js";
-/** Re-exported API for src/plugin-sdk, starting with generate Conversation Label. */
+/** Generates a stable human-readable label for a channel conversation. */
 export { generateConversationLabel } from "../auto-reply/reply/conversation-label-generator.js";
-/** Re-exported API for src/plugin-sdk, starting with Conversation Label Params. */
+/** Input shape for channel conversation label generation. */
 export type { ConversationLabelParams } from "../auto-reply/reply/conversation-label-generator.js";
