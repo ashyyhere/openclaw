@@ -1,9 +1,9 @@
-// infra tmp openclaw dir helpers and runtime behavior.
+/** Chooses a secure writable temp directory for OpenClaw runtime artifacts. */
 import fs from "node:fs";
 import { tmpdir as getOsTmpDir } from "node:os";
 import path from "node:path";
 
-/** Reused constant for POSIX OPENCLAW TMP DIR behavior in src/infra. */
+/** Preferred shared POSIX temp directory when ownership and permissions are safe. */
 export const POSIX_OPENCLAW_TMP_DIR = "/tmp/openclaw";
 
 type MaybeNodeError = { code?: string };
@@ -15,7 +15,7 @@ type SecureDirStat = {
   uid?: number;
 };
 
-/** Shared type for Resolve Preferred Open Claw Tmp Dir Options in src/infra. */
+/** Injectable filesystem hooks for testing secure temp-dir resolution. */
 export type ResolvePreferredOpenClawTmpDirOptions = {
   accessSync?: (path: string, mode?: number) => void;
   chmodSync?: (path: string, mode: number) => void;
@@ -36,7 +36,7 @@ function isNodeErrorWithCode(err: unknown, code: string): err is MaybeNodeError 
   );
 }
 
-/** Reused helper for resolve Preferred Open Claw Tmp Dir behavior in src/infra. */
+/** Resolve or create a trusted OpenClaw temp directory, falling back per user when needed. */
 export function resolvePreferredOpenClawTmpDir(
   options: ResolvePreferredOpenClawTmpDirOptions = {},
 ): string {

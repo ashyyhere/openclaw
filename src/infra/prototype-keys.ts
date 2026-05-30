@@ -1,7 +1,7 @@
-// infra prototype keys helpers and runtime behavior.
+/** Blocks object keys that can mutate prototypes during object materialization. */
 const BLOCKED_OBJECT_KEYS = new Set(["__proto__", "prototype", "constructor"]);
 
-/** Reused helper for is Blocked Object Key behavior in src/infra. */
+/** Check whether a key is unsafe for plain object assignment. */
 export function isBlockedObjectKey(key: string): boolean {
   return BLOCKED_OBJECT_KEYS.has(key);
 }

@@ -1,7 +1,7 @@
-// infra clipboard helpers and runtime behavior.
+/** Cross-platform clipboard write helper used by CLI conveniences. */
 import { runCommandWithTimeout } from "../process/exec.js";
 
-/** Reused helper for copy To Clipboard behavior in src/infra. */
+/** Try common platform clipboard commands and report whether any accepted the text. */
 export async function copyToClipboard(value: string): Promise<boolean> {
   const attempts: Array<{ argv: string[] }> = [
     { argv: ["pbcopy"] },
