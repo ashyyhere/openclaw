@@ -8,7 +8,6 @@ import type { ChannelPlugin } from "./types.plugin.js";
 
 const SAFE_MANIFEST_CHANNEL_ID_PATTERN = /^[a-z0-9][a-z0-9_-]{0,63}$/i;
 
-/** Shared type for Channel Command Defaults in src/channels/plugins. */
 export type ChannelCommandDefaults = Pick<
   NonNullable<ChannelPlugin["commands"]>,
   "nativeCommandsAutoEnabled" | "nativeSkillsAutoEnabled"
@@ -16,12 +15,10 @@ export type ChannelCommandDefaults = Pick<
 
 type ManifestChannelConfigRecord = NonNullable<PluginManifestRecord["channelConfigs"]>[string];
 
-/** Reused helper for is Safe Manifest Channel Id behavior in src/channels/plugins. */
 export function isSafeManifestChannelId(channelId: string): boolean {
   return SAFE_MANIFEST_CHANNEL_ID_PATTERN.test(channelId) && !isBlockedObjectKey(channelId);
 }
 
-/** Reused helper for read Own Record Value behavior in src/channels/plugins. */
 export function readOwnRecordValue(record: Record<string, unknown>, key: string): unknown {
   if (isBlockedObjectKey(key) || !Object.prototype.hasOwnProperty.call(record, key)) {
     return undefined;
@@ -29,7 +26,6 @@ export function readOwnRecordValue(record: Record<string, unknown>, key: string)
   return record[key];
 }
 
-/** Reused helper for normalize Channel Command Defaults behavior in src/channels/plugins. */
 export function normalizeChannelCommandDefaults(
   value: ChannelCommandDefaults | undefined,
 ): ChannelCommandDefaults | undefined {
@@ -55,7 +51,6 @@ export function normalizeChannelCommandDefaults(
   return defaults;
 }
 
-/** Reused helper for resolve Read Only Channel Command Defaults behavior in src/channels/plugins. */
 export function resolveReadOnlyChannelCommandDefaults(
   channelId: string,
   options: {

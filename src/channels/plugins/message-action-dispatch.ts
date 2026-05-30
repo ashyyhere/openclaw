@@ -1,4 +1,3 @@
-// Message action dispatch helpers for channel plugins.
 import type { AgentToolResult } from "../../agents/runtime/index.js";
 import { getChannelPlugin } from "./index.js";
 import type { ChannelMessageActionContext } from "./types.public.js";
@@ -13,7 +12,6 @@ function requiresTrustedRequesterSender(ctx: ChannelMessageActionContext): boole
   );
 }
 
-/** Reused helper for dispatch Channel Message Action behavior in src/channels/plugins. */
 export async function dispatchChannelMessageAction(
   ctx: ChannelMessageActionContext,
 ): Promise<AgentToolResult<unknown> | null> {

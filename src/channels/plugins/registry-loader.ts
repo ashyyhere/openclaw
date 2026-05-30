@@ -6,7 +6,6 @@ type ChannelRegistryValueResolver<TValue> = (
   entry: PluginChannelRegistration,
 ) => TValue | undefined;
 
-/** Reused helper for create Channel Registry Loader behavior in src/channels/plugins. */
 export function createChannelRegistryLoader<TValue>(
   resolveValue: ChannelRegistryValueResolver<TValue>,
 ): (id: ChannelId) => Promise<TValue | undefined> {
