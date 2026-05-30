@@ -1,4 +1,4 @@
-// extensions/qa-lab/src harness runtime helpers and runtime behavior.
+// QA lab harness runtime builds an in-memory plugin runtime for scenario tests.
 import {
   buildMentionRegexes,
   implicitMentionKindWhen,
@@ -13,6 +13,7 @@ type SessionRecord = {
   body: string;
 };
 
+/** Create the lightweight runtime facade used by QA runner harness tests. */
 export function createQaRunnerRuntime(): PluginRuntime {
   const sessions = new Map<string, SessionRecord>();
   return {

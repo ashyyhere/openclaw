@@ -1,9 +1,10 @@
-// extensions/qa-lab/src qa agent workspace helpers and runtime behavior.
+// QA agent workspace seeding writes mission, identity, scenario, and repo-link files.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { buildQaScenarioPlanMarkdown, readQaAgentIdentityMarkdown } from "./qa-agent-bootstrap.js";
 import { readQaBootstrapScenarioCatalog, readQaScenarioPackMarkdown } from "./scenario-catalog.js";
 
+/** Seed a QA agent workspace with bootstrap docs and an optional repo symlink. */
 export async function seedQaAgentWorkspace(params: { workspaceDir: string; repoRoot?: string }) {
   const catalog = readQaBootstrapScenarioCatalog();
   await fs.mkdir(params.workspaceDir, { recursive: true });
