@@ -12,7 +12,7 @@ import type {
   ChannelSetupInput,
 } from "./types.core.js";
 
-/** Shared type for Channel Setup Plugin in src/channels/plugins. */
+/** Channel plugin surface consumed by the shared setup wizard. */
 export type ChannelSetupPlugin = {
   id: ChannelId;
   meta: ChannelMeta;
@@ -22,7 +22,7 @@ export type ChannelSetupPlugin = {
   setupWizard?: ChannelSetupWizard | ChannelSetupWizardAdapter;
 };
 
-/** Shared type for Channel Setup Wizard Status in src/channels/plugins. */
+/** Status probe and labels used when listing setup-ready channels. */
 export type ChannelSetupWizardStatus = {
   configuredLabel: string;
   unconfiguredLabel: string;
@@ -51,7 +51,7 @@ export type ChannelSetupWizardStatus = {
   }) => number | undefined | Promise<number | undefined>;
 };
 
-/** Shared type for Channel Setup Wizard Credential State in src/channels/plugins. */
+/** Current configured/env state for one setup credential prompt. */
 export type ChannelSetupWizardCredentialState = {
   accountConfigured: boolean;
   hasConfiguredValue: boolean;
@@ -59,10 +59,10 @@ export type ChannelSetupWizardCredentialState = {
   envValue?: string;
 };
 
-/** Shared type for Channel Setup Wizard Credential Values in src/channels/plugins. */
+/** Collected credential values keyed by setup input names. */
 export type ChannelSetupWizardCredentialValues = Partial<Record<string, string>>;
 
-/** Shared type for Channel Setup Wizard Note in src/channels/plugins. */
+/** Conditional note shown during channel setup. */
 export type ChannelSetupWizardNote = {
   title: string;
   lines: string[];
@@ -73,7 +73,7 @@ export type ChannelSetupWizardNote = {
   }) => boolean | Promise<boolean>;
 };
 
-/** Shared type for Channel Setup Wizard Env Shortcut in src/channels/plugins. */
+/** Shortcut that configures a channel from an available environment variable. */
 export type ChannelSetupWizardEnvShortcut = {
   prompt: string;
   preferredEnvVar?: string;
@@ -84,7 +84,7 @@ export type ChannelSetupWizardEnvShortcut = {
   }) => OpenClawConfig | Promise<OpenClawConfig>;
 };
 
-/** Shared type for Channel Setup Wizard Credential in src/channels/plugins. */
+/** Credential prompt descriptor for channel setup flows. */
 export type ChannelSetupWizardCredential = {
   inputKey: keyof ChannelSetupInput;
   providerHint: string;
@@ -120,7 +120,7 @@ export type ChannelSetupWizardCredential = {
   }) => OpenClawConfig | Promise<OpenClawConfig>;
 };
 
-/** Shared type for Channel Setup Wizard Text Input in src/channels/plugins. */
+/** Free-text prompt descriptor for non-secret channel setup values. */
 export type ChannelSetupWizardTextInput = {
   inputKey: keyof ChannelSetupInput;
   message: string;
@@ -167,14 +167,14 @@ export type ChannelSetupWizardTextInput = {
   }) => OpenClawConfig | Promise<OpenClawConfig>;
 };
 
-/** Shared type for Channel Setup Wizard Allow From Entry in src/channels/plugins. */
+/** Parsed allowlist entry plus resolution status for setup prompts. */
 export type ChannelSetupWizardAllowFromEntry = {
   input: string;
   resolved: boolean;
   id: string | null;
 };
 
-/** Shared type for Channel Setup Wizard Allow From in src/channels/plugins. */
+/** DM allowlist prompt descriptor for channel setup. */
 export type ChannelSetupWizardAllowFrom = {
   helpTitle?: string;
   helpLines?: string[];
@@ -197,7 +197,7 @@ export type ChannelSetupWizardAllowFrom = {
   }) => OpenClawConfig | Promise<OpenClawConfig>;
 };
 
-/** Shared type for Channel Setup Wizard Group Access in src/channels/plugins. */
+/** Group-channel access policy and allowlist prompt descriptor. */
 export type ChannelSetupWizardGroupAccess = {
   label: string;
   placeholder: string;
@@ -226,7 +226,7 @@ export type ChannelSetupWizardGroupAccess = {
   }) => OpenClawConfig;
 };
 
-/** Shared type for Channel Setup Wizard Prepare in src/channels/plugins. */
+/** Optional hook that prepares config or collected values before setup prompts. */
 export type ChannelSetupWizardPrepare = (params: {
   cfg: OpenClawConfig;
   accountId: string;
@@ -245,7 +245,7 @@ export type ChannelSetupWizardPrepare = (params: {
       credentialValues?: ChannelSetupWizardCredentialValues;
     } | void>;
 
-/** Shared type for Channel Setup Wizard Finalize in src/channels/plugins. */
+/** Optional hook that finalizes config or collected values after setup prompts. */
 export type ChannelSetupWizardFinalize = (params: {
   cfg: OpenClawConfig;
   accountId: string;
@@ -265,7 +265,7 @@ export type ChannelSetupWizardFinalize = (params: {
       credentialValues?: ChannelSetupWizardCredentialValues;
     } | void>;
 
-/** Shared type for Channel Setup Wizard in src/channels/plugins. */
+/** Declarative setup wizard contract implemented by channel plugins. */
 export type ChannelSetupWizard = {
   channel: string;
   status: ChannelSetupWizardStatus;
@@ -298,7 +298,7 @@ export type ChannelSetupWizard = {
   onAccountRecorded?: ChannelSetupWizardAdapter["onAccountRecorded"];
 };
 
-/** Shared type for Setup Channels Options in src/channels/plugins. */
+/** Options controlling multi-channel setup selection and prompt behavior. */
 export type SetupChannelsOptions = {
   allowDisable?: boolean;
   allowSignalInstall?: boolean;
@@ -318,7 +318,7 @@ export type SetupChannelsOptions = {
   secretInputMode?: "plaintext" | "ref";
 };
 
-/** Shared type for Prompt Account Id Params in src/channels/plugins. */
+/** Prompt inputs for choosing or creating a channel account id. */
 export type PromptAccountIdParams = {
   cfg: OpenClawConfig;
   prompter: WizardPrompter;
@@ -328,10 +328,10 @@ export type PromptAccountIdParams = {
   defaultAccountId: string;
 };
 
-/** Shared type for Prompt Account Id in src/channels/plugins. */
+/** Account-id prompt function used by setup adapters. */
 export type PromptAccountId = (params: PromptAccountIdParams) => Promise<string>;
 
-/** Shared type for Channel Setup Status in src/channels/plugins. */
+/** Resolved status for one channel setup option. */
 export type ChannelSetupStatus = {
   channel: ChannelId;
   configured: boolean;
@@ -340,14 +340,14 @@ export type ChannelSetupStatus = {
   quickstartScore?: number;
 };
 
-/** Shared type for Channel Setup Status Context in src/channels/plugins. */
+/** Context passed to channel setup status probes. */
 export type ChannelSetupStatusContext = {
   cfg: OpenClawConfig;
   options?: SetupChannelsOptions;
   accountOverrides: Partial<Record<ChannelId, string>>;
 };
 
-/** Shared type for Channel Setup Configure Context in src/channels/plugins. */
+/** Context passed while configuring one channel account. */
 export type ChannelSetupConfigureContext = {
   cfg: OpenClawConfig;
   runtime: RuntimeEnv;
@@ -358,7 +358,7 @@ export type ChannelSetupConfigureContext = {
   forceAllowFrom: boolean;
 };
 
-/** Shared type for Channel Onboarding Post Write Context in src/channels/plugins. */
+/** Context passed after setup writes updated channel config. */
 export type ChannelOnboardingPostWriteContext = {
   previousCfg: OpenClawConfig;
   cfg: OpenClawConfig;
@@ -366,29 +366,29 @@ export type ChannelOnboardingPostWriteContext = {
   runtime: RuntimeEnv;
 };
 
-/** Shared type for Channel Onboarding Post Write Hook in src/channels/plugins. */
+/** Deferred hook that runs after channel onboarding config is persisted. */
 export type ChannelOnboardingPostWriteHook = {
   channel: ChannelId;
   accountId: string;
   run: (ctx: { cfg: OpenClawConfig; runtime: RuntimeEnv }) => Promise<void> | void;
 };
 
-/** Shared type for Channel Setup Result in src/channels/plugins. */
+/** Result returned by channel setup configuration. */
 export type ChannelSetupResult = {
   cfg: OpenClawConfig;
   accountId?: string;
 };
 
-/** Shared type for Channel Setup Configured Result in src/channels/plugins. */
+/** Result for interactive setup when a channel is already configured. */
 export type ChannelSetupConfiguredResult = ChannelSetupResult | "skip";
 
-/** Shared type for Channel Setup Interactive Context in src/channels/plugins. */
+/** Configure context plus current configured state for interactive prompts. */
 export type ChannelSetupInteractiveContext = ChannelSetupConfigureContext & {
   configured: boolean;
   label: string;
 };
 
-/** Shared type for Channel Setup Dm Policy in src/channels/plugins. */
+/** DM policy prompt and config mutator contract for channel setup. */
 export type ChannelSetupDmPolicy = {
   label: string;
   channel: ChannelId;
@@ -407,7 +407,7 @@ export type ChannelSetupDmPolicy = {
   }) => Promise<OpenClawConfig>;
 };
 
-/** Shared type for Channel Setup Wizard Adapter in src/channels/plugins. */
+/** Imperative setup adapter alternative to the declarative wizard contract. */
 export type ChannelSetupWizardAdapter = {
   channel: ChannelId;
   getStatus: (ctx: ChannelSetupStatusContext) => Promise<ChannelSetupStatus>;
