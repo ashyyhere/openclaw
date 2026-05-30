@@ -1,9 +1,10 @@
-// infra agent events helpers and runtime behavior.
+// Agent event logging and prompt extraction.
+// Converts agent lifecycle and tool events into durable rows and normalized live payloads.
 import type { VerboseLevel } from "../auto-reply/thinking.js";
 import { resolveGlobalSingleton } from "../shared/global-singleton.js";
 import { notifyListeners, registerListener } from "../shared/listeners.js";
 
-/** Shared type for Agent Event Stream in src/infra. */
+/** Event stream names emitted by agent runs for logs, UI, and channel delivery. */
 export type AgentEventStream =
   | "lifecycle"
   | "tool"
@@ -18,11 +19,11 @@ export type AgentEventStream =
   | "thinking"
   | (string & {});
 
-/** Shared type for Agent Item Event Phase in src/infra. */
+/** Lifecycle phase for a progress item within a run. */
 export type AgentItemEventPhase = "start" | "update" | "end";
-/** Shared type for Agent Item Event Status in src/infra. */
+/** Coarse status carried by item and command progress events. */
 export type AgentItemEventStatus = "running" | "completed" | "failed" | "blocked";
-/** Shared type for Agent Item Event Kind in src/infra. */
+/** Progress item families understood by channel and Control UI renderers. */
 export type AgentItemEventKind =
   | "tool"
   | "command"
@@ -31,7 +32,7 @@ export type AgentItemEventKind =
   | "analysis"
   | (string & {});
 
-/** Shared type for Agent Item Event Data in src/infra. */
+/** Payload for a single tool, command, patch, search, or analysis progress item. */
 export type AgentItemEventData = {
   itemId: string;
   phase: AgentItemEventPhase;
@@ -52,7 +53,7 @@ export type AgentItemEventData = {
   approvalSlug?: string;
 };
 
-/** Shared type for Agent Plan Event Data in src/infra. */
+/** Payload for an emitted plan update. */
 export type AgentPlanEventData = {
   phase: "update";
   title: string;
@@ -61,14 +62,14 @@ export type AgentPlanEventData = {
   source?: string;
 };
 
-/** Shared type for Agent Approval Event Phase in src/infra. */
+/** Phase for an approval request event. */
 export type AgentApprovalEventPhase = "requested" | "resolved";
-/** Shared type for Agent Approval Event Status in src/infra. */
+/** Approval state after routing through the active channel or plugin gate. */
 export type AgentApprovalEventStatus = "pending" | "unavailable" | "approved" | "denied" | "failed";
-/** Shared type for Agent Approval Event Kind in src/infra. */
+/** Approval source family for user-facing prompts. */
 export type AgentApprovalEventKind = "exec" | "plugin" | "unknown";
 
-/** Shared type for Agent Approval Event Data in src/infra. */
+/** Payload for exec or plugin approval prompts and their resolutions. */
 export type AgentApprovalEventData = {
   phase: AgentApprovalEventPhase;
   kind: AgentApprovalEventKind;
@@ -85,7 +86,7 @@ export type AgentApprovalEventData = {
   message?: string;
 };
 
-/** Shared type for Agent Command Output Event Data in src/infra. */
+/** Streaming stdout/stderr payload associated with a command progress item. */
 export type AgentCommandOutputEventData = {
   itemId: string;
   phase: "delta" | "end";
@@ -99,7 +100,7 @@ export type AgentCommandOutputEventData = {
   cwd?: string;
 };
 
-/** Shared type for Agent Patch Summary Event Data in src/infra. */
+/** File summary payload emitted when a patch tool call completes. */
 export type AgentPatchSummaryEventData = {
   itemId: string;
   phase: "end";
@@ -112,7 +113,7 @@ export type AgentPatchSummaryEventData = {
   summary: string;
 };
 
-/** Shared type for Agent Event Payload in src/infra. */
+/** Enriched event envelope delivered to listeners after sequencing and timestamping. */
 export type AgentEventPayload = {
   runId: string;
   seq: number;
@@ -123,7 +124,7 @@ export type AgentEventPayload = {
   agentId?: string;
 };
 
-/** Shared type for Agent Run Context in src/infra. */
+/** Run-scoped routing metadata used to attach session keys and visibility policy. */
 export type AgentRunContext = {
   sessionKey?: string;
   verboseLevel?: VerboseLevel;
@@ -152,7 +153,7 @@ function getAgentEventState(): AgentEventState {
   }));
 }
 
-/** Reused helper for register Agent Run Context behavior in src/infra. */
+/** Register or merge run context before events begin flowing. */
 export function registerAgentRunContext(runId: string, context: AgentRunContext) {
   if (!runId) {
     return;
@@ -186,12 +187,12 @@ export function registerAgentRunContext(runId: string, context: AgentRunContext)
   }
 }
 
-/** Reused helper for get Agent Run Context behavior in src/infra. */
+/** Read routing metadata for an active run. */
 export function getAgentRunContext(runId: string) {
   return getAgentEventState().runContextById.get(runId);
 }
 
-/** Reused helper for clear Agent Run Context behavior in src/infra. */
+/** Drop routing metadata and sequence state for a finished run. */
 export function clearAgentRunContext(runId: string) {
   const state = getAgentEventState();
   state.runContextById.delete(runId);
@@ -220,13 +221,13 @@ export function sweepStaleRunContexts(maxAgeMs = 30 * 60 * 1000): number {
   return swept;
 }
 
-/** Reused helper for reset Agent Run Context For Test behavior in src/infra. */
+/** Clear run context without touching event listeners in focused tests. */
 export function resetAgentRunContextForTest() {
   getAgentEventState().runContextById.clear();
   getAgentEventState().seqByRun.clear();
 }
 
-/** Reused helper for emit Agent Event behavior in src/infra. */
+/** Sequence, timestamp, redact, and publish a raw agent event. */
 export function emitAgentEvent(event: Omit<AgentEventPayload, "seq" | "ts">) {
   const state = getAgentEventState();
   const nextSeq = (state.seqByRun.get(event.runId) ?? 0) + 1;
@@ -255,7 +256,7 @@ export function emitAgentEvent(event: Omit<AgentEventPayload, "seq" | "ts">) {
   notifyListeners(state.listeners, enriched);
 }
 
-/** Reused helper for emit Agent Item Event behavior in src/infra. */
+/** Emit a progress item event on the item stream. */
 export function emitAgentItemEvent(params: {
   runId: string;
   data: AgentItemEventData;
@@ -269,7 +270,7 @@ export function emitAgentItemEvent(params: {
   });
 }
 
-/** Reused helper for emit Agent Plan Event behavior in src/infra. */
+/** Emit a plan update for renderers that track step lists. */
 export function emitAgentPlanEvent(params: {
   runId: string;
   data: AgentPlanEventData;
@@ -283,7 +284,7 @@ export function emitAgentPlanEvent(params: {
   });
 }
 
-/** Reused helper for emit Agent Approval Event behavior in src/infra. */
+/** Emit an approval request or resolution event. */
 export function emitAgentApprovalEvent(params: {
   runId: string;
   data: AgentApprovalEventData;
@@ -297,7 +298,7 @@ export function emitAgentApprovalEvent(params: {
   });
 }
 
-/** Reused helper for emit Agent Command Output Event behavior in src/infra. */
+/** Emit command output deltas or completion metadata. */
 export function emitAgentCommandOutputEvent(params: {
   runId: string;
   data: AgentCommandOutputEventData;
@@ -311,7 +312,7 @@ export function emitAgentCommandOutputEvent(params: {
   });
 }
 
-/** Reused helper for emit Agent Patch Summary Event behavior in src/infra. */
+/** Emit the file summary produced by a completed patch. */
 export function emitAgentPatchSummaryEvent(params: {
   runId: string;
   data: AgentPatchSummaryEventData;
@@ -325,13 +326,13 @@ export function emitAgentPatchSummaryEvent(params: {
   });
 }
 
-/** Reused helper for on Agent Event behavior in src/infra. */
+/** Subscribe to enriched agent events. */
 export function onAgentEvent(listener: (evt: AgentEventPayload) => void) {
   const state = getAgentEventState();
   return registerListener(state.listeners, listener);
 }
 
-/** Reused helper for reset Agent Events For Test behavior in src/infra. */
+/** Reset event sequence, listener, and context state for tests. */
 export function resetAgentEventsForTest() {
   const state = getAgentEventState();
   state.seqByRun.clear();

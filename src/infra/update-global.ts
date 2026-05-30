@@ -1,4 +1,5 @@
-// infra update global helpers and runtime behavior.
+// Global package update helpers for OpenClaw installs.
+// Stages npm, pnpm, and bun updates while preserving rollback dirs and install metadata.
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -20,10 +21,10 @@ import { readPackageVersion } from "./package-json.js";
 import { applyPathPrepend } from "./path-prepend.js";
 import { parseSemver } from "./runtime-guard.js";
 
-/** Shared type for Global Install Manager in src/infra. */
+/** Package managers that can own a global OpenClaw install. */
 export type GlobalInstallManager = "npm" | "pnpm" | "bun";
 
-/** Shared type for Command Runner in src/infra. */
+/** Minimal command runner contract used by update probes and install commands. */
 export type CommandRunner = (
   argv: string[],
   options: { timeoutMs: number; cwd?: string; env?: NodeJS.ProcessEnv },
@@ -34,7 +35,7 @@ type ResolvedGlobalInstallCommand = {
   command: string;
 };
 
-/** Shared type for Resolved Global Install Target in src/infra. */
+/** Install location resolved from the package manager plus any currently installed package root. */
 export type ResolvedGlobalInstallTarget = ResolvedGlobalInstallCommand & {
   globalRoot: string | null;
   packageRoot: string | null;
@@ -44,7 +45,7 @@ export type ResolvedGlobalInstallTarget = ResolvedGlobalInstallCommand & {
 const PRIMARY_PACKAGE_NAME = "openclaw";
 const ALL_PACKAGE_NAMES = [PRIMARY_PACKAGE_NAME] as const;
 const GLOBAL_RENAME_PREFIX = ".";
-/** Reused constant for OPENCLAW MAIN PACKAGE SPEC behavior in src/infra. */
+/** Package spec used when an updater asks for the moving `main` channel. */
 export const OPENCLAW_MAIN_PACKAGE_SPEC = "github:openclaw/openclaw#main";
 const COREPACK_ENABLE_DOWNLOAD_PROMPT_DEFAULT = "0";
 const NPM_GLOBAL_INSTALL_QUIET_FLAGS = ["--no-fund", "--no-audit", "--loglevel=error"] as const;
@@ -56,7 +57,7 @@ const OMITTED_PRIVATE_QA_BUNDLED_PLUGIN_ROOTS = new Set([
   "dist/extensions/qa-matrix",
 ]);
 
-/** Shared type for Npm Global Prefix Layout in src/infra. */
+/** Npm-style prefix layout split into package root and executable directories. */
 export type NpmGlobalPrefixLayout = {
   prefix: string;
   globalRoot: string;
@@ -75,12 +76,12 @@ function normalizePackageVersionForComparison(value: string | null | undefined):
   return trimmed.replace(/^[vV](?=\d)/, "");
 }
 
-/** Reused helper for is Main Package Target behavior in src/infra. */
+/** Return whether a package target names the special `main` source install. */
 export function isMainPackageTarget(value: string): boolean {
   return normalizeLowercaseStringOrEmpty(normalizePackageTarget(value)) === "main";
 }
 
-/** Reused helper for is Explicit Package Install Spec behavior in src/infra. */
+/** Return whether a target is already a concrete package, git, URL, or tarball spec. */
 export function isExplicitPackageInstallSpec(value: string): boolean {
   const trimmed = normalizePackageTarget(value);
   if (!trimmed) {
@@ -111,7 +112,7 @@ function isPnpmOpenClawSourceInstallSpec(spec: string): boolean {
   );
 }
 
-/** Reused helper for resolve Expected Installed Version From Spec behavior in src/infra. */
+/** Extract a comparable semver version from a plain `name@version` install spec. */
 export function resolveExpectedInstalledVersionFromSpec(
   packageName: string,
   spec: string,
@@ -134,7 +135,7 @@ export function resolveExpectedInstalledVersionFromSpec(
   return normalizePackageVersionForComparison(rawVersion);
 }
 
-/** Reused helper for collect Installed Global Package Errors behavior in src/infra. */
+/** Validate a resolved global package root against expected version and packaged dist files. */
 export async function collectInstalledGlobalPackageErrors(params: {
   packageRoot: string;
   expectedVersion?: string | null;
@@ -307,7 +308,7 @@ async function collectInstalledPathErrors(params: {
   return errors;
 }
 
-/** Reused helper for can Resolve Registry Version For Package Target behavior in src/infra. */
+/** Return whether a target should be looked up through the package registry. */
 export function canResolveRegistryVersionForPackageTarget(value: string): boolean {
   const trimmed = normalizePackageTarget(value);
   if (!trimmed) {
@@ -357,7 +358,7 @@ function applyCorepackDownloadPromptEnv(env: Record<string, string>) {
   }
 }
 
-/** Reused helper for resolve Global Install Spec behavior in src/infra. */
+/** Convert a user update target into the exact package-manager install spec. */
 export function resolveGlobalInstallSpec(params: {
   packageName: string;
   tag: string;
@@ -379,7 +380,7 @@ export function resolveGlobalInstallSpec(params: {
   return `${params.packageName}@${target}`;
 }
 
-/** Reused helper for create Global Install Env behavior in src/infra. */
+/** Build the environment used for global installs, including Windows and npm guardrails. */
 export async function createGlobalInstallEnv(
   env?: NodeJS.ProcessEnv,
 ): Promise<NodeJS.ProcessEnv | undefined> {
@@ -434,7 +435,7 @@ function inferNpmPrefixFromPackageRoot(pkgRoot?: string | null): string | null {
   return null;
 }
 
-/** Reused helper for resolve Npm Global Prefix Layout From Global Root behavior in src/infra. */
+/** Resolve npm prefix/bin layout from a global `node_modules` directory. */
 export function resolveNpmGlobalPrefixLayoutFromGlobalRoot(
   globalRoot?: string | null,
   options: { allowDirectNodeModulesRoot?: boolean } = {},
@@ -473,7 +474,7 @@ export function resolveNpmGlobalPrefixLayoutFromGlobalRoot(
   return null;
 }
 
-/** Reused helper for resolve Npm Global Prefix Layout From Prefix behavior in src/infra. */
+/** Resolve npm package and bin directories from an explicit global prefix. */
 export function resolveNpmGlobalPrefixLayoutFromPrefix(prefix: string): NpmGlobalPrefixLayout {
   const resolvedPrefix = path.resolve(prefix);
   if (process.platform === "win32") {
@@ -555,7 +556,7 @@ function inferPnpmGlobalRootFromPackageRoot(pkgRoot?: string | null): string | n
   return resolvePnpmGlobalDirFromGlobalRoot(globalRoot) ? globalRoot : null;
 }
 
-/** Reused helper for resolve Pnpm Global Dir From Global Root behavior in src/infra. */
+/** Resolve pnpm's global directory from its versioned `node_modules` layout. */
 export function resolvePnpmGlobalDirFromGlobalRoot(globalRoot?: string | null): string | null {
   const trimmed = globalRoot?.trim();
   if (!trimmed) {
@@ -594,7 +595,7 @@ function resolvePreferredGlobalManagerCommand(
   return resolvePreferredNpmCommand(pkgRoot) ?? manager;
 }
 
-/** Reused helper for resolve Global Install Command behavior in src/infra. */
+/** Pick the concrete executable for a global install manager. */
 export function resolveGlobalInstallCommand(
   manager: GlobalInstallManager,
   pkgRoot?: string | null,
@@ -625,7 +626,7 @@ function resolveInstallCommandForManager(
     : resolveGlobalInstallCommand(manager, pkgRoot);
 }
 
-/** Reused helper for resolve Global Root behavior in src/infra. */
+/** Ask the package manager for its global package root. */
 export async function resolveGlobalRoot(
   managerOrCommand: GlobalInstallManager | ResolvedGlobalInstallCommand,
   runCommand: CommandRunner,
@@ -645,7 +646,7 @@ export async function resolveGlobalRoot(
   return root || null;
 }
 
-/** Reused helper for resolve Global Package Root behavior in src/infra. */
+/** Resolve the installed OpenClaw package directory under a manager's global root. */
 export async function resolveGlobalPackageRoot(
   managerOrCommand: GlobalInstallManager | ResolvedGlobalInstallCommand,
   runCommand: CommandRunner,
@@ -659,7 +660,7 @@ export async function resolveGlobalPackageRoot(
   return path.join(root, PRIMARY_PACKAGE_NAME);
 }
 
-/** Reused helper for resolve Global Install Target behavior in src/infra. */
+/** Resolve the manager, global root, and package root that an update should mutate. */
 export async function resolveGlobalInstallTarget(params: {
   manager: GlobalInstallManager | ResolvedGlobalInstallCommand;
   runCommand: CommandRunner;
@@ -709,7 +710,7 @@ export async function resolveGlobalInstallTarget(params: {
   };
 }
 
-/** Reused helper for detect Global Install Manager For Root behavior in src/infra. */
+/** Detect which package manager owns an existing OpenClaw package root. */
 export async function detectGlobalInstallManagerForRoot(
   runCommand: CommandRunner,
   pkgRoot: string,
@@ -765,7 +766,7 @@ export async function detectGlobalInstallManagerForRoot(
   return null;
 }
 
-/** Reused helper for detect Global Install Manager By Presence behavior in src/infra. */
+/** Detect an installed global OpenClaw package by probing known manager roots. */
 export async function detectGlobalInstallManagerByPresence(
   runCommand: CommandRunner,
   timeoutMs: number,
@@ -791,7 +792,7 @@ export async function detectGlobalInstallManagerByPresence(
   return null;
 }
 
-/** Reused helper for global Install Args behavior in src/infra. */
+/** Build package-manager argv for the primary global install attempt. */
 export function globalInstallArgs(
   managerOrCommand: GlobalInstallManager | ResolvedGlobalInstallCommand,
   spec: string,
@@ -825,7 +826,7 @@ export function globalInstallArgs(
   ];
 }
 
-/** Reused helper for global Install Fallback Args behavior in src/infra. */
+/** Build npm fallback argv that omits optional dependencies when the primary install fails. */
 export function globalInstallFallbackArgs(
   managerOrCommand: GlobalInstallManager | ResolvedGlobalInstallCommand,
   spec: string,
@@ -850,7 +851,7 @@ export function globalInstallFallbackArgs(
   ];
 }
 
-/** Reused helper for cleanup Global Rename Dirs behavior in src/infra. */
+/** Remove stale renamed package directories left behind by global update swaps. */
 export async function cleanupGlobalRenameDirs(params: {
   globalRoot: string;
   packageName: string;
