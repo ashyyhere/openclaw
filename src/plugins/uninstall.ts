@@ -1,4 +1,5 @@
-// plugins uninstall helpers and runtime behavior.
+// Plugin uninstall planner and executor. Config cleanup is pure; filesystem and
+// managed npm/git cleanup happen only through resolved safe removal targets.
 import { realpathSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -20,7 +21,7 @@ import {
 import { relinkOpenClawPeerDependenciesInManagedNpmRoot } from "./plugin-peer-link.js";
 import { defaultSlotIdForKey } from "./slots.js";
 
-/** Shared type for Uninstall Actions in src/plugins. */
+/** Tracks which config/filesystem surfaces an uninstall removed. */
 export type UninstallActions = {
   entry: boolean;
   install: boolean;
@@ -33,7 +34,7 @@ export type UninstallActions = {
   directory: boolean;
 };
 
-/** Reused constant for UNINSTALL ACTION LABELS behavior in src/plugins. */
+/** Human-facing labels for uninstall action summaries and previews. */
 export const UNINSTALL_ACTION_LABELS = {
   entry: "config entry",
   install: "install record",
@@ -58,7 +59,7 @@ const UNINSTALL_ACTION_ORDER = [
   "directory",
 ] as const satisfies ReadonlyArray<keyof UninstallActions>;
 
-/** Reused helper for create Empty Uninstall Actions behavior in src/plugins. */
+/** Creates an uninstall action map with all actions disabled by default. */
 export function createEmptyUninstallActions(
   overrides: Partial<UninstallActions> = {},
 ): UninstallActions {
@@ -81,7 +82,7 @@ function createEmptyConfigUninstallActions(): Omit<UninstallActions, "directory"
   return actions;
 }
 
-/** Reused helper for format Uninstall Action Labels behavior in src/plugins. */
+/** Formats enabled uninstall actions in deterministic display order. */
 export function formatUninstallActionLabels(actions: UninstallActions): string[] {
   return UNINSTALL_ACTION_ORDER.flatMap((key) =>
     actions[key] ? [UNINSTALL_ACTION_LABELS[key]] : [],
@@ -92,13 +93,13 @@ function hasUninstallAction(actions: Omit<UninstallActions, "directory">): boole
   return Object.values(actions).some(Boolean);
 }
 
-/** Reused helper for format Uninstall Slot Reset Preview behavior in src/plugins. */
+/** Formats the slot reset preview shown before removing a selected plugin. */
 export function formatUninstallSlotResetPreview(slotKey: "memory" | "contextEngine"): string {
   const actionKey = slotKey === "memory" ? "memorySlot" : "contextEngineSlot";
   return `${UNINSTALL_ACTION_LABELS[actionKey]} (will reset to "${defaultSlotIdForKey(slotKey)}")`;
 }
 
-/** Shared type for Uninstall Plugin Result in src/plugins. */
+/** Result returned after config cleanup and optional directory removal. */
 export type UninstallPluginResult =
   | {
       ok: true;
@@ -109,7 +110,7 @@ export type UninstallPluginResult =
     }
   | { ok: false; error: string };
 
-/** Shared type for Plugin Uninstall Directory Removal in src/plugins. */
+/** Safe filesystem removal target plus optional managed package cleanup. */
 export type PluginUninstallDirectoryRemoval = {
   target: string;
   cleanup?:
@@ -124,7 +125,7 @@ export type PluginUninstallDirectoryRemoval = {
       };
 };
 
-/** Shared type for Plugin Uninstall Plan Result in src/plugins. */
+/** Pure uninstall plan with updated config and a safe directory removal target. */
 export type PluginUninstallPlanResult =
   | {
       ok: true;
@@ -135,7 +136,7 @@ export type PluginUninstallPlanResult =
     }
   | { ok: false; error: string };
 
-/** Reused helper for resolve Uninstall Directory Target behavior in src/plugins. */
+/** Resolves the managed install directory that may be removed for a plugin. */
 export function resolveUninstallDirectoryTarget(params: {
   pluginId: string;
   hasInstall: boolean;
@@ -532,7 +533,7 @@ export function removePluginFromConfig(
   return { config, actions };
 }
 
-/** Shared type for Uninstall Plugin Params in src/plugins. */
+/** Inputs for planning or applying plugin uninstall cleanup. */
 export type UninstallPluginParams = {
   config: OpenClawConfig;
   pluginId: string;
@@ -622,7 +623,7 @@ export function planPluginUninstall(params: UninstallPluginParams): PluginUninst
   };
 }
 
-/** Reused helper for apply Plugin Uninstall Directory Removal behavior in src/plugins. */
+/** Applies the safe directory removal target and prunes managed npm/git state. */
 export async function applyPluginUninstallDirectoryRemoval(
   removal: PluginUninstallDirectoryRemoval | null,
 ): Promise<{ directoryRemoved: boolean; warnings: string[] }> {
@@ -768,7 +769,7 @@ export async function applyPluginUninstallDirectoryRemoval(
   }
 }
 
-/** Reused helper for uninstall Plugin behavior in src/plugins. */
+/** Plans uninstall cleanup, removes managed files, and reports performed actions. */
 export async function uninstallPlugin(
   params: UninstallPluginParams,
 ): Promise<UninstallPluginResult> {

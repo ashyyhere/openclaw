@@ -1,4 +1,5 @@
-// plugins install paths helpers and runtime behavior.
+// Safe path helpers for plugin installs. All public resolvers keep plugin ids
+// inside managed OpenClaw directories and avoid package-name path traversal.
 import path from "node:path";
 import {
   resolveSafeInstallDir,
@@ -8,12 +9,12 @@ import {
 } from "../infra/install-safe-path.js";
 import { resolveConfigDir, resolveUserPath } from "../utils.js";
 
-/** Reused helper for safe Plugin Install File Name behavior in src/plugins. */
+/** Encodes a plugin file basename so a copied single-file plugin is path-safe. */
 export function safePluginInstallFileName(input: string): string {
   return safeDirName(input);
 }
 
-/** Reused helper for encode Plugin Install Dir Name behavior in src/plugins. */
+/** Encodes a plugin id into the managed extensions directory namespace. */
 export function encodePluginInstallDirName(pluginId: string): string {
   const trimmed = pluginId.trim();
   if (!trimmed.includes("/")) {
@@ -24,7 +25,7 @@ export function encodePluginInstallDirName(pluginId: string): string {
   return `@${safePathSegmentHashed(trimmed)}`;
 }
 
-/** Reused helper for validate Plugin Id behavior in src/plugins. */
+/** Validates OpenClaw plugin ids before using them in config or filesystem paths. */
 export function validatePluginId(pluginId: string): string | null {
   const trimmed = pluginId.trim();
   if (!trimmed) {
@@ -55,7 +56,7 @@ export function validatePluginId(pluginId: string): string | null {
   return null;
 }
 
-/** Reused helper for matches Expected Plugin Id behavior in src/plugins. */
+/** Checks an installed package id against the expected plugin id for updates. */
 export function matchesExpectedPluginId(params: {
   expectedPluginId?: string;
   pluginId: string;
@@ -78,7 +79,7 @@ export function matchesExpectedPluginId(params: {
   );
 }
 
-/** Reused helper for resolve Default Plugin Extensions Dir behavior in src/plugins. */
+/** Resolves the default managed directory for installed plugin extension files. */
 export function resolveDefaultPluginExtensionsDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir?: () => string,
@@ -86,7 +87,7 @@ export function resolveDefaultPluginExtensionsDir(
   return path.join(resolveConfigDir(env, homedir), "extensions");
 }
 
-/** Reused helper for resolve Default Plugin Npm Dir behavior in src/plugins. */
+/** Resolves the default managed npm root for plugin package installs. */
 export function resolveDefaultPluginNpmDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir?: () => string,
@@ -94,7 +95,7 @@ export function resolveDefaultPluginNpmDir(
   return path.join(resolveConfigDir(env, homedir), "npm");
 }
 
-/** Reused helper for encode Plugin Npm Project Dir Name behavior in src/plugins. */
+/** Encodes an npm package name into a stable managed npm project directory. */
 export function encodePluginNpmProjectDirName(packageName: string): string {
   const trimmed = packageName.trim();
   if (!trimmed) {
@@ -103,13 +104,13 @@ export function encodePluginNpmProjectDirName(packageName: string): string {
   return safePathSegmentHashed(trimmed);
 }
 
-/** Reused helper for resolve Plugin Npm Projects Dir behavior in src/plugins. */
+/** Resolves the parent directory for per-package managed npm projects. */
 export function resolvePluginNpmProjectsDir(npmDir?: string): string {
   const npmBase = npmDir ? resolveUserPath(npmDir) : resolveDefaultPluginNpmDir();
   return path.join(npmBase, "projects");
 }
 
-/** Reused helper for resolve Plugin Npm Project Dir behavior in src/plugins. */
+/** Resolves the managed npm project directory for one plugin package. */
 export function resolvePluginNpmProjectDir(params: {
   packageName: string;
   npmDir?: string;
@@ -120,7 +121,7 @@ export function resolvePluginNpmProjectDir(params: {
   );
 }
 
-/** Reused helper for resolve Plugin Npm Package Dir behavior in src/plugins. */
+/** Resolves the installed package directory inside its managed npm project. */
 export function resolvePluginNpmPackageDir(params: {
   packageName: string;
   npmDir?: string;
@@ -132,7 +133,7 @@ export function resolvePluginNpmPackageDir(params: {
   );
 }
 
-/** Reused helper for resolve Default Plugin Git Dir behavior in src/plugins. */
+/** Resolves the default managed checkout root for git-sourced plugins. */
 export function resolveDefaultPluginGitDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir?: () => string,
@@ -140,7 +141,7 @@ export function resolveDefaultPluginGitDir(
   return path.join(resolveConfigDir(env, homedir), "git");
 }
 
-/** Reused helper for resolve Plugin Install Dir behavior in src/plugins. */
+/** Resolves the managed extension install directory for a plugin id. */
 export function resolvePluginInstallDir(pluginId: string, extensionsDir?: string): string {
   const extensionsBase = extensionsDir
     ? resolveUserPath(extensionsDir)
