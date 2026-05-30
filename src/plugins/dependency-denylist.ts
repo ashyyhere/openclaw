@@ -1,27 +1,27 @@
-// plugins dependency denylist helpers and runtime behavior.
+// Install-time dependency denylist checks for plugin manifests and files.
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
 const BLOCKED_INSTALL_DEPENDENCY_PACKAGE_NAMES = ["plain-crypto-js"] as const;
 
-/** Reused constant for blocked Install Dependency Package Names behavior in src/plugins. */
+/** Package names blocked from plugin installation dependency surfaces. */
 export const blockedInstallDependencyPackageNames = [
   ...BLOCKED_INSTALL_DEPENDENCY_PACKAGE_NAMES,
 ] as const;
 
-/** Shared type for Blocked Manifest Dependency Finding in src/plugins. */
+/** Denylist finding reported from package.json fields. */
 export type BlockedManifestDependencyFinding = {
   dependencyName: string;
   declaredAs?: string;
   field: "dependencies" | "name" | "optionalDependencies" | "overrides" | "peerDependencies";
 };
 
-/** Shared type for Blocked Package Directory Finding in src/plugins. */
+/** Denylist finding reported from a package directory path. */
 export type BlockedPackageDirectoryFinding = {
   dependencyName: string;
   directoryRelativePath: string;
 };
 
-/** Shared type for Blocked Package File Finding in src/plugins. */
+/** Denylist finding reported from a package file alias path. */
 export type BlockedPackageFileFinding = {
   dependencyName: string;
   fileRelativePath: string;
@@ -193,7 +193,7 @@ function isPackageOverrideObject(value: unknown): value is PackageOverrideObject
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-/** Reused helper for find Blocked Manifest Dependencies behavior in src/plugins. */
+/** Finds blocked package names in manifest name/dependencies/overrides. */
 export function findBlockedManifestDependencies(
   manifest: PackageDependencyFields & PackageOverrideFields,
 ): BlockedManifestDependencyFinding[] {
@@ -232,7 +232,7 @@ export function findBlockedManifestDependencies(
   return findings;
 }
 
-/** Reused helper for find Blocked Node Modules Directory behavior in src/plugins. */
+/** Detects blocked packages from nested node_modules directory paths. */
 export function findBlockedNodeModulesDirectory(params: {
   directoryRelativePath: string;
 }): BlockedPackageDirectoryFinding | undefined {
@@ -259,7 +259,7 @@ function parseBlockedPackageFileAliasName(fileName: string): string | undefined 
   return fileName;
 }
 
-/** Reused helper for find Blocked Node Modules File Alias behavior in src/plugins. */
+/** Detects blocked package file aliases under node_modules. */
 export function findBlockedNodeModulesFileAlias(params: {
   fileRelativePath: string;
 }): BlockedPackageFileFinding | undefined {
@@ -275,7 +275,7 @@ export function findBlockedNodeModulesFileAlias(params: {
     : undefined;
 }
 
-/** Reused helper for find Blocked Package Directory In Path behavior in src/plugins. */
+/** Detects blocked package directory segments in arbitrary relative paths. */
 export function findBlockedPackageDirectoryInPath(params: {
   pathRelativeToRoot: string;
 }): BlockedPackageDirectoryFinding | undefined {
@@ -315,7 +315,7 @@ export function findBlockedPackageDirectoryInPath(params: {
   return undefined;
 }
 
-/** Reused helper for find Blocked Package File Alias In Path behavior in src/plugins. */
+/** Detects blocked package file aliases in arbitrary relative paths. */
 export function findBlockedPackageFileAliasInPath(params: {
   pathRelativeToRoot: string;
 }): BlockedPackageFileFinding | undefined {

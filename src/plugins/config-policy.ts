@@ -1,4 +1,4 @@
-// plugins config policy helpers and runtime behavior.
+// Plugin config normalization, activation policy, and memory-slot decisions.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolveMemorySlotDecisionShared,
@@ -18,15 +18,15 @@ import {
 import type { PluginKind } from "./plugin-kind.types.js";
 import type { PluginOrigin } from "./plugin-origin.types.js";
 
-/** Re-exported API for src/plugins, starting with Plugin Activation Source. */
+/** Source config type used while explaining plugin activation decisions. */
 export type { PluginActivationSource };
-/** Shared type for Plugin Activation State in src/plugins. */
+/** Public activation state returned by plugin policy evaluation. */
 export type PluginActivationState = PluginActivationStateLike;
 
-/** Shared type for Normalized Plugins Config in src/plugins. */
+/** Normalized plugins config shape consumed by activation policy. */
 export type NormalizedPluginsConfig = SharedNormalizedPluginsConfig;
 
-/** Reused helper for normalize Plugins Config With Resolver behavior in src/plugins. */
+/** Normalizes plugin config entries with an injectable id normalizer. */
 export function normalizePluginsConfigWithResolver(
   config?: OpenClawConfig["plugins"],
   normalizePluginId: NormalizePluginId = identityNormalizePluginId,
@@ -34,7 +34,7 @@ export function normalizePluginsConfigWithResolver(
   return normalizePluginsConfigWithResolverShared(config, normalizePluginId);
 }
 
-/** Reused helper for resolve Plugin Activation State behavior in src/plugins. */
+/** Resolves configured/default/auto-enabled plugin activation state. */
 export function resolvePluginActivationState(params: {
   id: string;
   origin: PluginOrigin;
@@ -56,10 +56,10 @@ export function resolvePluginActivationState(params: {
     }),
   );
 }
-/** Reused constant for has Explicit Plugin Config behavior in src/plugins. */
+/** Checks whether a plugin has an explicit config entry. */
 export const hasExplicitPluginConfig = hasExplicitPluginConfigShared;
 
-/** Reused constant for is Bundled Channel Enabled By Channel Config behavior in src/plugins. */
+/** Checks whether bundled channel config enables its backing plugin. */
 export const isBundledChannelEnabledByChannelConfig = isBundledChannelEnabledByChannelConfigShared;
 
 type PolicyEffectiveActivationParams = {
@@ -73,14 +73,14 @@ type PolicyEffectiveActivationParams = {
   autoEnabledReason?: string;
 };
 
-/** Reused helper for resolve Effective Plugin Activation State behavior in src/plugins. */
+/** Resolves the effective plugin activation state for policy callers. */
 export function resolveEffectivePluginActivationState(
   params: PolicyEffectiveActivationParams,
 ): PluginActivationState {
   return resolvePluginActivationState(params);
 }
 
-/** Reused helper for resolve Memory Slot Decision behavior in src/plugins. */
+/** Resolves whether a plugin may occupy a memory capability slot. */
 export function resolveMemorySlotDecision(params: {
   id: string;
   kind?: PluginKind | PluginKind[];
