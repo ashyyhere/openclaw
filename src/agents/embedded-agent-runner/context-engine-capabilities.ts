@@ -4,7 +4,7 @@ import type { ContextEngineRuntimeContext } from "../../context-engine/types.js"
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { resolveBoundAgentIdForSession } from "../session-agent-binding.js";
 
-/** Shared type for Resolve Context Engine Capabilities Params in src/agents/embedded-agent-runner. */
+/** Inputs used to bind host LLM capability access for a context-engine call. */
 export type ResolveContextEngineCapabilitiesParams = {
   config?: OpenClawConfig;
   sessionKey?: string;

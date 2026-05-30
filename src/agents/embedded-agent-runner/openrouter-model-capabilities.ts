@@ -61,7 +61,7 @@ interface OpenRouterApiModel {
   };
 }
 
-/** Shared type for Open Router Model Capabilities in src/agents/embedded-agent-runner. */
+/** Normalized OpenRouter capability metadata used by model routing decisions. */
 export interface OpenRouterModelCapabilities {
   name: string;
   input: Array<"text" | "image">;

@@ -11,7 +11,7 @@ type RecoverySessionMeta = { id: string; recoveredAnthropicThinking?: boolean };
 
 const THINKING_BLOCK_ERROR_PATTERN =
   /(?:thinking|redacted_thinking).*?(?:cannot be modified|signature|invalid|missing|empty|blank)|(?:signature|invalid|missing|empty|blank).*?(?:thinking|redacted_thinking)/i;
-/** Reused constant for OMITTED ASSISTANT REASONING TEXT behavior in src/agents/embedded-agent-runner. */
+/** Placeholder inserted when signed assistant reasoning must be hidden or repaired. */
 export const OMITTED_ASSISTANT_REASONING_TEXT = "[assistant reasoning omitted]";
 
 /** Narrows messages to assistant entries with mutable content blocks. */
