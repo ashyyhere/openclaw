@@ -1,4 +1,5 @@
-// gateway talk realtime relay helpers and runtime behavior.
+// Gateway relay for browser Talk realtime sessions, bridging provider audio,
+// transcripts, agent-consult tool calls, and session lifecycle events.
 import { randomUUID } from "node:crypto";
 import type { OpenClawConfig } from "../config/types.js";
 import type { RealtimeVoiceProviderPlugin } from "../plugins/types.js";
@@ -309,7 +310,7 @@ function enforceRelaySessionLimits(connId: string): void {
   }
 }
 
-/** Reused helper for create Talk Realtime Relay Session behavior in src/gateway. */
+/** Create a browser-facing realtime voice relay session backed by a provider bridge. */
 export function createTalkRealtimeRelaySession(
   params: CreateTalkRealtimeRelaySessionParams,
 ): TalkRealtimeRelaySessionResult {
@@ -716,7 +717,7 @@ function getRelaySession(relaySessionId: string, connId: string): RelaySession {
   return session;
 }
 
-/** Reused helper for send Talk Realtime Relay Audio behavior in src/gateway. */
+/** Forward one base64 PCM audio frame from the browser into a relay session. */
 export function sendTalkRealtimeRelayAudio(params: {
   relaySessionId: string;
   connId: string;
@@ -745,7 +746,7 @@ export function sendTalkRealtimeRelayAudio(params: {
   }
 }
 
-/** Reused helper for submit Talk Realtime Relay Tool Result behavior in src/gateway. */
+/** Submit an agent-consult tool result back to the realtime provider bridge. */
 export function submitTalkRealtimeRelayToolResult(params: {
   relaySessionId: string;
   connId: string;
@@ -823,7 +824,7 @@ export function submitTalkRealtimeRelayToolResult(params: {
   });
 }
 
-/** Reused helper for register Talk Realtime Relay Agent Run behavior in src/gateway. */
+/** Track an agent run and optional consult call id owned by a relay session. */
 export function registerTalkRealtimeRelayAgentRun(params: {
   relaySessionId: string;
   connId: string;
@@ -841,7 +842,7 @@ export function registerTalkRealtimeRelayAgentRun(params: {
   }
 }
 
-/** Reused helper for steer Talk Realtime Relay Agent Run behavior in src/gateway. */
+/** Send live steering text to the active agent run for a relay session. */
 export async function steerTalkRealtimeRelayAgentRun(params: {
   relaySessionId: string;
   connId: string;
@@ -884,7 +885,7 @@ export async function steerTalkRealtimeRelayAgentRun(params: {
   return result;
 }
 
-/** Reused helper for cancel Talk Realtime Relay Turn behavior in src/gateway. */
+/** Cancel current relay audio/tool activity and abort active agent consult runs. */
 export function cancelTalkRealtimeRelayTurn(params: {
   relaySessionId: string;
   connId: string;
@@ -907,7 +908,7 @@ export function cancelTalkRealtimeRelayTurn(params: {
   });
 }
 
-/** Reused helper for stop Talk Realtime Relay Session behavior in src/gateway. */
+/** Close a relay session as a normal client-requested completion. */
 export function stopTalkRealtimeRelaySession(params: {
   relaySessionId: string;
   connId: string;
@@ -916,7 +917,7 @@ export function stopTalkRealtimeRelaySession(params: {
   closeRelaySession(session, "completed");
 }
 
-/** Reused helper for clear Talk Realtime Relay Sessions For Test behavior in src/gateway. */
+/** Clear all relay sessions and timers for tests. */
 export function clearTalkRealtimeRelaySessionsForTest(): void {
   for (const session of relaySessions.values()) {
     session.forcedConsults.clear();

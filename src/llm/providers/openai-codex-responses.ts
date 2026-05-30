@@ -1,4 +1,5 @@
-// llm/providers openai codex responses helpers and runtime behavior.
+// OpenAI Codex Responses provider transport, including WebSocket reuse,
+// SSE fallback, retry handling, and ChatGPT account header setup.
 import type * as NodeOs from "node:os";
 import type {
   Tool as OpenAITool,
@@ -76,7 +77,7 @@ const CODEX_RESPONSE_STATUSES = new Set<CodexResponseStatus>([
 // Types
 // ============================================================================
 
-/** Shared type for Open AICodex Responses Options in src/llm/providers. */
+/** Stream options accepted by the OpenAI Codex Responses provider transport. */
 export interface OpenAICodexResponsesOptions extends StreamOptions {
   reasoningEffort?: "none" | "minimal" | "low" | "medium" | "high" | "xhigh";
   reasoningSummary?: "auto" | "concise" | "detailed" | "off" | "on" | null;
@@ -188,7 +189,7 @@ function formatRequestTimeoutError(timeoutMs: number, cause: unknown): Error {
 // Main Stream Function
 // ============================================================================
 
-/** Reused constant for stream Open AICodex Responses behavior in src/llm/providers. */
+/** Stream OpenAI Codex Responses via WebSocket when possible, falling back to SSE. */
 export const streamOpenAICodexResponses: StreamFunction<
   "openai-codex-responses",
   OpenAICodexResponsesOptions
@@ -443,7 +444,7 @@ export const streamOpenAICodexResponses: StreamFunction<
   return stream;
 };
 
-/** Reused constant for stream Simple Open AICodex Responses behavior in src/llm/providers. */
+/** Simple-stream adapter that maps generic reasoning options onto Codex Responses. */
 export const streamSimpleOpenAICodexResponses: StreamFunction<
   "openai-codex-responses",
   SimpleStreamOptions
@@ -787,7 +788,7 @@ interface CachedWebSocketConnection {
   continuation?: CachedWebSocketContinuationState;
 }
 
-/** Shared type for Open AICodex Web Socket Debug Stats in src/llm/providers. */
+/** Per-session WebSocket reuse and fallback counters for tests and diagnostics. */
 export interface OpenAICodexWebSocketDebugStats {
   requests: number;
   connectionsCreated: number;
@@ -829,7 +830,7 @@ function getOrCreateWebSocketDebugStats(sessionId: string): OpenAICodexWebSocket
   return stats;
 }
 
-/** Reused helper for get Open AICodex Web Socket Debug Stats behavior in src/llm/providers. */
+/** Return a copy of WebSocket debug counters for one Codex session. */
 export function getOpenAICodexWebSocketDebugStats(
   sessionId: string,
 ): OpenAICodexWebSocketDebugStats | undefined {
@@ -837,7 +838,7 @@ export function getOpenAICodexWebSocketDebugStats(
   return stats ? { ...stats } : undefined;
 }
 
-/** Reused helper for reset Open AICodex Web Socket Debug Stats behavior in src/llm/providers. */
+/** Reset Codex WebSocket debug counters and SSE fallback state. */
 export function resetOpenAICodexWebSocketDebugStats(sessionId?: string): void {
   if (sessionId) {
     websocketDebugStats.delete(sessionId);
@@ -848,7 +849,7 @@ export function resetOpenAICodexWebSocketDebugStats(sessionId?: string): void {
   websocketSseFallbackSessions.clear();
 }
 
-/** Reused helper for close Open AICodex Web Socket Sessions behavior in src/llm/providers. */
+/** Close cached Codex WebSocket sessions, optionally for one session id. */
 export function closeOpenAICodexWebSocketSessions(sessionId?: string): void {
   const closeEntry = (entry: CachedWebSocketConnection) => {
     if (entry.idleTimer) {
@@ -1562,7 +1563,7 @@ async function parseErrorResponse(
 // Auth & Headers
 // ============================================================================
 
-/** Reused helper for extract Open AICodex Account Id behavior in src/llm/providers. */
+/** Extract the ChatGPT account id claim required by Codex backend headers. */
 export function extractOpenAICodexAccountId(token: string): string {
   const accountId = resolveOpenAICodexAccountId(token);
   if (accountId) {

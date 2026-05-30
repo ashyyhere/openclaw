@@ -3,20 +3,20 @@
 import { testing as managerTesting, getAcpSessionManager } from "../acp/control-plane/manager.js";
 import { testing as registryTesting } from "../acp/runtime/registry.js";
 
-/** Re-exported API for src/plugin-sdk, starting with get Acp Session Manager. */
+/** Shared ACP session manager for plugin runtime control-plane integrations. */
 export { getAcpSessionManager };
-/** Re-exported API for src/plugin-sdk, starting with Acp Runtime Error. */
+/** ACP runtime error class and guard used across backend adapters. */
 export { AcpRuntimeError, isAcpRuntimeError } from "../acp/runtime/errors.js";
-/** Re-exported API for src/plugin-sdk, starting with Acp Runtime Error Code. */
+/** Stable ACP runtime error codes surfaced by backend adapters. */
 export type { AcpRuntimeErrorCode } from "../acp/runtime/errors.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Register and resolve ACP runtime backends by runtime id. */
 export {
   getAcpRuntimeBackend,
   registerAcpRuntimeBackend,
   requireAcpRuntimeBackend,
   unregisterAcpRuntimeBackend,
 } from "../acp/runtime/registry.js";
-/** Re-exported API for src/plugin-sdk. */
+/** ACP backend, session, turn, attachment, and status contracts for plugins. */
 export type {
   AcpRuntime,
   AcpRuntimeCapabilities,
@@ -32,17 +32,17 @@ export type {
   AcpRuntimeTurnResultError,
   AcpSessionUpdateTag,
 } from "../acp/runtime/types.js";
-/** Re-exported API for src/plugin-sdk, starting with read Acp Session Entry. */
+/** Read persisted ACP session metadata entries. */
 export { readAcpSessionEntry } from "../acp/runtime/session-meta.js";
-/** Re-exported API for src/plugin-sdk, starting with Acp Session Store Entry. */
+/** Stored ACP session metadata shape. */
 export type { AcpSessionStoreEntry } from "../acp/runtime/session-meta.js";
-/** Re-exported API for src/plugin-sdk, starting with try Dispatch Acp Reply Hook. */
+/** Dispatch ACP reply hooks when a runtime turn produces output. */
 export { tryDispatchAcpReplyHook } from "./acp-runtime-backend.js";
 
 // Keep test helpers off the hot init path. Eagerly merging them here can
 // create a back-edge through the bundled ACP runtime chunk before the imported
 // testing bindings finish initialization.
-/** Reused constant for testing behavior in src/plugin-sdk. */
+/** Lazy testing facade that avoids ACP runtime initialization back-edges. */
 export const testing = new Proxy({} as typeof managerTesting & typeof registryTesting, {
   get(_target, prop, receiver) {
     if (Reflect.has(managerTesting, prop)) {

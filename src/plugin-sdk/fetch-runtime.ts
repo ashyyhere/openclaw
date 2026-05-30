@@ -2,24 +2,24 @@
 
 import type { GuardedFetchOptions } from "../infra/net/fetch-guard.js";
 
-/** Re-exported API for src/plugin-sdk, starting with resolve Fetch. */
+/** Resolve runtime fetch and compose fetch calls with caller abort signals. */
 export { resolveFetch, wrapFetchWithAbortSignal } from "../infra/fetch.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Undici HTTP/1 proxy agents for providers that need env-compatible proxy transport. */
 export {
   createHttp1EnvHttpProxyAgent,
   createHttp1ProxyAgent,
 } from "../infra/net/undici-runtime.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Managed proxy TLS option helpers for active proxy connections. */
 export {
   addActiveManagedProxyTlsOptions,
   resolveActiveManagedProxyTlsOptions,
 } from "../infra/net/proxy/managed-proxy-undici.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Node proxy-agent factory and options exposed to plugin fetch integrations. */
 export {
   createNodeProxyAgent,
   type CreateNodeProxyAgentOptions,
 } from "../infra/net/node-proxy-agent.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Environment proxy detection and resolution helpers for guarded outbound fetches. */
 export {
   hasEnvHttpProxyConfigured,
   hasEnvHttpProxyAgentConfigured,
@@ -27,11 +27,11 @@ export {
   resolveEnvHttpProxyUrl,
   shouldUseEnvHttpProxyForUrl,
 } from "../infra/net/proxy-env.js";
-/** Re-exported API for src/plugin-sdk, starting with get Proxy Url From Fetch. */
+/** Build fetch wrappers that route requests through explicit proxy URLs. */
 export { getProxyUrlFromFetch, makeProxyFetch } from "../infra/net/proxy-fetch.js";
-/** Re-exported API for src/plugin-sdk, starting with create Pinned Lookup. */
+/** Create DNS-pinned lookup functions for SSRF-aware dispatchers. */
 export { createPinnedLookup } from "../infra/net/ssrf.js";
-/** Re-exported API for src/plugin-sdk, starting with Pinned Dispatcher Policy. */
+/** Dispatcher policy type used by DNS pinning guards. */
 export type { PinnedDispatcherPolicy } from "../infra/net/ssrf.js";
 
 type GuardedFetchPresetOptions = Omit<
@@ -39,7 +39,7 @@ type GuardedFetchPresetOptions = Omit<
   "mode" | "proxy" | "dangerouslyAllowEnvProxyWithoutPinnedDns"
 >;
 
-/** Reused helper for with Trusted Env Proxy Guarded Fetch Mode behavior in src/plugin-sdk. */
+/** Apply the guarded-fetch preset that permits trusted environment proxy settings. */
 export function withTrustedEnvProxyGuardedFetchMode(
   params: GuardedFetchPresetOptions,
 ): GuardedFetchOptions {
