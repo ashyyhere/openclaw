@@ -1,4 +1,4 @@
-// plugins/runtime runtime web channel plugin helpers and runtime behavior.
+// Lazy runtime facade for web-channel plugin light/heavy boundary modules.
 import type { AgentToolResult } from "../../agents/runtime/index.js";
 import type { ChannelAgentTool } from "../../channels/plugins/types.core.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -205,112 +205,112 @@ async function getHeavyExport<K extends keyof WebChannelHeavyRuntimeModule>(
   return value as NonNullable<WebChannelHeavyRuntimeModule[K]>;
 }
 
-/** Reused helper for get Active Web Listener behavior in src/plugins/runtime. */
+/** Returns the active web listener from the light runtime boundary. */
 export function getActiveWebListener(
   ...args: Parameters<WebChannelLightRuntimeModule["getActiveWebListener"]>
 ): ReturnType<WebChannelLightRuntimeModule["getActiveWebListener"]> {
   return getLightExport("getActiveWebListener")(...args);
 }
 
-/** Reused helper for get Web Auth Age Ms behavior in src/plugins/runtime. */
+/** Returns the age of web auth state from the light runtime boundary. */
 export function getWebAuthAgeMs(
   ...args: Parameters<WebChannelLightRuntimeModule["getWebAuthAgeMs"]>
 ): ReturnType<WebChannelLightRuntimeModule["getWebAuthAgeMs"]> {
   return getLightExport("getWebAuthAgeMs")(...args);
 }
 
-/** Reused helper for log Web Self Id behavior in src/plugins/runtime. */
+/** Logs the current web self id through the light runtime boundary. */
 export function logWebSelfId(
   ...args: Parameters<WebChannelLightRuntimeModule["logWebSelfId"]>
 ): ReturnType<WebChannelLightRuntimeModule["logWebSelfId"]> {
   return getLightExport("logWebSelfId")(...args);
 }
 
-/** Reused helper for login Web behavior in src/plugins/runtime. */
+/** Starts web login through the heavy runtime boundary. */
 export function loginWeb(
   ...args: Parameters<WebChannelHeavyRuntimeModule["loginWeb"]>
 ): ReturnType<WebChannelHeavyRuntimeModule["loginWeb"]> {
   return loadWebChannelHeavyModule().then((loaded) => loaded.loginWeb(...args));
 }
 
-/** Reused helper for logout Web behavior in src/plugins/runtime. */
+/** Logs out web auth state through the light runtime boundary. */
 export function logoutWeb(
   ...args: Parameters<WebChannelLightRuntimeModule["logoutWeb"]>
 ): ReturnType<WebChannelLightRuntimeModule["logoutWeb"]> {
   return getLightExport("logoutWeb")(...args);
 }
 
-/** Reused helper for read Web Self Id behavior in src/plugins/runtime. */
+/** Reads cached web self id fields through the light runtime boundary. */
 export function readWebSelfId(
   ...args: Parameters<WebChannelLightRuntimeModule["readWebSelfId"]>
 ): ReturnType<WebChannelLightRuntimeModule["readWebSelfId"]> {
   return getLightExport("readWebSelfId")(...args);
 }
 
-/** Reused helper for web Auth Exists behavior in src/plugins/runtime. */
+/** Checks whether web auth state exists through the light runtime boundary. */
 export function webAuthExists(
   ...args: Parameters<WebChannelLightRuntimeModule["webAuthExists"]>
 ): ReturnType<WebChannelLightRuntimeModule["webAuthExists"]> {
   return getLightExport("webAuthExists")(...args);
 }
 
-/** Reused helper for send Web Channel Message behavior in src/plugins/runtime. */
+/** Sends a web-channel text/media message through the heavy runtime boundary. */
 export function sendWebChannelMessage(
   ...args: Parameters<WebChannelHeavyRuntimeModule["sendMessageWhatsApp"]>
 ): ReturnType<WebChannelHeavyRuntimeModule["sendMessageWhatsApp"]> {
   return loadWebChannelHeavyModule().then((loaded) => loaded.sendMessageWhatsApp(...args));
 }
 
-/** Reused helper for send Web Channel Poll behavior in src/plugins/runtime. */
+/** Sends a web-channel poll through the heavy runtime boundary. */
 export function sendWebChannelPoll(
   ...args: Parameters<WebChannelHeavyRuntimeModule["sendPollWhatsApp"]>
 ): ReturnType<WebChannelHeavyRuntimeModule["sendPollWhatsApp"]> {
   return loadWebChannelHeavyModule().then((loaded) => loaded.sendPollWhatsApp(...args));
 }
 
-/** Reused helper for send Web Channel Reaction behavior in src/plugins/runtime. */
+/** Sends a web-channel reaction through the heavy runtime boundary. */
 export function sendWebChannelReaction(
   ...args: Parameters<WebChannelHeavyRuntimeModule["sendReactionWhatsApp"]>
 ): ReturnType<WebChannelHeavyRuntimeModule["sendReactionWhatsApp"]> {
   return loadWebChannelHeavyModule().then((loaded) => loaded.sendReactionWhatsApp(...args));
 }
 
-/** Reused helper for create Runtime Web Channel Login Tool behavior in src/plugins/runtime. */
+/** Creates the web-channel login agent tool from the light runtime boundary. */
 export function createRuntimeWebChannelLoginTool(
   ...args: Parameters<WebChannelLightRuntimeModule["createWhatsAppLoginTool"]>
 ): ReturnType<WebChannelLightRuntimeModule["createWhatsAppLoginTool"]> {
   return getLightExport("createWhatsAppLoginTool")(...args);
 }
 
-/** Reused helper for create Web Channel Socket behavior in src/plugins/runtime. */
+/** Creates a web-channel socket through the heavy runtime boundary. */
 export function createWebChannelSocket(
   ...args: Parameters<WebChannelHeavyRuntimeModule["createWaSocket"]>
 ): ReturnType<WebChannelHeavyRuntimeModule["createWaSocket"]> {
   return loadWebChannelHeavyModule().then((loaded) => loaded.createWaSocket(...args));
 }
 
-/** Reused helper for format Error behavior in src/plugins/runtime. */
+/** Formats web-channel runtime errors through the light boundary. */
 export function formatError(
   ...args: Parameters<WebChannelLightRuntimeModule["formatError"]>
 ): ReturnType<WebChannelLightRuntimeModule["formatError"]> {
   return getLightExport("formatError")(...args);
 }
 
-/** Reused helper for get Status Code behavior in src/plugins/runtime. */
+/** Extracts a status code from a web-channel runtime error. */
 export function getStatusCode(
   ...args: Parameters<WebChannelLightRuntimeModule["getStatusCode"]>
 ): ReturnType<WebChannelLightRuntimeModule["getStatusCode"]> {
   return getLightExport("getStatusCode")(...args);
 }
 
-/** Reused helper for pick Web Channel behavior in src/plugins/runtime. */
+/** Selects the active web channel identity through the light boundary. */
 export function pickWebChannel(
   ...args: Parameters<WebChannelLightRuntimeModule["pickWebChannel"]>
 ): ReturnType<WebChannelLightRuntimeModule["pickWebChannel"]> {
   return getLightExport("pickWebChannel")(...args);
 }
 
-/** Reused helper for resolve Web Channel Auth Dir behavior in src/plugins/runtime. */
+/** Resolves the default web-channel auth directory from the light boundary. */
 export function resolveWebChannelAuthDir(): ReturnType<
   NonNullable<WebChannelLightRuntimeModule["resolveDefaultWebAuthDir"]>
 > {
@@ -327,79 +327,79 @@ export function resolveWebChannelAuthDir(): ReturnType<
   throw new Error("web channel plugin runtime is missing export 'resolveDefaultWebAuthDir'");
 }
 
-/** Reused helper for handle Web Channel Action behavior in src/plugins/runtime. */
+/** Runs a web-channel message tool action through the heavy boundary. */
 export async function handleWebChannelAction(
   ...args: Parameters<WebChannelHeavyRuntimeModule["handleWhatsAppAction"]>
 ): ReturnType<WebChannelHeavyRuntimeModule["handleWhatsAppAction"]> {
   return (await getHeavyExport("handleWhatsAppAction"))(...args);
 }
 
-/** Reused helper for load Web Media behavior in src/plugins/runtime. */
+/** Loads web-channel media through the shared media loader. */
 export async function loadWebMedia(
   ...args: Parameters<typeof loadWebMediaImpl>
 ): ReturnType<typeof loadWebMediaImpl> {
   return await loadWebMediaImpl(...args);
 }
 
-/** Reused helper for load Web Media Raw behavior in src/plugins/runtime. */
+/** Loads raw web-channel media bytes through the shared media loader. */
 export async function loadWebMediaRaw(
   ...args: Parameters<typeof loadWebMediaRawImpl>
 ): ReturnType<typeof loadWebMediaRawImpl> {
   return await loadWebMediaRawImpl(...args);
 }
 
-/** Reused helper for monitor Web Channel behavior in src/plugins/runtime. */
+/** Starts web-channel monitoring through the heavy runtime boundary. */
 export function monitorWebChannel(
   ...args: Parameters<WebChannelHeavyRuntimeModule["monitorWebChannel"]>
 ): ReturnType<WebChannelHeavyRuntimeModule["monitorWebChannel"]> {
   return loadWebChannelHeavyModule().then((loaded) => loaded.monitorWebChannel(...args));
 }
 
-/** Reused helper for monitor Web Inbox behavior in src/plugins/runtime. */
+/** Starts web inbox monitoring through the heavy runtime boundary. */
 export async function monitorWebInbox(
   ...args: Parameters<WebChannelHeavyRuntimeModule["monitorWebInbox"]>
 ): ReturnType<WebChannelHeavyRuntimeModule["monitorWebInbox"]> {
   return (await getHeavyExport("monitorWebInbox"))(...args);
 }
 
-/** Reused helper for optimize Image To Jpeg behavior in src/plugins/runtime. */
+/** Optimizes an image to JPEG through the shared media helper. */
 export async function optimizeImageToJpeg(
   ...args: Parameters<typeof optimizeImageToJpegImpl>
 ): ReturnType<typeof optimizeImageToJpegImpl> {
   return await optimizeImageToJpegImpl(...args);
 }
 
-/** Reused helper for start Web Login With Qr behavior in src/plugins/runtime. */
+/** Starts QR-based web login through the heavy runtime boundary. */
 export async function startWebLoginWithQr(
   ...args: Parameters<WebChannelHeavyRuntimeModule["startWebLoginWithQr"]>
 ): ReturnType<WebChannelHeavyRuntimeModule["startWebLoginWithQr"]> {
   return (await getHeavyExport("startWebLoginWithQr"))(...args);
 }
 
-/** Reused helper for wait For Web Channel Connection behavior in src/plugins/runtime. */
+/** Waits for web-channel socket connection through the heavy boundary. */
 export async function waitForWebChannelConnection(
   ...args: Parameters<WebChannelHeavyRuntimeModule["waitForWaConnection"]>
 ): ReturnType<WebChannelHeavyRuntimeModule["waitForWaConnection"]> {
   return (await getHeavyExport("waitForWaConnection"))(...args);
 }
 
-/** Reused helper for wait For Web Login behavior in src/plugins/runtime. */
+/** Waits for web login completion through the heavy runtime boundary. */
 export async function waitForWebLogin(
   ...args: Parameters<WebChannelHeavyRuntimeModule["waitForWebLogin"]>
 ): ReturnType<WebChannelHeavyRuntimeModule["waitForWebLogin"]> {
   return (await getHeavyExport("waitForWebLogin"))(...args);
 }
 
-/** Reused constant for extract Media Placeholder behavior in src/plugins/runtime. */
+/** Extracts media placeholders through the current heavy runtime module. */
 export const extractMediaPlaceholder = (
   ...args: Parameters<WebChannelHeavyRuntimeModule["extractMediaPlaceholder"]>
 ) => loadCurrentHeavyModuleSync().extractMediaPlaceholder(...args);
 
-/** Reused constant for extract Text behavior in src/plugins/runtime. */
+/** Extracts message text through the current heavy runtime module. */
 export const extractText = (...args: Parameters<WebChannelHeavyRuntimeModule["extractText"]>) =>
   loadCurrentHeavyModuleSync().extractText(...args);
 
-/** Reused helper for get Default Local Roots behavior in src/plugins/runtime. */
+/** Returns default local filesystem roots for web-channel media loading. */
 export function getDefaultLocalRoots(
   ...args: Parameters<typeof getDefaultLocalRootsImpl>
 ): ReturnType<typeof getDefaultLocalRootsImpl> {
