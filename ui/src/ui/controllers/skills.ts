@@ -1,8 +1,8 @@
-// ui/src/ui/controllers skills helpers and runtime behavior.
+// Control UI state controller for installed skills and ClawHub discovery flows.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { SkillClawHubLink, SkillStatusEntry, SkillStatusReport } from "../types.ts";
 
-/** Shared type for Claw Hub Search Result in ui/src/ui/controllers. */
+/** ClawHub search result shown in the skill discovery list. */
 export type ClawHubSearchResult = {
   score: number;
   slug: string;
@@ -12,7 +12,7 @@ export type ClawHubSearchResult = {
   updatedAt?: number;
 };
 
-/** Shared type for Claw Hub Skill Detail in ui/src/ui/controllers. */
+/** ClawHub skill detail payload shown before install. */
 export type ClawHubSkillDetail = {
   skill: {
     slug: string;
@@ -38,7 +38,7 @@ export type ClawHubSkillDetail = {
   } | null;
 };
 
-/** Shared type for Claw Hub Skill Security Verdict in ui/src/ui/controllers. */
+/** Security verdict returned for a linked ClawHub skill version. */
 export type ClawHubSkillSecurityVerdict = {
   registry: string;
   ok: boolean;
@@ -63,7 +63,7 @@ export type ClawHubSkillSecurityVerdict = {
   };
 };
 
-/** Shared type for Skills State in ui/src/ui/controllers. */
+/** Mutable UI state for skills status, edits, skill cards, and ClawHub views. */
 export type SkillsState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -92,13 +92,13 @@ export type SkillsState = {
   skillCardErrors: Record<string, string>;
 };
 
-/** Shared type for Skill Message in ui/src/ui/controllers. */
+/** Per-skill success or error message shown after a mutation. */
 export type SkillMessage = {
   kind: "success" | "error";
   message: string;
 };
 
-/** Shared type for Skill Message Map in ui/src/ui/controllers. */
+/** Skill-key-indexed mutation messages for the skills screen. */
 export type SkillMessageMap = Record<string, SkillMessage>;
 
 function setSkillMessage(state: SkillsState, key: string, message: SkillMessage) {
@@ -110,7 +110,7 @@ function setSkillMessage(state: SkillsState, key: string, message: SkillMessage)
 
 const getErrorMessage = (err: unknown) => (err instanceof Error ? err.message : String(err));
 
-/** Reused helper for clawhub Verdict Key behavior in ui/src/ui/controllers. */
+/** Builds a stable map key for a ClawHub security verdict target. */
 export function clawhubVerdictKey(target: {
   registry: string;
   slug: string;
@@ -165,7 +165,7 @@ async function runStaleAwareRequest<T>(
   onFinally();
 }
 
-/** Reused helper for set Claw Hub Search Query behavior in ui/src/ui/controllers. */
+/** Updates the ClawHub search query and clears stale search/install state. */
 export function setClawHubSearchQuery(state: SkillsState, query: string) {
   state.clawhubSearchQuery = query;
   state.clawhubInstallMessage = null;
@@ -174,7 +174,7 @@ export function setClawHubSearchQuery(state: SkillsState, query: string) {
   state.clawhubSearchLoading = false;
 }
 
-/** Reused helper for load Skills behavior in ui/src/ui/controllers. */
+/** Loads installed skill status and related ClawHub security verdicts. */
 export async function loadSkills(state: SkillsState, options?: { clearMessages?: boolean }) {
   if (options?.clearMessages && Object.keys(state.skillMessages).length > 0) {
     state.skillMessages = {};
@@ -222,7 +222,7 @@ function pruneSkillCardState(state: SkillsState, report: SkillStatusReport) {
   }
 }
 
-/** Reused helper for load Skill Card behavior in ui/src/ui/controllers. */
+/** Loads and caches a skill card file for one installed skill. */
 export async function loadSkillCard(state: SkillsState, skillKey: string) {
   if (
     !state.client ||
@@ -298,7 +298,7 @@ async function loadClawHubSecurityVerdicts(state: SkillsState, report: SkillStat
   }
 }
 
-/** Reused helper for update Skill Edit behavior in ui/src/ui/controllers. */
+/** Updates the pending API-key edit value for one installed skill. */
 export function updateSkillEdit(state: SkillsState, skillKey: string, value: string) {
   state.skillEdits = { ...state.skillEdits, [skillKey]: value };
 }
@@ -330,7 +330,7 @@ async function runSkillMutation(
   }
 }
 
-/** Reused helper for update Skill Enabled behavior in ui/src/ui/controllers. */
+/** Enables or disables an installed skill through the gateway. */
 export async function updateSkillEnabled(state: SkillsState, skillKey: string, enabled: boolean) {
   await runSkillMutation(state, skillKey, async (client) => {
     await client.request("skills.update", { skillKey, enabled });
@@ -341,7 +341,7 @@ export async function updateSkillEnabled(state: SkillsState, skillKey: string, e
   });
 }
 
-/** Reused helper for save Skill Api Key behavior in ui/src/ui/controllers. */
+/** Persists the pending API key edit for an installed skill. */
 export async function saveSkillApiKey(state: SkillsState, skillKey: string) {
   await runSkillMutation(state, skillKey, async (client) => {
     const apiKey = state.skillEdits[skillKey] ?? "";
@@ -353,7 +353,7 @@ export async function saveSkillApiKey(state: SkillsState, skillKey: string) {
   });
 }
 
-/** Reused helper for install Skill behavior in ui/src/ui/controllers. */
+/** Runs the generic skill install action for a named install target. */
 export async function installSkill(
   state: SkillsState,
   skillKey: string,
@@ -375,7 +375,7 @@ export async function installSkill(
   });
 }
 
-/** Reused helper for search Claw Hub behavior in ui/src/ui/controllers. */
+/** Searches ClawHub and ignores stale responses from older queries. */
 export async function searchClawHub(state: SkillsState, query: string) {
   if (!state.client || !state.connected) {
     return;
@@ -411,7 +411,7 @@ export async function searchClawHub(state: SkillsState, query: string) {
   );
 }
 
-/** Reused helper for load Claw Hub Detail behavior in ui/src/ui/controllers. */
+/** Loads ClawHub detail for the selected slug with stale-response protection. */
 export async function loadClawHubDetail(state: SkillsState, slug: string) {
   if (!state.client || !state.connected) {
     return;
@@ -436,7 +436,7 @@ export async function loadClawHubDetail(state: SkillsState, slug: string) {
   );
 }
 
-/** Reused helper for close Claw Hub Detail behavior in ui/src/ui/controllers. */
+/** Clears the currently open ClawHub detail panel state. */
 export function closeClawHubDetail(state: SkillsState) {
   state.clawhubDetailSlug = null;
   state.clawhubDetail = null;
@@ -444,7 +444,7 @@ export function closeClawHubDetail(state: SkillsState) {
   state.clawhubDetailLoading = false;
 }
 
-/** Reused helper for install From Claw Hub behavior in ui/src/ui/controllers. */
+/** Installs a skill from ClawHub and refreshes installed skill status. */
 export async function installFromClawHub(state: SkillsState, slug: string) {
   if (!state.client || !state.connected) {
     return;
