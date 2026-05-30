@@ -59,7 +59,7 @@ import { resolveSubagentSpawnAcceptedNote } from "./subagent-spawn-accepted-note
 import { resolveSubagentSpawnOwnership } from "./subagent-spawn-ownership.js";
 import { resolveSubagentTargetPolicy } from "./subagent-target-policy.js";
 import { normalizeSubagentTaskName } from "./subagent-task-name.js";
-/** Re-exported API for src/agents. */
+/** Accepted-note constants for subagent spawn responses. */
 export {
   SUBAGENT_SPAWN_ACCEPTED_NOTE,
   SUBAGENT_SPAWN_SESSION_ACCEPTED_NOTE,
@@ -103,20 +103,20 @@ import {
   type SpawnSubagentSandboxMode,
 } from "./subagent-spawn.types.js";
 
-/** Re-exported API for src/agents. */
+/** Allowed subagent spawn mode enum values. */
 export {
   SUBAGENT_SPAWN_CONTEXT_MODES,
   SUBAGENT_SPAWN_MODES,
   SUBAGENT_SPAWN_SANDBOX_MODES,
 } from "./subagent-spawn.types.js";
-/** Re-exported API for src/agents. */
+/** Subagent spawn mode types used by callers and config. */
 export type {
   SpawnSubagentContextMode,
   SpawnSubagentMode,
   SpawnSubagentSandboxMode,
 } from "./subagent-spawn.types.js";
 
-/** Re-exported API for src/agents, starting with decode Strict Base64. */
+/** Strict attachment base64 decoder used by subagent spawn materialization. */
 export { decodeStrictBase64 };
 
 function resolveConfiguredAgentIds(cfg: OpenClawConfig): string[] {
@@ -196,7 +196,7 @@ export type SpawnSubagentContext = {
   inheritedToolDenylist?: string[];
 };
 
-/** Shared type for Spawn Subagent Result in src/agents. */
+/** Result returned after accepting, rejecting, or failing a direct subagent spawn. */
 export type SpawnSubagentResult = {
   status: "accepted" | "forbidden" | "error";
   childSessionKey?: string;
@@ -218,7 +218,7 @@ export type SpawnSubagentResult = {
   };
 };
 
-/** Re-exported API for src/agents, starting with split Model Ref. */
+/** Split a provider/model ref for subagent model planning. */
 export { splitModelRef } from "./subagent-spawn-plan.js";
 
 async function updateSubagentSessionStore(
@@ -981,7 +981,7 @@ function hasRoutableDeliveryOrigin(
   return Boolean(origin?.channel && origin.to);
 }
 
-/** Reused helper for spawn Subagent Direct behavior in src/agents. */
+/** Spawn a direct child agent session, fork context, and start its gateway run. */
 export async function spawnSubagentDirect(
   params: SpawnSubagentParams,
   ctx: SpawnSubagentContext,
@@ -1659,7 +1659,7 @@ export async function spawnSubagentDirect(
   };
 }
 
-/** Reused constant for testing behavior in src/agents. */
+/** Test-only dependency override surface for direct subagent spawning. */
 export const testing = {
   setDepsForTest(overrides?: Partial<SubagentSpawnDeps>) {
     subagentSpawnDeps = overrides
@@ -1670,5 +1670,5 @@ export const testing = {
       : defaultSubagentSpawnDeps;
   },
 };
-/** Re-exported API for src/agents, starting with testing. */
+/** Backward-compatible test facade alias. */
 export { testing as __testing };

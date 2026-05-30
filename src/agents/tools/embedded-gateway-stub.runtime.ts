@@ -1,26 +1,26 @@
 /** Runtime imports isolated for embedded gateway stub tests and wiring. */
 export { resolveSessionAgentId } from "../../agents/agent-scope.js";
-/** Re-exported API for src/agents/tools, starting with get Runtime Config. */
+/** Runtime config accessor used by embedded gateway session tools. */
 export { getRuntimeConfig } from "../../config/config.js";
-/** Re-exported API for src/agents/tools. */
+/** Chat history projection helpers used by embedded gateway stubs. */
 export {
   projectRecentChatDisplayMessages,
   resolveEffectiveChatHistoryMaxChars,
 } from "../../gateway/chat-display-projection.js";
-/** Re-exported API for src/agents/tools, starting with augment Chat History With Cli Session Imports. */
+/** Attach imported CLI session history to gateway chat history. */
 export { augmentChatHistoryWithCliSessionImports } from "../../gateway/cli-session-history.js";
-/** Re-exported API for src/agents/tools, starting with get Max Chat History Messages Bytes. */
+/** Runtime byte cap for chat-history message responses. */
 export { getMaxChatHistoryMessagesBytes } from "../../gateway/server-constants.js";
-/** Re-exported API for src/agents/tools. */
+/** Chat history budget and canvas-block helpers used by session tools. */
 export {
   augmentChatHistoryWithCanvasBlocks,
   CHAT_HISTORY_MAX_SINGLE_MESSAGE_BYTES,
   enforceChatHistoryFinalBudget,
   replaceOversizedChatHistoryMessages,
 } from "../../gateway/server-methods/chat.js";
-/** Re-exported API for src/agents/tools, starting with cap Array By Json Bytes. */
+/** Cap JSON arrays by serialized byte size for session tool payloads. */
 export { capArrayByJsonBytes } from "../../gateway/session-utils.fs.js";
-/** Re-exported API for src/agents/tools. */
+/** Session store readers used by embedded gateway session tools. */
 export {
   listSessionsFromStoreAsync,
   loadCombinedSessionStoreForGateway,
@@ -28,7 +28,7 @@ export {
   readSessionMessagesAsync,
   resolveSessionModelRef,
 } from "../../gateway/session-utils.js";
-/** Re-exported API for src/agents/tools, starting with resolve Session Key From Resolve Params. */
+/** Resolve a session key from sessions.resolve-style input. */
 export { resolveSessionKeyFromResolveParams } from "../../gateway/sessions-resolve.js";
-/** Re-exported API for src/agents/tools, starting with Sessions List Result. */
+/** Sessions list response type returned by gateway session utilities. */
 export type { SessionsListResult } from "../../gateway/session-utils.types.js";

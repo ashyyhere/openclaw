@@ -5,33 +5,33 @@ import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { isInternalMessageChannel } from "../../utils/message-channel.js";
 import type { ElevatedLevel, ReasoningLevel } from "./directives.js";
 
-/** Reused constant for format Directive Ack behavior in src/auto-reply/reply. */
+/** Format a directive acknowledgement as a system-prefixed reply line. */
 export const formatDirectiveAck = (text: string): string => {
   return prefixSystemMessage(text);
 };
 
 const formatOptionsLine = (options: string) => `Options: ${options}.`;
-/** Reused constant for with Options behavior in src/auto-reply/reply. */
+/** Append a standardized options line to directive help text. */
 export const withOptions = (line: string, options: string) =>
   `${line}\n${formatOptionsLine(options)}`;
 
-/** Reused constant for format Elevated Runtime Hint behavior in src/auto-reply/reply. */
+/** Explain that elevated mode is irrelevant for direct, unsandboxed runtime. */
 export const formatElevatedRuntimeHint = () =>
   `${SYSTEM_MARK} Runtime is direct; sandboxing does not apply.`;
 
-/** Reused constant for format Internal Exec Persistence Denied Text behavior in src/auto-reply/reply. */
+/** Message shown when internal callers lack admin scope to persist exec defaults. */
 export const formatInternalExecPersistenceDeniedText = () =>
   "Exec defaults require operator.admin for gateway callers; skipped persistence.";
 
-/** Reused constant for format Internal Verbose Persistence Denied Text behavior in src/auto-reply/reply. */
+/** Message shown when internal callers lack admin scope to persist verbose defaults. */
 export const formatInternalVerbosePersistenceDeniedText = () =>
   "Verbose defaults require operator.admin for gateway callers; skipped persistence.";
 
-/** Reused constant for format Internal Verbose Current Reply Only Text behavior in src/auto-reply/reply. */
+/** Message shown when verbose mode applies only to the current reply. */
 export const formatInternalVerboseCurrentReplyOnlyText = () =>
   "Verbose logging set for the current reply only.";
 
-/** Reused helper for can Persist Session Directive Defaults behavior in src/auto-reply/reply. */
+/** Decide whether a directive may persist session defaults for this caller. */
 export function canPersistSessionDirectiveDefaults(params: {
   messageProvider?: string;
   surface?: string;
@@ -74,7 +74,7 @@ const formatReasoningEvent = (level: ReasoningLevel) => {
   return "Reasoning OFF - hide <think>.";
 };
 
-/** Reused helper for enqueue Mode Switch Events behavior in src/auto-reply/reply. */
+/** Enqueue system events describing elevated/reasoning mode changes. */
 export function enqueueModeSwitchEvents(params: {
   enqueueSystemEvent: (text: string, meta: { sessionKey: string; contextKey: string }) => void;
   sessionEntry: { elevatedLevel?: string | null; reasoningLevel?: string | null };
@@ -98,7 +98,7 @@ export function enqueueModeSwitchEvents(params: {
   }
 }
 
-/** Reused helper for format Elevated Unavailable Text behavior in src/auto-reply/reply. */
+/** Build the explanatory reply when elevated mode is blocked by policy. */
 export function formatElevatedUnavailableText(params: {
   runtimeSandboxed: boolean;
   failures?: Array<{ gate: string; key: string }>;
