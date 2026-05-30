@@ -8,7 +8,7 @@ import { formatErrorMessage } from "../infra/errors.js";
 import { defaultRuntime, writeRuntimeJson, type RuntimeEnv } from "../runtime.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
-/** Shared type for Plugins Search Options in src/cli. */
+/** User-facing ClawHub plugin search options. */
 export type PluginsSearchOptions = {
   json?: boolean;
   limit?: number;
@@ -67,7 +67,7 @@ function formatPackageSearchLine(entry: ClawHubPackageSearchResult): string {
   return `${pkg.name}  ${theme.muted(flags.join(" | "))}${summary}\n  ${theme.muted(`Install: openclaw plugins install clawhub:${pkg.name}`)}`;
 }
 
-/** Reused helper for run Plugins Search Command behavior in src/cli. */
+/** Searches installable ClawHub plugin families and renders merged ranked results. */
 export async function runPluginsSearchCommand(
   queryParts: string[] | string,
   opts: PluginsSearchOptions = {},

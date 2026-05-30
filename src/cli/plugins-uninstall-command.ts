@@ -11,7 +11,7 @@ import {
 import { defaultRuntime, type RuntimeEnv } from "../runtime.js";
 import { shortenHomePath } from "../utils.js";
 
-/** Shared type for Plugin Uninstall Options in src/cli. */
+/** Options controlling uninstall preview, confirmation, and file deletion. */
 export type PluginUninstallOptions = {
   keepFiles?: boolean;
   /** @deprecated Use keepFiles. */
@@ -27,7 +27,7 @@ function isPromptInputClosedError(
   return error instanceof PromptInputClosedError;
 }
 
-/** Reused helper for run Plugin Uninstall Command behavior in src/cli. */
+/** Plans and persists plugin uninstall config/install-record changes with optional file removal. */
 export async function runPluginUninstallCommand(
   id: string,
   opts: PluginUninstallOptions = {},

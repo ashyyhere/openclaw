@@ -1,6 +1,6 @@
 import { formatCliCommand } from "./command-format.js";
 
-/** Reused helper for format Invalid Config Recovery Hint behavior in src/cli. */
+/** Recovery hint shown when startup/config parsing blocks command execution. */
 export function formatInvalidConfigRecoveryHint(): string {
   return [
     `Run "${formatCliCommand("openclaw doctor --fix")}" to repair, then retry.`,
@@ -8,7 +8,7 @@ export function formatInvalidConfigRecoveryHint(): string {
   ].join("\n");
 }
 
-/** Reused helper for format Plugin Packaging Runtime Output Recovery Hint behavior in src/cli. */
+/** Recovery hint for plugins that ship source without compiled runtime output. */
 export function formatPluginPackagingRuntimeOutputRecoveryHint(): string {
   return [
     "This is a plugin packaging issue, not a local config problem.",

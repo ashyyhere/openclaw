@@ -26,23 +26,23 @@ function loadPrecomputedChannelOptions(): string[] | null {
   return null;
 }
 
-/** Reused helper for resolve Cli Channel Options behavior in src/cli. */
+/** Returns startup-metadata channel choices without loading plugin registries. */
 export function resolveCliChannelOptions(): string[] {
   const precomputed = loadPrecomputedChannelOptions();
   return precomputed ?? [];
 }
 
-/** Reused helper for format Cli Channel Options behavior in src/cli. */
+/** Formats channel option choices for Commander help text. */
 export function formatCliChannelOptions(extra: string[] = []): string {
   const options = [...extra, ...resolveCliChannelOptions()];
   return options.length > 0 ? options.join("|") : "channel";
 }
 
-/** Reused constant for testing behavior in src/cli. */
+/** Test seam for resetting cached startup-metadata channel options. */
 export const testing = {
   resetPrecomputedChannelOptionsForTests(): void {
     precomputedChannelOptions = undefined;
   },
 };
-/** Re-exported API for src/cli, starting with testing. */
+/** Backward-compatible test export for channel option cache controls. */
 export { testing as __testing };
