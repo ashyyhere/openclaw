@@ -1,16 +1,18 @@
-// test/vitest vitest boundary config helpers and runtime behavior.
+// Boundary Vitest config runs module-boundary unit tests with optional isolation.
 import { defineProject } from "vitest/config";
 import { loadPatternListFromEnv, narrowIncludePatternsForCli } from "./vitest.pattern-file.ts";
 import { resolveVitestIsolation } from "./vitest.scoped-config.ts";
 import { nonIsolatedRunnerPath, sharedVitestConfig } from "./vitest.shared.config.ts";
 import { boundaryTestFiles } from "./vitest.unit-paths.mjs";
 
+/** Loads optional boundary test include patterns from an env-provided pattern file. */
 export function loadBoundaryIncludePatternsFromEnv(
   env: Record<string, string | undefined> = process.env,
 ): string[] | null {
   return loadPatternListFromEnv("OPENCLAW_VITEST_INCLUDE_FILE", env);
 }
 
+/** Creates the boundary Vitest project config. */
 export function createBoundaryVitestConfig(
   env: Record<string, string | undefined> = process.env,
   argv: string[] = process.argv,
@@ -33,4 +35,5 @@ export function createBoundaryVitestConfig(
   });
 }
 
+/** Default boundary Vitest project config. */
 export default createBoundaryVitestConfig();
