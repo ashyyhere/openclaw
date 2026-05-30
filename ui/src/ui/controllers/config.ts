@@ -1,4 +1,4 @@
-// ui/src/ui/controllers config helpers and runtime behavior.
+// Control UI state controller for config snapshots, schema-backed forms, and apply/update actions.
 import { applyMergePatch } from "../../../../src/config/merge-patch.ts";
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { ConfigSchemaResponse, ConfigSnapshot, ConfigUiHints } from "../types.ts";
@@ -12,7 +12,7 @@ import {
   setPathValue,
 } from "./config/form-utils.ts";
 
-/** Shared type for Config State in ui/src/ui/controllers. */
+/** Mutable UI state for raw config, form config, schema metadata, and update status. */
 export type ConfigState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -45,12 +45,12 @@ export type ConfigState = {
 
 const autoAllowlistedPluginIdsByState = new WeakMap<ConfigState, Set<string>>();
 
-/** Shared type for Load Config Options in ui/src/ui/controllers. */
+/** Options that control whether loading config preserves dirty edits. */
 export type LoadConfigOptions = {
   discardPendingChanges?: boolean;
 };
 
-/** Reused helper for load Config behavior in ui/src/ui/controllers. */
+/** Loads the current config snapshot from the gateway. */
 export async function loadConfig(state: ConfigState, options: LoadConfigOptions = {}) {
   if (!state.client || !state.connected) {
     return;
@@ -67,7 +67,7 @@ export async function loadConfig(state: ConfigState, options: LoadConfigOptions 
   }
 }
 
-/** Reused helper for load Config Schema behavior in ui/src/ui/controllers. */
+/** Loads the config JSON schema and UI hints used by the form renderer. */
 export async function loadConfigSchema(state: ConfigState) {
   if (!state.client || !state.connected) {
     return;
@@ -109,7 +109,7 @@ function resolveEditableSnapshotConfig(
   );
 }
 
-/** Reused helper for apply Config Snapshot behavior in ui/src/ui/controllers. */
+/** Applies a gateway config snapshot while optionally preserving pending edits. */
 export function applyConfigSnapshot(
   state: ConfigState,
   snapshot: ConfigSnapshot,
@@ -262,19 +262,19 @@ function syncConfigDraft(state: ConfigState, nextForm: Record<string, unknown>) 
   state.configFormDirty = nextRaw !== originalRaw;
 }
 
-/** Reused helper for save Config behavior in ui/src/ui/controllers. */
+/** Saves the pending config draft without applying it to the current session. */
 export async function saveConfig(state: ConfigState): Promise<boolean> {
   return submitConfigChange(state, "config.set", "configSaving");
 }
 
-/** Reused helper for apply Config behavior in ui/src/ui/controllers. */
+/** Applies the pending config draft to the selected session key. */
 export async function applyConfig(state: ConfigState): Promise<boolean> {
   return submitConfigChange(state, "config.apply", "configApplying", {
     sessionKey: state.applySessionKey,
   });
 }
 
-/** Reused helper for run Update behavior in ui/src/ui/controllers. */
+/** Starts the gateway update flow and records any follow-up status banner. */
 export async function runUpdate(state: ConfigState) {
   if (!state.client || !state.connected) {
     return;
@@ -384,7 +384,7 @@ function syncEnabledPluginAllowlist(
   untrackAutoAllowlistedPluginId(state, pluginId);
 }
 
-/** Reused helper for update Config Form Value behavior in ui/src/ui/controllers. */
+/** Updates one schema-form path and synchronizes related plugin allowlist edits. */
 export function updateConfigFormValue(
   state: ConfigState,
   path: Array<string | number>,
@@ -400,7 +400,7 @@ export function updateConfigFormValue(
   });
 }
 
-/** Reused helper for update Config Raw Value behavior in ui/src/ui/controllers. */
+/** Updates the raw config editor text and dirty/base-hash state. */
 export function updateConfigRawValue(state: ConfigState, value: string) {
   state.configRaw = value;
   state.configFormDirty = value !== state.configRawOriginal;
@@ -411,7 +411,7 @@ export function updateConfigRawValue(state: ConfigState, value: string) {
   }
 }
 
-/** Reused helper for stage Config Preset behavior in ui/src/ui/controllers. */
+/** Applies a merge-patch preset to the current editable config draft. */
 export function stageConfigPreset(state: ConfigState, patch: Record<string, unknown>) {
   const snapshotConfig = resolveEditableSnapshotConfig(state.configSnapshot);
   const baseSource = state.configForm ?? snapshotConfig;
@@ -426,7 +426,7 @@ export function stageConfigPreset(state: ConfigState, patch: Record<string, unkn
   syncConfigDraft(state, cloneConfigObject(merged as Record<string, unknown>));
 }
 
-/** Reused helper for reset Config Pending Changes behavior in ui/src/ui/controllers. */
+/** Restores the config form/raw draft to the last loaded snapshot. */
 export function resetConfigPendingChanges(state: ConfigState) {
   const editableConfig = resolveEditableSnapshotConfig(state.configSnapshot);
   state.configForm = cloneConfigObject(state.configFormOriginal ?? editableConfig ?? {});
@@ -438,12 +438,12 @@ export function resetConfigPendingChanges(state: ConfigState) {
   autoAllowlistedPluginIdsByState.delete(state);
 }
 
-/** Reused helper for remove Config Form Value behavior in ui/src/ui/controllers. */
+/** Removes one path from the schema-form config draft. */
 export function removeConfigFormValue(state: ConfigState, path: Array<string | number>) {
   mutateConfigForm(state, (draft) => removePathValue(draft, path));
 }
 
-/** Reused helper for find Agent Config Entry Index behavior in ui/src/ui/controllers. */
+/** Finds an agent config entry index by agent id. */
 export function findAgentConfigEntryIndex(
   config: Record<string, unknown> | null,
   agentId: string,
@@ -465,7 +465,7 @@ export function findAgentConfigEntryIndex(
   );
 }
 
-/** Reused helper for ensure Agent Config Entry behavior in ui/src/ui/controllers. */
+/** Ensures an agent config entry exists and returns its index. */
 export function ensureAgentConfigEntry(state: ConfigState, agentId: string): number {
   const normalizedAgentId = agentId.trim();
   if (!normalizedAgentId) {
@@ -482,7 +482,7 @@ export function ensureAgentConfigEntry(state: ConfigState, agentId: string): num
   return nextIndex;
 }
 
-/** Reused helper for stage Default Agent Config Entry behavior in ui/src/ui/controllers. */
+/** Marks one staged agent config entry as the default agent. */
 export function stageDefaultAgentConfigEntry(state: ConfigState, agentId: string): boolean {
   const normalizedAgentId = agentId.trim();
   if (!normalizedAgentId) {
@@ -514,7 +514,7 @@ export function stageDefaultAgentConfigEntry(state: ConfigState, agentId: string
   return true;
 }
 
-/** Reused helper for open Config File behavior in ui/src/ui/controllers. */
+/** Requests the host to open the config file, copying the path on failure. */
 export async function openConfigFile(state: ConfigState): Promise<void> {
   if (!state.client || !state.connected) {
     return;
