@@ -1,9 +1,9 @@
-// ui/src/ui/controllers dreaming helpers and runtime behavior.
+/** Dreaming tab controller state, payload normalization, and gateway actions. */
 import type { GatewayBrowserClient, GatewayHelloOk } from "../gateway.ts";
 import { isPluginEnabledInConfigSnapshot } from "../plugin-activation.ts";
 import type { ConfigSnapshot } from "../types.ts";
 
-/** Shared type for Dreaming Phase Id in ui/src/ui/controllers. */
+/** Cron-managed memory dreaming phases shown in the Dreaming status panel. */
 export type DreamingPhaseId = "light" | "deep" | "rem";
 const DEFAULT_DREAM_DIARY_PATH = "DREAMS.md";
 const DEFAULT_DREAMING_PLUGIN_ID = "memory-core";
@@ -37,7 +37,7 @@ type RemDreamingStatus = DreamingPhaseStatusBase & {
   minPatternStrength: number;
 };
 
-/** Shared type for Dreaming Entry in ui/src/ui/controllers. */
+/** Normalized memory entry surfaced in short-term, signal, and promoted lists. */
 export type DreamingEntry = {
   key: string;
   path: string;
@@ -55,7 +55,7 @@ export type DreamingEntry = {
   lastRecalledAt?: string;
 };
 
-/** Shared type for Dreaming Status in ui/src/ui/controllers. */
+/** Dreaming status snapshot returned by the memory doctor endpoint. */
 export type DreamingStatus = {
   enabled: boolean;
   timezone?: string;
@@ -86,7 +86,7 @@ export type DreamingStatus = {
   };
 };
 
-/** Shared type for Wiki Import Insight Item in ui/src/ui/controllers. */
+/** ChatGPT import insight row displayed before promoting items into the wiki. */
 export type WikiImportInsightItem = {
   pagePath: string;
   title: string;
@@ -110,7 +110,7 @@ export type WikiImportInsightItem = {
   updatedAt?: string;
 };
 
-/** Shared type for Wiki Import Insight Cluster in ui/src/ui/controllers. */
+/** Group of import insight rows with aggregate risk and signal counts. */
 export type WikiImportInsightCluster = {
   key: string;
   label: string;
@@ -122,7 +122,7 @@ export type WikiImportInsightCluster = {
   items: WikiImportInsightItem[];
 };
 
-/** Shared type for Wiki Import Insights in ui/src/ui/controllers. */
+/** Normalized import insight payload for the memory wiki migration view. */
 export type WikiImportInsights = {
   sourceType: "chatgpt";
   totalItems: number;
@@ -130,7 +130,7 @@ export type WikiImportInsights = {
   clusters: WikiImportInsightCluster[];
 };
 
-/** Shared type for Wiki Memory Palace Item in ui/src/ui/controllers. */
+/** Memory wiki page summary rendered in the palace browser. */
 export type WikiMemoryPalaceItem = {
   pagePath: string;
   title: string;
@@ -147,7 +147,7 @@ export type WikiMemoryPalaceItem = {
   snippet?: string;
 };
 
-/** Shared type for Wiki Memory Palace Cluster in ui/src/ui/controllers. */
+/** Memory palace group for one wiki page kind plus aggregate evidence counts. */
 export type WikiMemoryPalaceCluster = {
   key: WikiMemoryPalaceItem["kind"];
   label: string;
@@ -159,10 +159,10 @@ export type WikiMemoryPalaceCluster = {
   items: WikiMemoryPalaceItem[];
 };
 
-/** Shared type for Wiki Memory Palace Page Counts in ui/src/ui/controllers. */
+/** Page-kind counts keyed by the memory palace item kind union. */
 export type WikiMemoryPalacePageCounts = Record<WikiMemoryPalaceItem["kind"], number>;
 
-/** Shared type for Wiki Memory Palace in ui/src/ui/controllers. */
+/** Normalized memory palace payload used by the Dreaming wiki panel. */
 export type WikiMemoryPalace = {
   totalItems: number;
   totalPages: number;
@@ -216,7 +216,7 @@ type WikiMemoryPalacePayload = {
   clusters?: unknown;
 };
 
-/** Shared type for Dreaming State in ui/src/ui/controllers. */
+/** Mutable controller state owned by the Dreaming UI surface. */
 export type DreamingState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -389,7 +389,7 @@ function resolveDreamingPluginId(configValue: Record<string, unknown> | null): s
   return DEFAULT_DREAMING_PLUGIN_ID;
 }
 
-/** Reused helper for resolve Configured Dreaming behavior in ui/src/ui/controllers. */
+/** Resolves the configured memory plugin and current dreaming enablement. */
 export function resolveConfiguredDreaming(configValue: Record<string, unknown> | null): {
   pluginId: string;
   enabled: boolean;
@@ -787,7 +787,7 @@ function normalizeDreamingStatus(raw: unknown): DreamingStatus | null {
   };
 }
 
-/** Reused helper for load Dreaming Status behavior in ui/src/ui/controllers. */
+/** Loads and normalizes the memory doctor dreaming status. */
 export async function loadDreamingStatus(state: DreamingState): Promise<void> {
   if (!state.client || !state.connected || state.dreamingStatusLoading) {
     return;
@@ -807,7 +807,7 @@ export async function loadDreamingStatus(state: DreamingState): Promise<void> {
   }
 }
 
-/** Reused helper for load Dream Diary behavior in ui/src/ui/controllers. */
+/** Loads DREAMS.md content and records whether the diary exists. */
 export async function loadDreamDiary(state: DreamingState): Promise<void> {
   if (!state.client || !state.connected || state.dreamDiaryLoading) {
     return;
@@ -835,7 +835,7 @@ export async function loadDreamDiary(state: DreamingState): Promise<void> {
   }
 }
 
-/** Reused helper for load Wiki Import Insights behavior in ui/src/ui/controllers. */
+/** Loads optional memory-wiki import insights when the method is available. */
 export async function loadWikiImportInsights(state: DreamingState): Promise<void> {
   if (!state.client || !state.connected || state.wikiImportInsightsLoading) {
     return;
@@ -860,7 +860,7 @@ export async function loadWikiImportInsights(state: DreamingState): Promise<void
   }
 }
 
-/** Reused helper for load Wiki Memory Palace behavior in ui/src/ui/controllers. */
+/** Loads optional memory-wiki palace summaries when the method is available. */
 export async function loadWikiMemoryPalace(state: DreamingState): Promise<void> {
   if (!state.client || !state.connected || state.wikiMemoryPalaceLoading) {
     return;
@@ -945,31 +945,31 @@ async function runDreamDiaryAction(
   }
 }
 
-/** Reused helper for backfill Dream Diary behavior in ui/src/ui/controllers. */
+/** Backfills DREAMS.md from existing memory signals and refreshes status. */
 export async function backfillDreamDiary(state: DreamingState): Promise<boolean> {
   return runDreamDiaryAction(state, "doctor.memory.backfillDreamDiary");
 }
 
-/** Reused helper for reset Dream Diary behavior in ui/src/ui/controllers. */
+/** Removes generated dream diary entries and refreshes diary/status state. */
 export async function resetDreamDiary(state: DreamingState): Promise<boolean> {
   return runDreamDiaryAction(state, "doctor.memory.resetDreamDiary");
 }
 
-/** Reused helper for reset Grounded Short Term behavior in ui/src/ui/controllers. */
+/** Clears replayed short-term grounded memory entries. */
 export async function resetGroundedShortTerm(state: DreamingState): Promise<boolean> {
   return runDreamDiaryAction(state, "doctor.memory.resetGroundedShortTerm", {
     reloadDiary: false,
   });
 }
 
-/** Reused helper for repair Dreaming Artifacts behavior in ui/src/ui/controllers. */
+/** Archives derived dream cache artifacts and triggers a clean rebuild. */
 export async function repairDreamingArtifacts(state: DreamingState): Promise<boolean> {
   return runDreamDiaryAction(state, "doctor.memory.repairDreamingArtifacts", {
     reloadDiary: false,
   });
 }
 
-/** Reused helper for copy Dreaming Archive Path behavior in ui/src/ui/controllers. */
+/** Copies the latest repair archive path to the browser clipboard. */
 export async function copyDreamingArchivePath(state: DreamingState): Promise<boolean> {
   const path = state.dreamDiaryActionArchivePath;
   if (!path) {
@@ -998,7 +998,7 @@ export async function copyDreamingArchivePath(state: DreamingState): Promise<boo
   }
 }
 
-/** Reused helper for dedupe Dream Diary behavior in ui/src/ui/controllers. */
+/** Removes exact duplicate entries from DREAMS.md. */
 export async function dedupeDreamDiary(state: DreamingState): Promise<boolean> {
   return runDreamDiaryAction(state, "doctor.memory.dedupeDreamDiary");
 }
@@ -1083,7 +1083,7 @@ async function ensureDreamingPathSupported(
   return true;
 }
 
-/** Reused helper for update Dreaming Enabled behavior in ui/src/ui/controllers. */
+/** Writes the configured plugin dreaming.enabled flag through config.patch. */
 export async function updateDreamingEnabled(
   state: DreamingState,
   enabled: boolean,
