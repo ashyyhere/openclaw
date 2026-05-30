@@ -7,27 +7,27 @@ import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { uniqueStrings } from "../../shared/string-normalization.js";
 import { MIGRATION_CONFLICT_REASON_PHRASES } from "./output.js";
 
-/** Reused constant for MIGRATION SKILL NOT SELECTED REASON behavior in src/commands/migrate. */
+/** Skip reason applied to skill items deselected during migration. */
 export const MIGRATION_SKILL_NOT_SELECTED_REASON = "not selected for migration";
-/** Reused constant for MIGRATION PLUGIN NOT SELECTED REASON behavior in src/commands/migrate. */
+/** Skip reason applied to plugin install/config items deselected during migration. */
 export const MIGRATION_PLUGIN_NOT_SELECTED_REASON = "not selected for migration";
-/** Reused constant for MIGRATION SELECTION ACCEPT behavior in src/commands/migrate. */
+/** Sentinel value emitted by the interactive selector when accepting recommendations. */
 export const MIGRATION_SELECTION_ACCEPT = "__openclaw_migrate_accept_recommended__";
-/** Reused constant for MIGRATION SELECTION TOGGLE ALL ON behavior in src/commands/migrate. */
+/** Sentinel value that represents selecting every currently visible migration item. */
 export const MIGRATION_SELECTION_TOGGLE_ALL_ON = "__openclaw_migrate_toggle_all_on__";
-/** Reused constant for MIGRATION SELECTION TOGGLE ALL OFF behavior in src/commands/migrate. */
+/** Sentinel value that represents deselecting every currently visible migration item. */
 export const MIGRATION_SELECTION_TOGGLE_ALL_OFF = "__openclaw_migrate_toggle_all_off__";
-/** Reused constant for MIGRATION SKILL SELECTION ACCEPT behavior in src/commands/migrate. */
+/** Skill-selector alias for the shared accept sentinel. */
 export const MIGRATION_SKILL_SELECTION_ACCEPT = MIGRATION_SELECTION_ACCEPT;
-/** Reused constant for MIGRATION SKILL SELECTION TOGGLE ALL ON behavior in src/commands/migrate. */
+/** Skill-selector alias for the shared select-all sentinel. */
 export const MIGRATION_SKILL_SELECTION_TOGGLE_ALL_ON = MIGRATION_SELECTION_TOGGLE_ALL_ON;
-/** Reused constant for MIGRATION SKILL SELECTION TOGGLE ALL OFF behavior in src/commands/migrate. */
+/** Skill-selector alias for the shared deselect-all sentinel. */
 export const MIGRATION_SKILL_SELECTION_TOGGLE_ALL_OFF = MIGRATION_SELECTION_TOGGLE_ALL_OFF;
 
 type InteractiveMigrationSelection = { action: "select"; selectedItemIds: Set<string> };
-/** Shared type for Interactive Migration Skill Selection in src/commands/migrate. */
+/** Normalized interactive skill selection result consumed by migration apply. */
 export type InteractiveMigrationSkillSelection = InteractiveMigrationSelection;
-/** Shared type for Interactive Migration Plugin Selection in src/commands/migrate. */
+/** Normalized interactive plugin selection result consumed by migration apply. */
 export type InteractiveMigrationPluginSelection = InteractiveMigrationSelection;
 
 function normalizeSelectionRef(value: string): string {
@@ -184,7 +184,7 @@ function resolveSelectedPluginItemIds(
   });
 }
 
-/** Reused helper for get Selectable Migration Skill Items behavior in src/commands/migrate. */
+/** Returns planned/conflicting skill copy items that users can select or skip. */
 export function getSelectableMigrationSkillItems(plan: MigrationPlan): MigrationItem[] {
   return plan.items.filter(
     (item) =>
@@ -194,7 +194,7 @@ export function getSelectableMigrationSkillItems(plan: MigrationPlan): Migration
   );
 }
 
-/** Reused helper for get Selectable Migration Plugin Items behavior in src/commands/migrate. */
+/** Returns source-installed curated plugin items that users can select or skip. */
 export function getSelectableMigrationPluginItems(plan: MigrationPlan): MigrationItem[] {
   // Only source-installed curated Codex plugins become selectable install items.
   // Cached/manual-review plugin bundles are emitted as manual items, the aggregate
@@ -209,34 +209,34 @@ export function getSelectableMigrationPluginItems(plan: MigrationPlan): Migratio
   );
 }
 
-/** Reused helper for get Migration Skill Selection Value behavior in src/commands/migrate. */
+/** Stable option value used by the interactive skill selector. */
 export function getMigrationSkillSelectionValue(item: MigrationItem): string {
   return item.id;
 }
 
-/** Reused helper for get Migration Plugin Selection Value behavior in src/commands/migrate. */
+/** Stable option value used by the interactive plugin selector. */
 export function getMigrationPluginSelectionValue(item: MigrationItem): string {
   return item.id;
 }
 
-/** Reused helper for format Migration Plugin Selection Label behavior in src/commands/migrate. */
+/** Human-readable plugin option label, preferring the migrated plugin name. */
 export function formatMigrationPluginSelectionLabel(item: MigrationItem): string {
   return readMigrationPluginName(item) ?? item.id.replace(/^plugin:/u, "");
 }
 
-/** Reused helper for get Default Migration Skill Selection Values behavior in src/commands/migrate. */
+/** Default selected skill values; conflicts remain visible but start deselected. */
 export function getDefaultMigrationSkillSelectionValues(items: readonly MigrationItem[]): string[] {
   return items.filter((item) => item.status === "planned").map(getMigrationSkillSelectionValue);
 }
 
-/** Reused helper for get Default Migration Plugin Selection Values behavior in src/commands/migrate. */
+/** Default selected plugin values; conflicts remain visible but start deselected. */
 export function getDefaultMigrationPluginSelectionValues(
   items: readonly MigrationItem[],
 ): string[] {
   return items.filter((item) => item.status === "planned").map(getMigrationPluginSelectionValue);
 }
 
-/** Reused helper for format Migration Skill Selection Label behavior in src/commands/migrate. */
+/** Human-readable skill option label, preferring the migrated skill name. */
 export function formatMigrationSkillSelectionLabel(item: MigrationItem): string {
   return readMigrationSkillName(item) ?? item.id.replace(/^skill:/u, "");
 }
@@ -248,7 +248,7 @@ function humanizeMigrationConflictReason(reason: string | undefined): string {
   return MIGRATION_CONFLICT_REASON_PHRASES[reason] ?? reason;
 }
 
-/** Reused helper for format Migration Skill Selection Hint behavior in src/commands/migrate. */
+/** Conflict hint shown beside an interactive skill migration option. */
 export function formatMigrationSkillSelectionHint(item: MigrationItem): string | undefined {
   if (item.status !== "conflict") {
     return undefined;
@@ -258,7 +258,7 @@ export function formatMigrationSkillSelectionHint(item: MigrationItem): string |
   return sourceLabel ? `${sourceLabel} ${reason}` : reason;
 }
 
-/** Reused helper for format Migration Plugin Selection Hint behavior in src/commands/migrate. */
+/** Conflict hint shown beside an interactive plugin migration option. */
 export function formatMigrationPluginSelectionHint(item: MigrationItem): string | undefined {
   if (item.status !== "conflict") {
     return undefined;
@@ -268,7 +268,7 @@ export function formatMigrationPluginSelectionHint(item: MigrationItem): string 
   return marketplace ? `${marketplace} plugin ${reason}` : reason;
 }
 
-/** Reused helper for apply Migration Selected Skill Item Ids behavior in src/commands/migrate. */
+/** Marks unselected skill copy items skipped and refreshes the migration summary. */
 export function applyMigrationSelectedSkillItemIds(
   plan: MigrationPlan,
   selectedItemIds: ReadonlySet<string>,
@@ -287,7 +287,7 @@ export function applyMigrationSelectedSkillItemIds(
   };
 }
 
-/** Reused helper for apply Migration Skill Selection behavior in src/commands/migrate. */
+/** Applies non-interactive skill selection refs to a migration plan. */
 export function applyMigrationSkillSelection(
   plan: MigrationPlan,
   selectedSkillRefs: readonly string[] | undefined,
@@ -300,7 +300,7 @@ export function applyMigrationSkillSelection(
   return applyMigrationSelectedSkillItemIds(plan, selectedIds);
 }
 
-/** Reused helper for apply Migration Plugin Selection behavior in src/commands/migrate. */
+/** Applies non-interactive plugin selection refs to a migration plan. */
 export function applyMigrationPluginSelection(
   plan: MigrationPlan,
   selectedPluginRefs: readonly string[] | undefined,
@@ -313,7 +313,7 @@ export function applyMigrationPluginSelection(
   return applyMigrationSelectedPluginItemIds(plan, selectedIds);
 }
 
-/** Reused helper for apply Migration Selected Plugin Item Ids behavior in src/commands/migrate. */
+/** Marks unselected plugin installs skipped and prunes aggregate plugin config. */
 export function applyMigrationSelectedPluginItemIds(
   plan: MigrationPlan,
   selectedItemIds: ReadonlySet<string>,
@@ -449,7 +449,7 @@ function resolveMigrationSelectionBulkToggleValues(
   return undefined;
 }
 
-/** Reused helper for resolve Interactive Migration Skill Selection behavior in src/commands/migrate. */
+/** Converts selected skill option values into migration item ids. */
 export function resolveInteractiveMigrationSkillSelection(
   items: readonly MigrationItem[],
   selectedValues: readonly string[],
@@ -461,7 +461,7 @@ export function resolveInteractiveMigrationSkillSelection(
   );
 }
 
-/** Reused helper for resolve Interactive Migration Plugin Selection behavior in src/commands/migrate. */
+/** Converts selected plugin option values into migration item ids. */
 export function resolveInteractiveMigrationPluginSelection(
   items: readonly MigrationItem[],
   selectedValues: readonly string[],
@@ -473,7 +473,7 @@ export function resolveInteractiveMigrationPluginSelection(
   );
 }
 
-/** Reused helper for reconcile Interactive Migration Skill Toggle Values behavior in src/commands/migrate. */
+/** Reconciles checkbox toggles so select-all and deselect-all sentinels stay coherent. */
 export function reconcileInteractiveMigrationSkillToggleValues(
   selectedValues: readonly string[],
   activatedValue: string | undefined,
@@ -493,7 +493,7 @@ export function reconcileInteractiveMigrationSkillToggleValues(
   );
 }
 
-/** Reused helper for reconcile Interactive Migration Enter Values behavior in src/commands/migrate. */
+/** Reconciles Enter activation for single-item and bulk migration selections. */
 export function reconcileInteractiveMigrationEnterValues(
   selectedValues: readonly string[],
   activatedValue: string | undefined,
@@ -514,7 +514,7 @@ export function reconcileInteractiveMigrationEnterValues(
   return [...selectedValues];
 }
 
-/** Reused helper for reconcile Interactive Migration Shortcut Values behavior in src/commands/migrate. */
+/** Reconciles keyboard shortcuts for all/none migration selection states. */
 export function reconcileInteractiveMigrationShortcutValues(
   previousValues: readonly string[],
   selectedValues: readonly string[],
