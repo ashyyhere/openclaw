@@ -82,7 +82,7 @@ function resolveModelCost(
   };
 }
 
-/** Reused helper for resolve Normalized Provider Model Max Tokens behavior in src/config. */
+/** Clamps provider model maxTokens to context limits and provider-specific safe caps. */
 export function resolveNormalizedProviderModelMaxTokens(params: {
   providerId: string;
   modelId: string;
@@ -106,7 +106,7 @@ type SessionDefaultsOptions = {
   warnState?: WarnState;
 };
 
-/** Reused helper for apply Message Defaults behavior in src/config. */
+/** Adds missing message defaults without changing existing message config. */
 export function applyMessageDefaults(cfg: OpenClawConfig): OpenClawConfig {
   const messages = cfg.messages;
   const hasAckScope = messages?.ackReactionScope !== undefined;
@@ -122,7 +122,7 @@ export function applyMessageDefaults(cfg: OpenClawConfig): OpenClawConfig {
   };
 }
 
-/** Reused helper for apply Session Defaults behavior in src/config. */
+/** Normalizes ignored session.mainKey config while warning once for non-main values. */
 export function applySessionDefaults(
   cfg: OpenClawConfig,
   options: SessionDefaultsOptions = {},
@@ -149,12 +149,12 @@ export function applySessionDefaults(
   return next;
 }
 
-/** Reused helper for apply Talk Config Normalization behavior in src/config. */
+/** Applies talk config normalization as part of the shared default pipeline. */
 export function applyTalkConfigNormalization(config: OpenClawConfig): OpenClawConfig {
   return normalizeTalkConfig(config);
 }
 
-/** Reused helper for apply Model Defaults behavior in src/config. */
+/** Applies provider/model catalog defaults and normalizes configured agent model refs. */
 export function applyModelDefaults(
   cfg: OpenClawConfig,
   options: ProviderPolicyDefaultsOptions = {},
@@ -405,7 +405,7 @@ function normalizeAgentModelConfigForDefaults(value: unknown): unknown {
   return mutated ? next : value;
 }
 
-/** Reused helper for apply Agent Defaults behavior in src/config. */
+/** Adds missing agent and subagent concurrency/archive defaults. */
 export function applyAgentDefaults(cfg: OpenClawConfig): OpenClawConfig {
   const agents = cfg.agents;
   const defaults = agents?.defaults;
@@ -454,7 +454,7 @@ export function applyAgentDefaults(cfg: OpenClawConfig): OpenClawConfig {
   };
 }
 
-/** Reused helper for apply Cron Defaults behavior in src/config. */
+/** Adds the default cron concurrency limit when config omits it. */
 export function applyCronDefaults(cfg: OpenClawConfig): OpenClawConfig {
   const raw = cfg.cron?.maxConcurrentRuns;
   if (typeof raw === "number" && Number.isFinite(raw)) {
@@ -469,7 +469,7 @@ export function applyCronDefaults(cfg: OpenClawConfig): OpenClawConfig {
   };
 }
 
-/** Reused helper for apply Logging Defaults behavior in src/config. */
+/** Adds the default sensitive logging redaction mode for existing logging config. */
 export function applyLoggingDefaults(cfg: OpenClawConfig): OpenClawConfig {
   const logging = cfg.logging;
   if (!logging) {
@@ -513,7 +513,7 @@ function hasAnthropicDefaultSignal(cfg: OpenClawConfig, env: NodeJS.ProcessEnv):
   });
 }
 
-/** Reused helper for apply Context Pruning Defaults behavior in src/config. */
+/** Applies Anthropic context-pruning provider defaults when Anthropic auth/config is present. */
 export function applyContextPruningDefaults(
   cfg: OpenClawConfig,
   options: ProviderPolicyDefaultsOptions = {},
@@ -534,7 +534,7 @@ export function applyContextPruningDefaults(
   );
 }
 
-/** Reused helper for apply Compaction Defaults behavior in src/config. */
+/** Adds the default agent compaction mode when agent defaults exist. */
 export function applyCompactionDefaults(cfg: OpenClawConfig): OpenClawConfig {
   const defaults = cfg.agents?.defaults;
   if (!defaults) {
