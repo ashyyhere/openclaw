@@ -1,4 +1,4 @@
-// infra restart coordinator helpers and runtime behavior.
+/** Defers gateway restarts until queues, replies, runs, and tasks are idle. */
 import { getActiveEmbeddedRunCount } from "../agents/embedded-agent-runner/run-state.js";
 import { getTotalPendingReplies } from "../auto-reply/reply/dispatcher-registry.js";
 import { getTotalQueueSize } from "../process/command-queue.js";
@@ -8,7 +8,7 @@ import {
 } from "../tasks/task-registry.maintenance.js";
 import { scheduleGatewaySigusr1Restart, type ScheduledRestart } from "./restart.js";
 
-/** Shared type for Safe Gateway Restart Counts in src/infra. */
+/** Snapshot of active work considered before scheduling a safe gateway restart. */
 export type SafeGatewayRestartCounts = {
   queueSize: number;
   pendingReplies: number;
@@ -17,7 +17,7 @@ export type SafeGatewayRestartCounts = {
   totalActive: number;
 };
 
-/** Shared type for Safe Gateway Restart Blocker in src/infra. */
+/** Concrete active-work reason that can defer a gateway restart. */
 export type SafeGatewayRestartBlocker = {
   kind: "queue" | "reply" | "embedded-run" | "task";
   count: number;
@@ -25,7 +25,7 @@ export type SafeGatewayRestartBlocker = {
   task?: ActiveTaskRestartBlocker;
 };
 
-/** Shared type for Safe Gateway Restart Preflight in src/infra. */
+/** Restart preflight decision with counts, blockers, and operator summary. */
 export type SafeGatewayRestartPreflight = {
   safe: boolean;
   counts: SafeGatewayRestartCounts;
@@ -33,7 +33,7 @@ export type SafeGatewayRestartPreflight = {
   summary: string;
 };
 
-/** Shared type for Safe Gateway Restart Request Result in src/infra. */
+/** Result from requesting a restart through the safe-restart coordinator. */
 export type SafeGatewayRestartRequestResult = {
   ok: true;
   status: "scheduled" | "deferred" | "coalesced";
@@ -82,7 +82,7 @@ function createFallbackTaskBlocker(count: number): SafeGatewayRestartBlocker {
   };
 }
 
-/** Reused helper for create Safe Gateway Restart Preflight behavior in src/infra. */
+/** Inspect active work and build the defer-or-run decision for restart requests. */
 export function createSafeGatewayRestartPreflight(
   inspectors: Partial<SafeRestartInspectors> = {},
 ): SafeGatewayRestartPreflight {
@@ -151,7 +151,7 @@ export function createSafeGatewayRestartPreflight(
   };
 }
 
-/** Reused helper for request Safe Gateway Restart behavior in src/infra. */
+/** Schedule a gateway restart while preserving preflight deferral evidence. */
 export function requestSafeGatewayRestart(
   opts: {
     reason?: string;
