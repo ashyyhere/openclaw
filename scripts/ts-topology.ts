@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts ts topology helpers and runtime behavior.
+// TypeScript topology CLI analyzes public surfaces and renders ownership reports.
 import path from "node:path";
 import { formatErrorMessage } from "../src/infra/errors.ts";
 import { analyzeTopology } from "./lib/ts-topology/analyze.js";
@@ -133,6 +133,7 @@ function assertValidReport(report: string): asserts report is TopologyReportName
   }
 }
 
+/** Runs the topology analyzer CLI and returns a process-style exit code. */
 export async function main(argv: string[], io: IoLike = process): Promise<number> {
   let options: CliOptions;
   try {

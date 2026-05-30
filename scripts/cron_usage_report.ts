@@ -1,4 +1,4 @@
-// scripts cron usage report helpers and runtime behavior.
+// Cron usage report aggregates token usage from cron run JSONL logs.
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -96,6 +96,7 @@ function fmtInt(n: number) {
   return new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(n);
 }
 
+/** Reads cron run logs, filters a time window, and prints token usage by job/model. */
 export async function main() {
   const args = parseArgs(process.argv);
   const store = typeof args.store === "string" ? args.store : undefined;

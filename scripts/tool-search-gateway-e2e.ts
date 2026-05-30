@@ -1,4 +1,4 @@
-// scripts tool search gateway e2e helpers and runtime behavior.
+// Tool Search gateway E2E compares direct plugin-tool exposure with bridge-based lookup.
 import fs from "node:fs/promises";
 import net from "node:net";
 import os from "node:os";
@@ -152,6 +152,7 @@ async function readSessionLogMentions(params: {
   return mentions;
 }
 
+/** Fetches JSON with timeout and bounded-body enforcement for gateway E2E requests. */
 export async function fetchJson(
   url: string,
   init: RequestInit = {},
@@ -582,6 +583,7 @@ async function runLane(params: {
   }
 }
 
+/** Runs normal and Tool Search gateway lanes against a temporary fake plugin fixture. */
 export async function main() {
   const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-tool-search-"));
   let provider: Awaited<ReturnType<typeof startQaMockOpenAiServer>> | undefined;

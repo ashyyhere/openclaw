@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts test force helpers and runtime behavior.
+// Forced test runner frees the gateway port before running project tests.
 import { spawnSync } from "node:child_process";
 import os from "node:os";
 import path from "node:path";

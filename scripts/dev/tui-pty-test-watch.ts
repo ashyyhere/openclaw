@@ -1,4 +1,4 @@
-// scripts/dev tui pty test watch helpers and runtime behavior.
+// TUI PTY test watcher mirrors harness output while Vitest runs in a child process.
 import { spawn } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
