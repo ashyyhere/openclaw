@@ -246,6 +246,14 @@ describe("runEmbeddedAttempt context engine sessionKey forwarding", () => {
       tempPaths,
       attemptOverrides: {
         disableTools: false,
+        contextTokenBudget: 32_000,
+        model: {
+          api: "openai-completions",
+          provider: "openai",
+          compat: {},
+          contextWindow: 128_000,
+          input: ["text"],
+        } as never,
         config: {
           tools: {
             toolSearch: true,
@@ -262,6 +270,8 @@ describe("runEmbeddedAttempt context engine sessionKey forwarding", () => {
     );
     expect(options.includeToolSearchControls).toBe(true);
     expect(options.toolSearchCatalogRef).toEqual({});
+    expect(options.modelContextTokens).toBe(32_000);
+    expect(options.modelContextWindowTokens).toBe(128_000);
   });
 
   it("quarantines unsupported tool schemas before creating the model session", async () => {

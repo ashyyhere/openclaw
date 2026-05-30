@@ -475,6 +475,108 @@ describe("runCodexAppServerSideQuestion", () => {
     expect(toolOptions).toHaveProperty("requireExplicitMessageTarget", true);
   });
 
+  it("passes resolved model context caps into side-question dynamic tool construction", async () => {
+    const client = createFakeClient();
+    client.request.mockImplementation(async (method: string) => {
+      if (method === "thread/fork") {
+        return threadResult("side-thread");
+      }
+      if (method === "thread/inject_items") {
+        return {};
+      }
+      if (method === "turn/start") {
+        queueMicrotask(() =>
+          client.emit(turnCompletedWithNestedThread("side-thread", "turn-1", "Side answer.")),
+        );
+        return turnStartResult("turn-1");
+      }
+      if (method === "thread/unsubscribe") {
+        return {};
+      }
+      throw new Error(`unexpected request: ${method}`);
+    });
+    getSharedCodexAppServerClientMock.mockResolvedValue(client);
+
+    await runCodexAppServerSideQuestion(
+      sideParams({
+        cfg: {
+          agents: {
+            defaults: {
+              contextTokens: 32_000,
+            },
+          },
+        } as never,
+        runtimeModel: {
+          provider: "ollama",
+          id: "qwen3:8b",
+          name: "qwen3:8b",
+          api: "ollama",
+          input: ["text"],
+          contextWindow: 128_000,
+        } as never,
+      }),
+    );
+
+    const [toolOptions] = mockCall(createOpenClawCodingToolsMock);
+    expect(toolOptions).toMatchObject({
+      modelContextTokens: 32_000,
+      modelContextWindowTokens: 128_000,
+    });
+  });
+
+  it("bounds provider context caps by runtime model windows for side-question tools", async () => {
+    const client = createFakeClient();
+    client.request.mockImplementation(async (method: string) => {
+      if (method === "thread/fork") {
+        return threadResult("side-thread");
+      }
+      if (method === "thread/inject_items") {
+        return {};
+      }
+      if (method === "turn/start") {
+        queueMicrotask(() =>
+          client.emit(turnCompletedWithNestedThread("side-thread", "turn-1", "Side answer.")),
+        );
+        return turnStartResult("turn-1");
+      }
+      if (method === "thread/unsubscribe") {
+        return {};
+      }
+      throw new Error(`unexpected request: ${method}`);
+    });
+    getSharedCodexAppServerClientMock.mockResolvedValue(client);
+
+    await runCodexAppServerSideQuestion(
+      sideParams({
+        cfg: {
+          models: {
+            providers: {
+              ollama: {
+                contextTokens: 128_000,
+              },
+            },
+          },
+        } as never,
+        provider: "ollama",
+        model: "qwen3:8b",
+        runtimeModel: {
+          provider: "ollama",
+          id: "qwen3:8b",
+          name: "qwen3:8b",
+          api: "ollama",
+          input: ["text"],
+          contextWindow: 32_000,
+        } as never,
+      }),
+    );
+
+    const [toolOptions] = mockCall(createOpenClawCodingToolsMock);
+    expect(toolOptions).toMatchObject({
+      modelContextTokens: 32_000,
+      modelContextWindowTokens: 32_000,
+    });
+  });
+
   it("returns side-thread completions scoped by nested turn thread id", async () => {
     const client = createFakeClient();
     client.request.mockImplementation(async (method: string) => {

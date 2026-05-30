@@ -83,6 +83,14 @@ export function resolveOpenClawCodingToolsSessionKeys(
   };
 }
 
+function readCodexToolModelContextTokens(params: EmbeddedRunAttemptParams): number | undefined {
+  const modelContextTokens = (params.model as { contextTokens?: unknown }).contextTokens;
+  if (typeof modelContextTokens === "number" && Number.isFinite(modelContextTokens)) {
+    return modelContextTokens;
+  }
+  return undefined;
+}
+
 export function resolveCodexAppServerHookChannelId(
   params: EmbeddedRunAttemptParams,
   sandboxSessionKey: string,
@@ -229,6 +237,11 @@ export async function buildDynamicTools(input: DynamicToolBuildParams) {
         ? (params.model.compat as OpenClawCodingToolsOptions["modelCompat"])
         : undefined,
     modelApi: params.model.api,
+    modelContextTokens:
+      params.contextTokenBudget ??
+      params.contextWindowInfo?.tokens ??
+      readCodexToolModelContextTokens(params) ??
+      params.model.contextWindow,
     modelContextWindowTokens: params.model.contextWindow,
     modelAuthMode: resolveModelAuthMode(
       params.model.provider,

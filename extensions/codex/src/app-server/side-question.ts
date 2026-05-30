@@ -519,6 +519,83 @@ function buildSideRunAttemptParams(
   return sideParams as unknown as EmbeddedRunAttemptParams;
 }
 
+function normalizePositiveContextTokens(value: unknown): number | undefined {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    return undefined;
+  }
+  const int = Math.floor(value);
+  return int > 0 ? int : undefined;
+}
+
+function normalizeContextKey(value: string | undefined): string {
+  return value?.trim().toLowerCase() ?? "";
+}
+
+function readSideQuestionProviderConfig(
+  params: AgentHarnessSideQuestionParams,
+): Record<string, unknown> | undefined {
+  const providers = params.cfg.models?.providers as Record<string, unknown> | undefined;
+  const providerKey = normalizeContextKey(params.provider);
+  if (!providers || !providerKey) {
+    return undefined;
+  }
+  return Object.entries(providers).find(
+    ([key]) => normalizeContextKey(key) === providerKey,
+  )?.[1] as Record<string, unknown> | undefined;
+}
+
+function readSideQuestionModelConfig(
+  providerConfig: Record<string, unknown> | undefined,
+  params: AgentHarnessSideQuestionParams,
+): Record<string, unknown> | undefined {
+  const models = providerConfig?.models;
+  if (!Array.isArray(models)) {
+    return undefined;
+  }
+  const providerKey = normalizeContextKey(params.provider);
+  const modelKey = normalizeContextKey(params.model);
+  const providerPrefixedKey = normalizeContextKey(`${providerKey}/${params.model}`);
+  return models.find((model) => {
+    if (!model || typeof model !== "object") {
+      return false;
+    }
+    const key = normalizeContextKey((model as { id?: string }).id);
+    return key === modelKey || key === providerPrefixedKey;
+  }) as Record<string, unknown> | undefined;
+}
+
+function resolveSideQuestionModelContextTokens(
+  params: AgentHarnessSideQuestionParams,
+  runtimeModel: { contextTokens?: unknown; contextWindow?: unknown },
+) {
+  const providerConfig = readSideQuestionProviderConfig(params);
+  const modelConfig = readSideQuestionModelConfig(providerConfig, params);
+  const modelContextTokens = normalizePositiveContextTokens(modelConfig?.contextTokens);
+  const providerContextTokens = normalizePositiveContextTokens(providerConfig?.contextTokens);
+  const modelContextWindow = normalizePositiveContextTokens(modelConfig?.contextWindow);
+  const providerContextWindowBound =
+    modelContextWindow ?? normalizePositiveContextTokens(runtimeModel.contextWindow);
+  const boundedProviderContextTokens =
+    providerContextTokens && providerContextWindowBound
+      ? Math.min(providerContextTokens, providerContextWindowBound)
+      : providerContextTokens;
+  const configuredContextTokens =
+    modelContextTokens ??
+    boundedProviderContextTokens ??
+    modelContextWindow ??
+    normalizePositiveContextTokens(providerConfig?.contextWindow);
+  const runtimeContextTokens =
+    normalizePositiveContextTokens(runtimeModel.contextTokens) ??
+    normalizePositiveContextTokens(runtimeModel.contextWindow);
+  const baseContextTokens = configuredContextTokens ?? runtimeContextTokens;
+  const agentContextTokens = normalizePositiveContextTokens(
+    params.cfg.agents?.defaults?.contextTokens,
+  );
+  return agentContextTokens && baseContextTokens
+    ? Math.min(agentContextTokens, baseContextTokens)
+    : (agentContextTokens ?? baseContextTokens);
+}
+
 async function createCodexSideToolBridge(input: {
   params: AgentHarnessSideQuestionParams;
   cwd: string;
@@ -565,6 +642,7 @@ async function createCodexSideToolBridge(input: {
           ? (runtimeModel.compat as never)
           : undefined,
       modelApi: runtimeModel.api,
+      modelContextTokens: resolveSideQuestionModelContextTokens(input.params, runtimeModel),
       modelContextWindowTokens: runtimeModel.contextWindow,
       modelAuthMode: resolveModelAuthMode(runtimeModel.provider, input.params.cfg, undefined, {
         workspaceDir: input.cwd,
