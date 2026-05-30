@@ -1,4 +1,5 @@
-// infra scp host helpers and runtime behavior.
+// SCP host/path safety checks for remote copy commands.
+// Inputs are restricted to simple ssh tokens and absolute paths to avoid shell injection.
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 const SSH_TOKEN = /^[A-Za-z0-9._-]+$/;
@@ -16,7 +17,7 @@ function hasControlOrWhitespace(value: string): boolean {
   return false;
 }
 
-/** Reused helper for normalize Scp Remote Host behavior in src/infra. */
+/** Normalize a safe SCP remote host of the form host, user@host, or bracketed IPv6. */
 export function normalizeScpRemoteHost(value: string | null | undefined): string | undefined {
   const trimmed = normalizeOptionalString(value);
   if (!trimmed) {
@@ -59,12 +60,12 @@ export function normalizeScpRemoteHost(value: string | null | undefined): string
   return user ? `${user}@${host}` : host;
 }
 
-/** Reused helper for is Safe Scp Remote Host behavior in src/infra. */
+/** Return whether a remote host string is safe for SCP command construction. */
 export function isSafeScpRemoteHost(value: string | null | undefined): boolean {
   return normalizeScpRemoteHost(value) !== undefined;
 }
 
-/** Reused helper for normalize Scp Remote Path behavior in src/infra. */
+/** Normalize an absolute remote path while rejecting shell-sensitive characters. */
 export function normalizeScpRemotePath(value: string | null | undefined): string | undefined {
   const trimmed = normalizeOptionalString(value);
   if (!trimmed || !trimmed.startsWith("/")) {
@@ -81,7 +82,7 @@ export function normalizeScpRemotePath(value: string | null | undefined): string
   return trimmed;
 }
 
-/** Reused helper for is Safe Scp Remote Path behavior in src/infra. */
+/** Return whether a remote path string is safe for SCP command construction. */
 export function isSafeScpRemotePath(value: string | null | undefined): boolean {
   return normalizeScpRemotePath(value) !== undefined;
 }

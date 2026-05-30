@@ -1,5 +1,6 @@
-// infra session delivery queue helpers and runtime behavior.
-/** Re-exported API for src/infra. */
+// Session delivery queue barrel.
+// Storage handles files; recovery handles retry eligibility and replay.
+/** Session delivery queue storage operations. */
 export {
   ackSessionDelivery,
   enqueueSessionDelivery,
@@ -8,17 +9,17 @@ export {
   loadPendingSessionDeliveries,
   resolveSessionDeliveryQueueDir,
 } from "./session-delivery-queue-storage.js";
-/** Re-exported API for src/infra. */
+/** Session delivery payload and route contracts. */
 export type {
   QueuedSessionDelivery,
   QueuedSessionDeliveryPayload,
   SessionDeliveryRoute,
 } from "./session-delivery-queue-storage.js";
-/** Re-exported API for src/infra. */
+/** Session delivery recovery and retry helpers. */
 export {
   drainPendingSessionDeliveries,
   isSessionDeliveryEligibleForRetry,
   recoverPendingSessionDeliveries,
 } from "./session-delivery-queue-recovery.js";
-/** Re-exported API for src/infra, starting with Session Delivery Recovery Logger. */
+/** Logger contract consumed by session delivery recovery. */
 export type { SessionDeliveryRecoveryLogger } from "./session-delivery-queue-recovery.js";

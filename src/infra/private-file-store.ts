@@ -1,4 +1,5 @@
-// infra private file store helpers and runtime behavior.
+// Private fs-safe file-store factories.
+// Stores are created with private permissions for credentials and local state.
 import "./fs-safe-defaults.js";
 import {
   fileStore,
@@ -7,18 +8,18 @@ import {
   type FileStoreSync,
 } from "@openclaw/fs-safe/store";
 
-/** Shared type for Private File Store in src/infra. */
+/** Async private file-store interface exposed by fs-safe. */
 export type PrivateFileStore = FileStore;
 
-/** Reused helper for private File Store behavior in src/infra. */
+/** Create an async private file store rooted at the given directory. */
 export function privateFileStore(rootDir: string): FileStore {
   return fileStore({ rootDir, private: true });
 }
 
-/** Shared type for Private File Store Sync in src/infra. */
+/** Sync private file-store interface exposed by fs-safe. */
 export type PrivateFileStoreSync = FileStoreSync;
 
-/** Reused helper for private File Store Sync behavior in src/infra. */
+/** Create a synchronous private file store rooted at the given directory. */
 export function privateFileStoreSync(rootDir: string): PrivateFileStoreSync {
   return fileStoreSync({ rootDir, private: true });
 }

@@ -1,4 +1,5 @@
-// infra windows encoding helpers and runtime behavior.
+// Windows console encoding detection and output decoding.
+// Prefers strict UTF-8, then falls back to the active console code page when needed.
 import { spawnSync } from "node:child_process";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
@@ -14,7 +15,7 @@ const WINDOWS_CODEPAGE_ENCODING_MAP: Record<number, string> = {
 
 let cachedWindowsConsoleEncoding: string | null | undefined;
 
-/** Reused helper for parse Windows Code Page behavior in src/infra. */
+/** Parse a Windows `chcp` code page number from command output. */
 export function parseWindowsCodePage(raw: string): number | null {
   if (!raw) {
     return null;
@@ -30,7 +31,7 @@ export function parseWindowsCodePage(raw: string): number | null {
   return codePage;
 }
 
-/** Reused helper for resolve Windows Console Encoding behavior in src/infra. */
+/** Resolve and cache the Windows console encoding name for legacy code pages. */
 export function resolveWindowsConsoleEncoding(): string | null {
   if (process.platform !== "win32") {
     return null;
@@ -54,7 +55,7 @@ export function resolveWindowsConsoleEncoding(): string | null {
   return cachedWindowsConsoleEncoding;
 }
 
-/** Reused helper for decode Windows Output Buffer behavior in src/infra. */
+/** Decode one output buffer with UTF-8 first, then the detected Windows code page. */
 export function decodeWindowsOutputBuffer(params: {
   buffer: Buffer;
   platform?: NodeJS.Platform;
@@ -81,7 +82,7 @@ export function decodeWindowsOutputBuffer(params: {
   }
 }
 
-/** Reused helper for create Windows Output Decoder behavior in src/infra. */
+/** Create a streaming decoder that switches to legacy encoding after invalid UTF-8. */
 export function createWindowsOutputDecoder(params?: {
   platform?: NodeJS.Platform;
   windowsEncoding?: string | null;

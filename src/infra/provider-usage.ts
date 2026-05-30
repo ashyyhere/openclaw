@@ -1,15 +1,16 @@
-// infra provider usage helpers and runtime behavior.
-/** Re-exported API for src/infra. */
+// Provider usage reporting barrel.
+// Formatting, loading, id resolution, and snapshot types stay split by responsibility.
+/** Usage report formatting helpers for CLI/status output. */
 export {
   formatUsageReportLines,
   formatUsageSummaryLine,
   formatUsageWindowSummary,
 } from "./provider-usage.format.js";
-/** Re-exported API for src/infra, starting with load Provider Usage Summary. */
+/** Loader for persisted provider usage summaries. */
 export { loadProviderUsageSummary } from "./provider-usage.load.js";
-/** Re-exported API for src/infra, starting with resolve Usage Provider Id. */
+/** Provider id normalizer shared by usage collection and display. */
 export { resolveUsageProviderId } from "./provider-usage.shared.js";
-/** Re-exported API for src/infra. */
+/** Provider usage snapshot and summary contracts. */
 export type {
   ProviderUsageSnapshot,
   UsageProviderId,

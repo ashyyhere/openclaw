@@ -1,10 +1,11 @@
-// infra system run approval context helpers and runtime behavior.
+// System-run approval context normalization.
+// Prepared node-host plans and fallback command args are converted into approval/runtime facts.
 import type { ExecAsk, ExecSecurity, SystemRunApprovalPlan } from "./exec-approvals.js";
 import { normalizeSystemRunApprovalPlan } from "./system-run-approval-binding.js";
 import { formatExecCommand, resolveSystemRunCommandRequest } from "./system-run-command.js";
 import { normalizeNonEmptyString, normalizeStringArray } from "./system-run-normalize.js";
 
-/** Shared type for Prepared Run Exec Policy in src/infra. */
+/** Exec policy snapshot embedded in prepared system.run payloads. */
 export type PreparedRunExecPolicy = {
   security: ExecSecurity;
   ask: ExecAsk;
@@ -72,7 +73,7 @@ function normalizePreparedRunExecPolicy(value: unknown): PreparedRunExecPolicy |
   return undefined;
 }
 
-/** Reused helper for parse Prepared System Run Payload behavior in src/infra. */
+/** Parse prepared system.run payloads, including legacy plan shapes. */
 export function parsePreparedSystemRunPayload(payload: unknown): PreparedRunPayload | null {
   if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
     return null;
@@ -113,7 +114,7 @@ export function parsePreparedSystemRunPayload(payload: unknown): PreparedRunPayl
   };
 }
 
-/** Reused helper for resolve System Run Approval Request Context behavior in src/infra. */
+/** Resolve the approval request context from node-host plans or fallback command args. */
 export function resolveSystemRunApprovalRequestContext(params: {
   host?: unknown;
   command?: unknown;
@@ -146,7 +147,7 @@ export function resolveSystemRunApprovalRequestContext(params: {
   };
 }
 
-/** Reused helper for resolve System Run Approval Runtime Context behavior in src/infra. */
+/** Resolve argv/cwd/session facts used when executing an approved system.run request. */
 export function resolveSystemRunApprovalRuntimeContext(params: {
   plan?: unknown;
   command?: unknown;
