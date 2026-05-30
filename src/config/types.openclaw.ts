@@ -1,4 +1,5 @@
-// config types openclaw helpers and runtime behavior.
+// Central OpenClaw config type surface. Composes domain-specific config blocks,
+// source/runtime branded states, validation issues, and file snapshots.
 import type { SilentReplyPolicyShape } from "../shared/silent-reply-policy.js";
 import type { TranscriptsConfig } from "../transcripts/config.js";
 import type { AccessGroupsConfig } from "./types.access-groups.js";
@@ -31,7 +32,7 @@ import type { SkillsConfig } from "./types.skills.js";
 import type { ToolsConfig } from "./types.tools.js";
 import type { ProxyConfig } from "./zod-schema.proxy.js";
 
-/** Shared type for Security Audit Suppression in src/config. */
+/** Operator-approved suppression rule for one security audit finding. */
 export type SecurityAuditSuppression = {
   /** Exact security audit check id to suppress. */
   checkId: string;
@@ -43,7 +44,7 @@ export type SecurityAuditSuppression = {
   reason?: string;
 };
 
-/** Shared type for Security Config in src/config. */
+/** Security-related config, including audit suppression settings. */
 export type SecurityConfig = {
   audit?: {
     /** Accepted security audit findings to omit from active summary/findings. */
@@ -51,12 +52,12 @@ export type SecurityConfig = {
   };
 };
 
-/** Shared type for Surface Config Entry in src/config. */
+/** Per-surface config shared by chat and integration surfaces. */
 export type SurfaceConfigEntry = {
   silentReply?: SilentReplyPolicyShape;
 };
 
-/** Shared type for Open Claw Config in src/config. */
+/** Full OpenClaw runtime config shape after domain config blocks are composed. */
 export type OpenClawConfig = {
   $schema?: string;
   meta?: {
@@ -160,7 +161,7 @@ export type OpenClawConfig = {
   proxy?: ProxyConfig;
 };
 
-/** Shared type for Open Claw Config Input in src/config. */
+/** User-authored config input shape before models defaults are normalized. */
 export type OpenClawConfigInput = Omit<OpenClawConfig, "models"> & {
   models?: ModelsConfigInput;
 };
@@ -171,14 +172,14 @@ type BrandedConfigState<TState extends string> = OpenClawConfig & {
   readonly [openClawConfigStateBrand]?: TState;
 };
 
-/** Shared type for Source Config in src/config. */
+/** Branded config read directly from source before runtime defaults. */
 export type SourceConfig = BrandedConfigState<"source">;
-/** Shared type for Resolved Source Config in src/config. */
+/** Branded source config after includes/env substitution. */
 export type ResolvedSourceConfig = BrandedConfigState<"resolved-source">;
-/** Shared type for Runtime Config in src/config. */
+/** Branded config after runtime defaults and normalizers are applied. */
 export type RuntimeConfig = BrandedConfigState<"runtime">;
 
-/** Shared type for Config Validation Issue in src/config. */
+/** Validation issue or warning attached to a config path. */
 export type ConfigValidationIssue = {
   path: string;
   message: string;
@@ -186,13 +187,13 @@ export type ConfigValidationIssue = {
   allowedValuesHiddenCount?: number;
 };
 
-/** Shared type for Legacy Config Issue in src/config. */
+/** Legacy config issue reported by compatibility checks. */
 export type LegacyConfigIssue = {
   path: string;
   message: string;
 };
 
-/** Shared type for Config File Snapshot in src/config. */
+/** Loaded config file state across raw, source, resolved, and runtime views. */
 export type ConfigFileSnapshot = {
   path: string;
   exists: boolean;
