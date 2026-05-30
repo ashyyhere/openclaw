@@ -1,4 +1,4 @@
-// scripts bench cli startup helpers and runtime behavior.
+// CLI startup benchmark measures command latency, first output, memory, and regressions.
 import { spawn } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";

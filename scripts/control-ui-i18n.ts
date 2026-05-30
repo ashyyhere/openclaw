@@ -1,4 +1,4 @@
-// scripts control ui i18n helpers and runtime behavior.
+// Control UI i18n tool syncs translations, translation memory, and raw-copy baselines.
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";

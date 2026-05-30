@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts openclaw cross os release checks helpers and runtime behavior.
+// Cross-OS release checks validate packaged installs, upgrades, gateways, and smoke runs.
 
 // Executed directly via Node.js + tsx in the release workflow.
 
