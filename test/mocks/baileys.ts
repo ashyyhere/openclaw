@@ -1,4 +1,4 @@
-// test/mocks baileys helpers and runtime behavior.
+// Baileys module mock provides WhatsApp socket/content helpers for plugin tests.
 import { EventEmitter } from "node:events";
 import { vi } from "vitest";
 
@@ -16,6 +16,7 @@ type MessageContentInput = Parameters<NormalizeMessageContentFn>[0];
 type MessageContentOutput = ReturnType<NormalizeMessageContentFn>;
 type MessageContentType = ReturnType<GetContentTypeFn>;
 
+/** Mock WhatsApp socket surface used by Baileys-dependent tests. */
 export type MockBaileysSocket = {
   ev: EventEmitter;
   ws: { close: ReturnType<typeof vi.fn> };
@@ -75,6 +76,7 @@ const MESSAGE_CONTENT_KEYS = [
 
 type MessageLike = Record<string, unknown>;
 
+/** Unwrap Baileys message wrapper layers to expose the normalized content payload. */
 export function mockNormalizeMessageContent(message: MessageContentInput): MessageContentOutput {
   let current = message as unknown;
   while (current && typeof current === "object") {
@@ -99,6 +101,7 @@ export function mockNormalizeMessageContent(message: MessageContentInput): Messa
   return current as MessageContentOutput;
 }
 
+/** Return the first supported Baileys content key present in a normalized message. */
 export function mockGetContentType(message: MessageContentInput): MessageContentType {
   const normalized = mockNormalizeMessageContent(message);
   if (!normalized || typeof normalized !== "object") {
@@ -112,6 +115,7 @@ export function mockGetContentType(message: MessageContentInput): MessageContent
   return undefined;
 }
 
+/** Extract the inner Baileys message content object for media and structured messages. */
 export function mockExtractMessageContent(message: MessageContentInput): MessageContentOutput {
   const normalized = mockNormalizeMessageContent(message);
   if (!normalized || typeof normalized !== "object") {
@@ -127,10 +131,12 @@ export function mockExtractMessageContent(message: MessageContentInput): Message
   ) as MessageContentOutput;
 }
 
+/** Return whether a mocked WhatsApp JID represents a group chat. */
 export function mockIsJidGroup(jid: string | undefined | null): boolean {
   return typeof jid === "string" && jid.endsWith("@g.us");
 }
 
+/** Create a complete mocked Baileys module and access to the latest fake socket. */
 export function createMockBaileys(): {
   mod: MockBaileysModule;
   lastSocket: () => MockBaileysSocket;

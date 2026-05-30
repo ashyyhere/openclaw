@@ -1,6 +1,7 @@
-// test/vitest vitest tasks config helpers and runtime behavior.
+// Vitest project config for task tests that must run serialized.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Create the scoped Vitest config for task tests with serialized execution. */
 export function createTasksVitestConfig(env?: Record<string, string | undefined>) {
   const config = createScopedVitestConfig(["src/tasks/**/*.test.ts"], {
     dir: "src",
@@ -23,4 +24,5 @@ export function createTasksVitestConfig(env?: Record<string, string | undefined>
   return config;
 }
 
+/** Default tasks Vitest project configuration. */
 export default createTasksVitestConfig();

@@ -1,4 +1,4 @@
-// test/vitest vitest performance config helpers and runtime behavior.
+// Vitest performance config enables optional import/cache diagnostics from env.
 type EnvMap = Record<string, string | undefined>;
 
 const isEnabled = (value: string | undefined): boolean => {
@@ -28,6 +28,7 @@ type VitestExperimentalConfig = {
   };
 };
 
+/** Load optional Vitest experimental diagnostics and fs cache config from env. */
 export function loadVitestExperimentalConfig(
   env: EnvMap = process.env,
   platform: NodeJS.Platform = process.platform,

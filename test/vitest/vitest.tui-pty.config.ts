@@ -1,4 +1,4 @@
-// test/vitest vitest tui pty config helpers and runtime behavior.
+// Vitest project config for serialized TUI PTY E2E tests.
 import { defineConfig } from "vitest/config";
 import { loadPatternListFromEnv, narrowIncludePatternsForCli } from "./vitest.pattern-file.ts";
 import { resolveRepoRootPath, sharedVitestConfig } from "./vitest.shared.config.ts";
@@ -14,6 +14,7 @@ function toTuiPtyIncludePatterns(patterns: string[] | null) {
   return patterns?.map((pattern) => pattern.replace(/^src\//u, "")) ?? null;
 }
 
+/** Create the Vitest config for TUI PTY tests with optional local PTY coverage. */
 export function createTuiPtyVitestConfig(env?: Record<string, string | undefined>) {
   const baseTest = sharedVitestConfig.test ?? {};
   const exclude = (baseTest.exclude ?? []).filter((pattern) => pattern !== "**/*.e2e.test.ts");
@@ -54,4 +55,5 @@ export function createTuiPtyVitestConfig(env?: Record<string, string | undefined
   });
 }
 
+/** Default TUI PTY Vitest project configuration. */
 export default createTuiPtyVitestConfig();
