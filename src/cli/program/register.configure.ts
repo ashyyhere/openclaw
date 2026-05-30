@@ -4,7 +4,7 @@ import { theme } from "../../../packages/terminal-core/src/theme.js";
 import { CONFIGURE_WIZARD_SECTIONS } from "../../commands/configure.shared.js";
 import { runCommandWithRuntime } from "../cli-utils.js";
 
-/** Reused helper for register Configure Command behavior in src/cli/program. */
+/** Register the interactive configuration wizard command. */
 export function registerConfigureCommand(program: Command): void {
   program
     .command("configure")

@@ -5,7 +5,7 @@ import { defaultRuntime } from "../../runtime.js";
 import { runCommandWithRuntime } from "../cli-utils.js";
 import { formatHelpExamples } from "../help-format.js";
 
-/** Reused helper for register Crestodian Command behavior in src/cli/program. */
+/** Register the interactive setup and repair assistant command. */
 export function registerCrestodianCommand(program: Command) {
   program
     .command("crestodian")

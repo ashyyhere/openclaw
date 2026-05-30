@@ -87,7 +87,7 @@ function readVerifyPluginApps(value: unknown): boolean {
   return value === true;
 }
 
-/** Reused helper for register Migrate Command behavior in src/cli/program. */
+/** Register migration preview/apply/list/plan commands and shared provider options. */
 export function registerMigrateCommand(program: Command) {
   const migrate = addVerifyPluginAppsOption(
     program

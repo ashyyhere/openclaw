@@ -4,7 +4,7 @@ import { theme } from "../../../packages/terminal-core/src/theme.js";
 import { defaultRuntime } from "../../runtime.js";
 import { runCommandWithRuntime } from "../cli-utils.js";
 
-/** Reused helper for register Maintenance Commands behavior in src/cli/program. */
+/** Register maintenance commands for doctor, dashboard, reset, and uninstall flows. */
 export function registerMaintenanceCommands(program: Command) {
   program
     .command("doctor")
