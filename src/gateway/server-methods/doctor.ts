@@ -1,4 +1,4 @@
-// gateway/server-methods doctor helpers and runtime behavior.
+// Gateway doctor RPC handlers for memory status, diary, and REM harness probes.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
@@ -112,7 +112,7 @@ type DoctorMemoryDreamingPayload = {
   };
 };
 
-/** Shared type for Doctor Memory Status Payload in src/gateway/server-methods. */
+/** Payload returned by the memory status doctor RPC. */
 export type DoctorMemoryStatusPayload = {
   agentId: string;
   provider?: string;
@@ -127,7 +127,7 @@ export type DoctorMemoryStatusPayload = {
   dreaming?: DoctorMemoryDreamingPayload;
 };
 
-/** Shared type for Doctor Memory Dream Diary Payload in src/gateway/server-methods. */
+/** Payload returned when reading the memory dream diary. */
 export type DoctorMemoryDreamDiaryPayload = {
   agentId: string;
   found: boolean;
@@ -136,7 +136,7 @@ export type DoctorMemoryDreamDiaryPayload = {
   updatedAtMs?: number;
 };
 
-/** Shared type for Doctor Memory Dream Action Payload in src/gateway/server-methods. */
+/** Payload returned by dream repair/backfill/reset doctor actions. */
 export type DoctorMemoryDreamActionPayload = {
   agentId: string;
   action:
@@ -162,7 +162,7 @@ export type DoctorMemoryDreamActionPayload = {
   keptEntries?: number;
 };
 
-/** Shared type for Doctor Memory Rem Harness Candidate Payload in src/gateway/server-methods. */
+/** Candidate memory entry shown in REM harness previews. */
 export type DoctorMemoryRemHarnessCandidatePayload = {
   key: string;
   path: string;
@@ -180,19 +180,19 @@ export type DoctorMemoryRemHarnessCandidatePayload = {
   promotedAt?: string;
 };
 
-/** Shared type for Doctor Memory Rem Harness Candidate Truth Payload in src/gateway/server-methods. */
+/** Ground-truth snippet confidence emitted by REM harness preview. */
 export type DoctorMemoryRemHarnessCandidateTruthPayload = {
   snippet: string;
   confidence: number;
 };
 
-/** Shared type for Doctor Memory Rem Harness Grounded File Payload in src/gateway/server-methods. */
+/** Grounded markdown file rendered during REM harness preview. */
 export type DoctorMemoryRemHarnessGroundedFilePayload = {
   path: string;
   renderedMarkdown: string;
 };
 
-/** Shared type for Doctor Memory Rem Harness Success Payload in src/gateway/server-methods. */
+/** Successful REM harness payload with rem/grounded/deep preview sections. */
 export type DoctorMemoryRemHarnessSuccessPayload = {
   ok: true;
   agentId: string;
@@ -228,7 +228,7 @@ export type DoctorMemoryRemHarnessSuccessPayload = {
   };
 };
 
-/** Shared type for Doctor Memory Rem Harness Error Payload in src/gateway/server-methods. */
+/** Error payload returned when REM harness preview fails. */
 export type DoctorMemoryRemHarnessErrorPayload = {
   ok: false;
   agentId: string;
@@ -899,7 +899,7 @@ const SKIPPED_MEMORY_EMBEDDING_PROBE = {
   error: "memory embedding readiness not checked; run `openclaw memory status --deep` to probe",
 } as const;
 
-/** Reused constant for doctor Handlers behavior in src/gateway/server-methods. */
+/** Gateway RPC handlers for doctor.memory.* methods. */
 export const doctorHandlers: GatewayRequestHandlers = {
   "doctor.memory.status": async ({ respond, context, params }) => {
     const cfg = context.getRuntimeConfig();

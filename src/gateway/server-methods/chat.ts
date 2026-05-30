@@ -1,4 +1,4 @@
-// gateway/server-methods chat helpers and runtime behavior.
+// Gateway chat RPC handlers for history, send, inject, and abort flows.
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -278,14 +278,14 @@ async function buildWebchatAssistantMediaMessage(
   });
 }
 
-/** Re-exported API for src/gateway/server-methods. */
+/** Chat history display projection helpers reused by gateway RPC handlers. */
 export {
   DEFAULT_CHAT_HISTORY_TEXT_MAX_CHARS,
   resolveEffectiveChatHistoryMaxChars,
   sanitizeChatHistoryMessages,
 } from "../chat-display-projection.js";
 
-/** Reused constant for CHAT HISTORY MAX SINGLE MESSAGE BYTES behavior in src/gateway/server-methods. */
+/** Per-message byte cap before chat history replaces content with a placeholder. */
 export const CHAT_HISTORY_MAX_SINGLE_MESSAGE_BYTES = 128 * 1024;
 const CHAT_HISTORY_OVERSIZED_PLACEHOLDER = "[chat.history omitted: message too large]";
 const MANAGED_OUTGOING_IMAGE_PATH_PREFIX = "/api/chat/media/outgoing/";
@@ -910,7 +910,7 @@ function stripDisallowedChatControlChars(message: string): string {
   return output;
 }
 
-/** Reused helper for sanitize Chat Send Message Input behavior in src/gateway/server-methods. */
+/** Normalizes chat.send text and removes disallowed control characters. */
 export function sanitizeChatSendMessageInput(
   message: string,
 ): { ok: true; message: string } | { ok: false; error: string } {
@@ -1301,7 +1301,7 @@ function messageContainsToolHistoryContent(message: unknown): boolean {
   });
 }
 
-/** Reused helper for augment Chat History With Canvas Blocks behavior in src/gateway/server-methods. */
+/** Adds canvas preview blocks to assistant history from preceding tool output. */
 export function augmentChatHistoryWithCanvasBlocks(messages: unknown[]): unknown[] {
   if (messages.length === 0) {
     return messages;
@@ -1379,7 +1379,7 @@ export function augmentChatHistoryWithCanvasBlocks(messages: unknown[]): unknown
   return changed ? next : messages;
 }
 
-/** Reused helper for build Oversized History Placeholder behavior in src/gateway/server-methods. */
+/** Builds a placeholder message preserving role/timestamp for oversized history. */
 export function buildOversizedHistoryPlaceholder(message?: unknown): Record<string, unknown> {
   const role =
     message &&
@@ -1401,7 +1401,7 @@ export function buildOversizedHistoryPlaceholder(message?: unknown): Record<stri
   };
 }
 
-/** Reused helper for replace Oversized Chat History Messages behavior in src/gateway/server-methods. */
+/** Replaces individually oversized history messages before final budget trim. */
 export function replaceOversizedChatHistoryMessages(params: {
   messages: unknown[];
   maxSingleMessageBytes: number;
@@ -1421,7 +1421,7 @@ export function replaceOversizedChatHistoryMessages(params: {
   return { messages: replacedCount > 0 ? next : messages, replacedCount };
 }
 
-/** Reused helper for enforce Chat History Final Budget behavior in src/gateway/server-methods. */
+/** Enforces final chat history byte budget while preserving the newest message. */
 export function enforceChatHistoryFinalBudget(params: { messages: unknown[]; maxBytes: number }): {
   messages: unknown[];
   placeholderCount: number;
@@ -2304,7 +2304,7 @@ function isChatHistoryAssistantMessage(message: unknown): boolean {
   return asOptionalRecord(message)?.role === "assistant";
 }
 
-/** Reused helper for drop Pre Session Start Announce Pairs behavior in src/gateway/server-methods. */
+/** Drops stale subagent announce user/assistant pairs from imported history. */
 export function dropPreSessionStartAnnouncePairs(
   messages: unknown[],
   sessionStartedAt: number | undefined,
@@ -2353,7 +2353,7 @@ function dropLocalHistoryOverreadContextMessage(
   return [...messages.slice(0, index), ...messages.slice(index + 1)];
 }
 
-/** Reused constant for chat Handlers behavior in src/gateway/server-methods. */
+/** Gateway RPC handlers for chat.history, chat.send, chat.inject, and chat.abort. */
 export const chatHandlers: GatewayRequestHandlers = {
   "chat.history": async ({ params, respond, context }) => {
     if (!validateChatHistoryParams(params)) {
