@@ -1,11 +1,12 @@
-// infra device identity helpers and runtime behavior.
+// Persists the local gateway/device Ed25519 identity and provides signing and
+// public-key normalization helpers for pairing/auth flows.
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
 import { privateFileStoreSync } from "./private-file-store.js";
 
-/** Shared type for Device Identity in src/infra. */
+/** Local device identity keypair and derived stable device id. */
 export type DeviceIdentity = {
   deviceId: string;
   publicKeyPem: string;
@@ -218,7 +219,7 @@ function identityFileExists(filePath: string): boolean {
   }
 }
 
-/** Reused helper for load Or Create Device Identity behavior in src/infra. */
+/** Loads a valid persisted device identity or creates and stores a new one. */
 export function loadOrCreateDeviceIdentity(
   filePath: string = resolveDefaultIdentityPath(),
 ): DeviceIdentity {
@@ -261,7 +262,7 @@ export function loadOrCreateDeviceIdentity(
   return identity;
 }
 
-/** Reused helper for load Device Identity If Present behavior in src/infra. */
+/** Loads an existing valid device identity without creating or repairing one. */
 export function loadDeviceIdentityIfPresent(
   filePath: string = resolveDefaultIdentityPath(),
 ): DeviceIdentity | null {
@@ -279,14 +280,14 @@ export function loadDeviceIdentityIfPresent(
   }
 }
 
-/** Reused helper for sign Device Payload behavior in src/infra. */
+/** Signs a UTF-8 payload with a device private key and returns base64url signature text. */
 export function signDevicePayload(privateKeyPem: string, payload: string): string {
   const key = crypto.createPrivateKey(privateKeyPem);
   const sig = crypto.sign(null, Buffer.from(payload, "utf8"), key);
   return base64UrlEncode(sig);
 }
 
-/** Reused helper for normalize Device Public Key Base64 Url behavior in src/infra. */
+/** Converts PEM or raw base64url public-key input into canonical raw base64url text. */
 export function normalizeDevicePublicKeyBase64Url(publicKey: string): string | null {
   try {
     if (publicKey.includes("BEGIN")) {
@@ -302,7 +303,7 @@ export function normalizeDevicePublicKeyBase64Url(publicKey: string): string | n
   }
 }
 
-/** Reused helper for derive Device Id From Public Key behavior in src/infra. */
+/** Derives the device id fingerprint from PEM or raw base64url public-key input. */
 export function deriveDeviceIdFromPublicKey(publicKey: string): string | null {
   try {
     const raw = publicKey.includes("BEGIN")
@@ -317,12 +318,12 @@ export function deriveDeviceIdFromPublicKey(publicKey: string): string | null {
   }
 }
 
-/** Reused helper for public Key Raw Base64 Url From Pem behavior in src/infra. */
+/** Extracts the raw Ed25519 public key from PEM and returns base64url text. */
 export function publicKeyRawBase64UrlFromPem(publicKeyPem: string): string {
   return base64UrlEncode(derivePublicKeyRaw(publicKeyPem));
 }
 
-/** Reused helper for verify Device Signature behavior in src/infra. */
+/** Verifies a device signature against PEM or raw base64url public-key input. */
 export function verifyDeviceSignature(
   publicKey: string,
   payload: string,

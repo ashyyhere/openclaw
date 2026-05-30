@@ -1,4 +1,4 @@
-// infra/format-time parse offsetless zoned datetime helpers and runtime behavior.
+// Parses offsetless ISO wall-clock datetimes in a caller-specified IANA time zone.
 const OFFSETLESS_ISO_DATETIME_RE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?(\.\d+)?$/;
 const OFFSETLESS_ISO_DATETIME_PARTS_RE =
   /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d+))?)?$/;
@@ -13,12 +13,12 @@ type OffsetlessIsoDateTimeParts = {
   millisecond: number;
 };
 
-/** Reused helper for is Offsetless Iso Date Time behavior in src/infra/format-time. */
+/** Returns whether a string is an ISO datetime without offset or zone suffix. */
 export function isOffsetlessIsoDateTime(raw: string): boolean {
   return OFFSETLESS_ISO_DATETIME_RE.test(raw);
 }
 
-/** Reused helper for parse Offsetless Iso Date Time In Time Zone behavior in src/infra/format-time. */
+/** Resolves an offsetless wall-clock datetime in a time zone to UTC ISO text. */
 export function parseOffsetlessIsoDateTimeInTimeZone(raw: string, timeZone: string): string | null {
   const expectedParts = parseOffsetlessIsoDateTimeParts(raw);
   if (!expectedParts) {
