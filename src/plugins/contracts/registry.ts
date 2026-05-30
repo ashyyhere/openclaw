@@ -249,7 +249,7 @@ function resolveBundledManifestPluginIdsForContract(contract: ManifestContractKe
   ).toSorted((left, right) => left.localeCompare(right));
 }
 
-/** Reused constant for provider Contract Load Error behavior in src/plugins/contracts. */
+/** Last provider contract load failure surfaced by strict contract lookups. */
 export let providerContractLoadError: Error | undefined;
 
 function formatBundledCapabilityPluginLoadError(params: {
@@ -448,7 +448,7 @@ function loadWebFetchProviderContractRegistry(): WebFetchProviderContractEntry[]
   }));
 }
 
-/** Reused helper for resolve Web Fetch Provider Contract Entries For Plugin Id behavior in src/plugins/contracts. */
+/** Loads web-fetch provider contract entries for one bundled plugin id. */
 export function resolveWebFetchProviderContractEntriesForPluginId(
   pluginId: string,
 ): WebFetchProviderContractEntry[] {
@@ -498,7 +498,7 @@ function loadWebSearchProviderContractRegistry(): WebSearchProviderContractEntry
   return [...publicArtifactEntries, ...runtimeEntries];
 }
 
-/** Reused helper for resolve Web Search Provider Contract Entries For Plugin Id behavior in src/plugins/contracts. */
+/** Loads web-search provider contract entries for one bundled plugin id. */
 export function resolveWebSearchProviderContractEntriesForPluginId(
   pluginId: string,
 ): WebSearchProviderContractEntry[] {
@@ -656,24 +656,24 @@ function createLazyArrayView<T>(load: () => T[]): T[] {
   });
 }
 
-/** Reused constant for provider Contract Registry behavior in src/plugins/contracts. */
+/** Lazy registry of bundled provider contracts. */
 export const providerContractRegistry: ProviderContractEntry[] = createLazyArrayView(
   loadProviderContractRegistry,
 );
-/** Reused constant for unique Provider Contract Providers behavior in src/plugins/contracts. */
+/** Lazy de-duplicated provider list derived from bundled contracts. */
 export const uniqueProviderContractProviders: ProviderPlugin[] = createLazyArrayView(
   loadUniqueProviderContractProviders,
 );
-/** Reused constant for provider Contract Plugin Ids behavior in src/plugins/contracts. */
+/** Lazy list of bundled plugin ids that declare provider contracts. */
 export const providerContractPluginIds: string[] = createLazyArrayView(
   loadProviderContractPluginIds,
 );
-/** Reused constant for provider Contract Compat Plugin Ids behavior in src/plugins/contracts. */
+/** Lazy provider contract plugin ids used by compat coverage. */
 export const providerContractCompatPluginIds: string[] = createLazyArrayView(
   loadProviderContractCompatPluginIds,
 );
 
-/** Reused helper for require Provider Contract Provider behavior in src/plugins/contracts. */
+/** Returns a provider contract by id or throws with registry load context. */
 export function requireProviderContractProvider(providerId: string): ProviderPlugin {
   const pluginIds = resolveBundledProviderContractPluginIdsByProviderId().get(providerId) ?? [];
   const entries = loadProviderContractEntriesForPluginIds(pluginIds);
@@ -695,7 +695,7 @@ export function requireProviderContractProvider(providerId: string): ProviderPlu
   return provider;
 }
 
-/** Reused helper for resolve Provider Contract Plugin Ids For Provider behavior in src/plugins/contracts. */
+/** Resolves bundled plugin ids that declare the exact provider id. */
 export function resolveProviderContractPluginIdsForProvider(
   providerId: string,
 ): string[] | undefined {
@@ -703,7 +703,7 @@ export function resolveProviderContractPluginIdsForProvider(
   return pluginIds.length > 0 ? pluginIds : undefined;
 }
 
-/** Reused helper for resolve Provider Contract Plugin Ids For Provider Alias behavior in src/plugins/contracts. */
+/** Resolves bundled plugin ids that expose a provider id or alias. */
 export function resolveProviderContractPluginIdsForProviderAlias(
   providerId: string,
 ): string[] | undefined {
@@ -728,7 +728,7 @@ export function resolveProviderContractPluginIdsForProviderAlias(
   return pluginIds.length > 0 ? pluginIds : undefined;
 }
 
-/** Reused helper for resolve Provider Contract Providers For Plugin Ids behavior in src/plugins/contracts. */
+/** Loads unique provider contracts for the supplied bundled plugin ids. */
 export function resolveProviderContractProvidersForPluginIds(
   pluginIds: readonly string[],
 ): ProviderPlugin[] {
@@ -742,35 +742,35 @@ export function resolveProviderContractProvidersForPluginIds(
   ];
 }
 
-/** Reused constant for web Search Provider Contract Registry behavior in src/plugins/contracts. */
+/** Lazy registry of bundled web-search provider contracts. */
 export const webSearchProviderContractRegistry: WebSearchProviderContractEntry[] =
   createLazyArrayView(loadWebSearchProviderContractRegistry);
-/** Reused constant for web Fetch Provider Contract Registry behavior in src/plugins/contracts. */
+/** Lazy registry of bundled web-fetch provider contracts. */
 export const webFetchProviderContractRegistry: WebFetchProviderContractEntry[] =
   createLazyArrayView(loadWebFetchProviderContractRegistry);
-/** Reused constant for speech Provider Contract Registry behavior in src/plugins/contracts. */
+/** Lazy registry of bundled speech provider contracts. */
 export const speechProviderContractRegistry: SpeechProviderContractEntry[] = createLazyArrayView(
   loadSpeechProviderContractRegistry,
 );
-/** Reused constant for realtime Transcription Provider Contract Registry behavior in src/plugins/contracts. */
+/** Lazy registry of bundled realtime transcription provider contracts. */
 export const realtimeTranscriptionProviderContractRegistry: RealtimeTranscriptionProviderContractEntry[] =
   createLazyArrayView(loadRealtimeTranscriptionProviderContractRegistry);
-/** Reused constant for realtime Voice Provider Contract Registry behavior in src/plugins/contracts. */
+/** Lazy registry of bundled realtime voice provider contracts. */
 export const realtimeVoiceProviderContractRegistry: RealtimeVoiceProviderContractEntry[] =
   createLazyArrayView(loadRealtimeVoiceProviderContractRegistry);
-/** Reused constant for media Understanding Provider Contract Registry behavior in src/plugins/contracts. */
+/** Lazy registry of bundled media-understanding provider contracts. */
 export const mediaUnderstandingProviderContractRegistry: MediaUnderstandingProviderContractEntry[] =
   createLazyArrayView(loadMediaUnderstandingProviderContractRegistry);
-/** Reused constant for transcripts Source Provider Contract Registry behavior in src/plugins/contracts. */
+/** Lazy registry of bundled transcript-source provider contracts. */
 export const transcriptsSourceProviderContractRegistry: TranscriptsSourceProviderContractEntry[] =
   createLazyArrayView(loadTranscriptsSourceProviderContractRegistry);
-/** Reused constant for image Generation Provider Contract Registry behavior in src/plugins/contracts. */
+/** Lazy registry of bundled image-generation provider contracts. */
 export const imageGenerationProviderContractRegistry: ImageGenerationProviderContractEntry[] =
   createLazyArrayView(loadImageGenerationProviderContractRegistry);
-/** Reused constant for video Generation Provider Contract Registry behavior in src/plugins/contracts. */
+/** Lazy registry of bundled video-generation provider contracts. */
 export const videoGenerationProviderContractRegistry: VideoGenerationProviderContractEntry[] =
   createLazyArrayView(loadVideoGenerationProviderContractRegistry);
-/** Reused constant for music Generation Provider Contract Registry behavior in src/plugins/contracts. */
+/** Lazy registry of bundled music-generation provider contracts. */
 export const musicGenerationProviderContractRegistry: MusicGenerationProviderContractEntry[] =
   createLazyArrayView(loadMusicGenerationProviderContractRegistry);
 
@@ -778,6 +778,6 @@ function loadPluginRegistrationContractRegistry(): PluginRegistrationContractEnt
   return resolveBundledManifestContracts();
 }
 
-/** Reused constant for plugin Registration Contract Registry behavior in src/plugins/contracts. */
+/** Lazy manifest-derived bundled plugin registration contract registry. */
 export const pluginRegistrationContractRegistry: PluginRegistrationContractEntry[] =
   createLazyArrayView(loadPluginRegistrationContractRegistry);
