@@ -1,4 +1,4 @@
-// extensions/qa-lab/src reply failure helpers and runtime behavior.
+// QA Lab reply-failure helpers detect visible error and coordination-leak replies.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 const FAILURE_REPLY_PREFIXES = [
@@ -29,6 +29,7 @@ const TOOL_BACKED_FAILURE_PATTERNS = [
   /^status:\s*blocked\b/im,
 ];
 
+/** Extracts visible coordination-leak text from a model reply. */
 export function extractQaVisibleReplyLeakText(text: string): string | undefined {
   const trimmed = text.trim();
   if (!trimmed) {
@@ -40,6 +41,7 @@ export function extractQaVisibleReplyLeakText(text: string): string | undefined 
   return undefined;
 }
 
+/** Extracts user-visible failure reply text when it matches known QA failure patterns. */
 export function extractQaFailureReplyText(text: string): string | undefined {
   const trimmed = text.trim();
   if (!trimmed) {

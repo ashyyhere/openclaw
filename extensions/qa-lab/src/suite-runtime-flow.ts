@@ -1,4 +1,4 @@
-// extensions/qa-lab/src suite runtime flow helpers and runtime behavior.
+// QA Lab suite-runtime flow helper builds the action API exposed to YAML scenario flows.
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -218,6 +218,7 @@ function createQaSuiteScenarioDeps(params: QaSuiteScenarioDepsParams) {
   };
 }
 
+/** Creates the runtime API object used to execute one QA scenario flow. */
 export function createQaSuiteScenarioFlowApi(params: QaSuiteScenarioFlowApiParams) {
   return createQaScenarioRuntimeApi({
     env: params.env,
