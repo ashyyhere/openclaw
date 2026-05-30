@@ -30,7 +30,7 @@ type RowFilter = {
   local?: boolean;
 };
 
-/** Shared type for Row Builder Context in src/commands/models. */
+/** Shared context for model-list row builders and suppression/auth filters. */
 export type RowBuilderContext = {
   cfg: OpenClawConfig;
   agentDir: string;
@@ -295,7 +295,7 @@ function toFallbackConfiguredListModel(entry: ConfiguredEntry, cfg: OpenClawConf
   );
 }
 
-/** Reused helper for append Discovered Rows behavior in src/commands/models. */
+/** Append rows for models discovered from the active runtime registry. */
 export async function appendDiscoveredRows(params: {
   rows: ModelRow[];
   models: Model[];
@@ -346,7 +346,7 @@ export async function appendDiscoveredRows(params: {
   return seenKeys;
 }
 
-/** Reused helper for append Configured Provider Rows behavior in src/commands/models. */
+/** Append rows for explicit models configured under models.providers. */
 export async function appendConfiguredProviderRows(params: {
   rows: ModelRow[];
   context: RowBuilderContext;
@@ -377,7 +377,7 @@ export async function appendConfiguredProviderRows(params: {
   }
 }
 
-/** Reused helper for append Authenticated Catalog Rows behavior in src/commands/models. */
+/** Append catalog rows whose providers currently have usable auth. */
 export async function appendAuthenticatedCatalogRows(params: {
   rows: ModelRow[];
   context: RowBuilderContext;
@@ -405,7 +405,7 @@ export async function appendAuthenticatedCatalogRows(params: {
   }
 }
 
-/** Reused helper for append Model Catalog Rows behavior in src/commands/models. */
+/** Append normalized model catalog rows after filters and suppression checks. */
 export async function appendModelCatalogRows(params: {
   rows: ModelRow[];
   context: RowBuilderContext;
@@ -431,7 +431,7 @@ export async function appendModelCatalogRows(params: {
   return appended;
 }
 
-/** Reused helper for append Manifest Catalog Rows behavior in src/commands/models. */
+/** Append manifest model catalog rows through the generic catalog path. */
 export function appendManifestCatalogRows(params: {
   rows: ModelRow[];
   context: RowBuilderContext;
@@ -444,7 +444,7 @@ export function appendManifestCatalogRows(params: {
   });
 }
 
-/** Reused helper for append Catalog Supplement Rows behavior in src/commands/models. */
+/** Fill gaps between discovered models and catalog/provider supplemental rows. */
 export async function appendCatalogSupplementRows(params: {
   rows: ModelRow[];
   modelRegistry: ModelRegistry;
@@ -498,7 +498,7 @@ export async function appendCatalogSupplementRows(params: {
   });
 }
 
-/** Reused helper for append Provider Catalog Rows behavior in src/commands/models. */
+/** Append live or static provider catalog rows for model listing. */
 export async function appendProviderCatalogRows(params: {
   rows: ModelRow[];
   context: RowBuilderContext;
@@ -536,7 +536,7 @@ export async function appendProviderCatalogRows(params: {
   return appended;
 }
 
-/** Reused helper for append Configured Rows behavior in src/commands/models. */
+/** Append rows from configured model allowlist entries and aliases. */
 export async function appendConfiguredRows(params: {
   rows: ModelRow[];
   entries: ConfiguredEntry[];

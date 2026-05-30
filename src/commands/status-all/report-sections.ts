@@ -10,7 +10,7 @@ import type { StatusReportSection } from "./text-report.js";
 
 type TableRenderer = (input: RenderTableOptions) => string;
 
-/** Reused helper for build Status Overview Section behavior in src/commands/status-all. */
+/** Build the top-level status-all overview table section. */
 export function buildStatusOverviewSection(params: {
   width: number;
   renderTable: TableRenderer;
@@ -26,7 +26,7 @@ export function buildStatusOverviewSection(params: {
   };
 }
 
-/** Reused helper for build Status Channels Section behavior in src/commands/status-all. */
+/** Build the channel status section from channel rows and issue summaries. */
 export function buildStatusChannelsSection(params: {
   width: number;
   renderTable: TableRenderer;
@@ -67,7 +67,7 @@ export function buildStatusChannelsSection(params: {
   } as StatusReportSection;
 }
 
-/** Reused helper for build Status Channels Table Section behavior in src/commands/status-all. */
+/** Build a pre-rendered channel table section with caller-provided rows. */
 export function buildStatusChannelsTableSection(params: {
   width: number;
   renderTable: TableRenderer;
@@ -84,7 +84,7 @@ export function buildStatusChannelsTableSection(params: {
   };
 }
 
-/** Reused helper for build Status Channel Details Sections behavior in src/commands/status-all. */
+/** Build per-channel detail sections for status-all output. */
 export function buildStatusChannelDetailsSections(params: {
   details: Array<{
     title: string;
@@ -105,7 +105,7 @@ export function buildStatusChannelDetailsSections(params: {
   });
 }
 
-/** Reused helper for build Status Agents Section behavior in src/commands/status-all. */
+/** Build the agent status table section. */
 export function buildStatusAgentsSection(params: {
   width: number;
   renderTable: TableRenderer;
@@ -136,7 +136,7 @@ export function buildStatusAgentsSection(params: {
   };
 }
 
-/** Reused helper for build Status Sessions Section behavior in src/commands/status-all. */
+/** Build the session status table section. */
 export function buildStatusSessionsSection(params: {
   width: number;
   renderTable: TableRenderer;
@@ -153,7 +153,7 @@ export function buildStatusSessionsSection(params: {
   };
 }
 
-/** Reused helper for build Status System Events Section behavior in src/commands/status-all. */
+/** Build the optional system events section. */
 export function buildStatusSystemEventsSection(params: {
   width: number;
   renderTable: TableRenderer;
@@ -172,7 +172,7 @@ export function buildStatusSystemEventsSection(params: {
   };
 }
 
-/** Reused helper for build Status Health Section behavior in src/commands/status-all. */
+/** Build the optional health findings section. */
 export function buildStatusHealthSection(params: {
   width: number;
   renderTable: TableRenderer;
@@ -190,7 +190,7 @@ export function buildStatusHealthSection(params: {
   };
 }
 
-/** Reused helper for build Status Usage Section behavior in src/commands/status-all. */
+/** Build the optional usage text section. */
 export function buildStatusUsageSection(params: { usageLines?: string[] }): StatusReportSection {
   return {
     kind: "lines",

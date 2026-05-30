@@ -1,17 +1,17 @@
-// config/sessions runtime types helpers and runtime behavior.
+// Runtime callback and maintenance types shared by session store modules.
 import type { MsgContext } from "../../auto-reply/templating.js";
 import type { ChannelRouteRef } from "../../plugin-sdk/channel-route.js";
 import type { DeliveryContext } from "../../utils/delivery-context.types.js";
 import type { SessionMaintenanceMode } from "../types.base.js";
 import type { SessionEntry, GroupKeyResolution } from "./types.js";
 
-/** Shared type for Read Session Updated At in src/config/sessions. */
+/** Read the last-updated timestamp for one session key from a store. */
 export type ReadSessionUpdatedAt = (params: {
   storePath: string;
   sessionKey: string;
 }) => number | undefined;
 
-/** Shared type for Session Maintenance Warning Runtime in src/config/sessions. */
+/** Warning payload emitted when session maintenance would prune or cap entries. */
 export type SessionMaintenanceWarningRuntime = {
   activeSessionKey: string;
   activeUpdatedAt?: number;
@@ -22,7 +22,7 @@ export type SessionMaintenanceWarningRuntime = {
   wouldCap: boolean;
 };
 
-/** Shared type for Resolved Session Maintenance Config Runtime in src/config/sessions. */
+/** Resolved session maintenance limits used at runtime. */
 export type ResolvedSessionMaintenanceConfigRuntime = {
   mode: SessionMaintenanceMode;
   pruneAfterMs: number;
@@ -32,7 +32,7 @@ export type ResolvedSessionMaintenanceConfigRuntime = {
   highWaterBytes: number | null;
 };
 
-/** Shared type for Session Maintenance Apply Report Runtime in src/config/sessions. */
+/** Report emitted after session maintenance mutates a store. */
 export type SessionMaintenanceApplyReportRuntime = {
   mode: SessionMaintenanceMode;
   beforeCount: number;
@@ -42,7 +42,7 @@ export type SessionMaintenanceApplyReportRuntime = {
   diskBudget: Record<string, unknown> | null;
 };
 
-/** Shared type for Save Session Store Options in src/config/sessions. */
+/** Save options for maintenance, warnings, and ACP metadata preservation. */
 export type SaveSessionStoreOptions = {
   skipMaintenance?: boolean;
   activeSessionKey?: string;
@@ -52,14 +52,14 @@ export type SaveSessionStoreOptions = {
   maintenanceOverride?: Partial<ResolvedSessionMaintenanceConfigRuntime>;
 };
 
-/** Shared type for Save Session Store in src/config/sessions. */
+/** Persist a session store with optional maintenance controls. */
 export type SaveSessionStore = (
   storePath: string,
   store: Record<string, SessionEntry>,
   opts?: SaveSessionStoreOptions,
 ) => Promise<void>;
 
-/** Shared type for Record Session Meta From Inbound in src/config/sessions. */
+/** Record inbound message metadata onto a session entry. */
 export type RecordSessionMetaFromInbound = (params: {
   storePath: string;
   sessionKey: string;
@@ -68,7 +68,7 @@ export type RecordSessionMetaFromInbound = (params: {
   createIfMissing?: boolean;
 }) => Promise<SessionEntry | null>;
 
-/** Shared type for Update Last Route in src/config/sessions. */
+/** Update the last outbound route and delivery context for a session. */
 export type UpdateLastRoute = (params: {
   storePath: string;
   sessionKey: string;

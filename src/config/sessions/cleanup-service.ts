@@ -1,4 +1,5 @@
-// config/sessions cleanup service helpers and runtime behavior.
+// Session cleanup service for pruning stale entries, repairing missing rows,
+// retiring old DM scope keys, and enforcing artifact disk budgets.
 import fs from "node:fs";
 import path from "node:path";
 import { resolveDefaultAgentId } from "../../agents/agent-scope.js";
@@ -38,7 +39,7 @@ import {
 } from "./targets.js";
 import type { SessionEntry } from "./types.js";
 
-/** Shared type for Sessions Cleanup Options in src/config/sessions. */
+/** CLI/service options controlling session cleanup preview and enforcement. */
 export type SessionsCleanupOptions = SessionStoreSelectionOptions & {
   dryRun?: boolean;
   enforce?: boolean;
@@ -48,7 +49,7 @@ export type SessionsCleanupOptions = SessionStoreSelectionOptions & {
   fixDmScope?: boolean;
 };
 
-/** Shared type for Session Cleanup Action in src/config/sessions. */
+/** Cleanup action assigned to one session store row. */
 export type SessionCleanupAction =
   | "keep"
   | "prune-missing"
@@ -57,7 +58,7 @@ export type SessionCleanupAction =
   | "evict-budget"
   | "retire-dm-scope";
 
-/** Shared type for Session Cleanup Summary in src/config/sessions. */
+/** Summary for one session store cleanup preview or apply pass. */
 export type SessionCleanupSummary = {
   agentId: string;
   storePath: string;
@@ -76,7 +77,7 @@ export type SessionCleanupSummary = {
   appliedCount?: number;
 };
 
-/** Shared type for Sessions Cleanup Result in src/config/sessions. */
+/** Serialized cleanup result for one store or all selected agent stores. */
 export type SessionsCleanupResult =
   | SessionCleanupSummary
   | {
@@ -86,7 +87,7 @@ export type SessionsCleanupResult =
       stores: SessionCleanupSummary[];
     };
 
-/** Shared type for Sessions Cleanup Run Result in src/config/sessions. */
+/** Internal cleanup run result retaining preview stores and key sets for rendering. */
 export type SessionsCleanupRunResult = {
   mode: ResolvedSessionMaintenanceConfig["mode"];
   previewResults: Array<{
@@ -168,7 +169,7 @@ function transcriptHasNoMessageRecords(transcriptPath: string): boolean {
   return true;
 }
 
-/** Reused helper for resolve Session Cleanup Action behavior in src/config/sessions. */
+/** Resolve which cleanup action applies to one session key. */
 export function resolveSessionCleanupAction(params: {
   key: string;
   missingKeys: Set<string>;
@@ -253,7 +254,7 @@ function retireMainScopeDirectSessionEntries(params: {
   return retired;
 }
 
-/** Reused helper for serialize Session Cleanup Result behavior in src/config/sessions. */
+/** Serialize cleanup summaries into the public one-store or all-agents result shape. */
 export function serializeSessionCleanupResult(params: {
   mode: ResolvedSessionMaintenanceConfig["mode"];
   dryRun: boolean;
@@ -466,7 +467,7 @@ async function previewStoreCleanup(params: {
   };
 }
 
-/** Reused helper for run Sessions Cleanup behavior in src/config/sessions. */
+/** Preview and optionally apply cleanup across selected session stores. */
 export async function runSessionsCleanup(params: {
   cfg: OpenClawConfig;
   opts: SessionsCleanupOptions;

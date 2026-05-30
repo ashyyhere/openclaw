@@ -1,5 +1,5 @@
-// config config helpers and runtime behavior.
-/** Re-exported API for src/config. */
+// Public config barrel for IO, mutation, validation, paths, and runtime snapshots.
+/** Config IO, runtime snapshot, recovery, cache, and write notification helpers. */
 export {
   clearConfigCache,
   ConfigRuntimeRefreshError,
@@ -31,26 +31,26 @@ export {
   setRuntimeConfigSnapshot,
   writeConfigFile,
 } from "./io.js";
-/** Re-exported API for src/config. */
+/** Runtime config hashing and post-write follow-up resolution. */
 export {
   hashRuntimeConfigValue,
   resolveConfigWriteAfterWrite,
   resolveConfigWriteFollowUp,
 } from "./runtime-snapshot.js";
-/** Re-exported API for src/config. */
+/** Runtime config post-write follow-up types. */
 export type {
   ConfigWriteAfterWrite,
   ConfigWriteFollowUp,
   RuntimeConfigSnapshotMetadata,
 } from "./runtime-snapshot.js";
-/** Re-exported API for src/config. */
+/** Config snapshot and write-result types from the IO layer. */
 export type {
   ConfigSnapshotReadOptions,
   ConfigWriteNotification,
   ConfigWriteResult,
   ReadConfigFileSnapshotWithPluginMetadataResult,
 } from "./io.js";
-/** Re-exported API for src/config. */
+/** Atomic config mutation helpers and conflict error class. */
 export {
   ConfigMutationConflictError,
   mutateConfigFile,
@@ -59,7 +59,7 @@ export {
   transformConfigFile,
   transformConfigFileWithRetry,
 } from "./mutate.js";
-/** Re-exported API for src/config. */
+/** Config mutation context, commit, replace, and transform result types. */
 export type {
   ConfigMutationCommit,
   ConfigMutationCommitParams,
@@ -72,7 +72,7 @@ export type {
   TransformConfigFileParams,
   TransformConfigFileWithRetryParams,
 } from "./mutate.js";
-/** Re-exported API for src/config. */
+/** Nix-mode write guard for config mutation entrypoints. */
 export {
   assertConfigWriteAllowedInCurrentMode,
   NixModeConfigMutationError,
@@ -81,7 +81,7 @@ export * from "./paths.js";
 export * from "./recovery-policy.js";
 export * from "./runtime-overrides.js";
 export * from "./types.js";
-/** Re-exported API for src/config. */
+/** Config validation helpers for raw and plugin-augmented schemas. */
 export {
   validateConfigObject,
   validateConfigObjectRaw,
