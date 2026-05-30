@@ -1,4 +1,4 @@
-// extensions/voice-call/src tts provider voice helpers and runtime behavior.
+// Voice Call TTS voice helpers resolve provider-specific voice settings from config.
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { VoiceCallTtsConfig } from "./config.js";
 
@@ -20,6 +20,7 @@ function resolveProviderVoiceSetting(providerConfig: unknown): string | undefine
   );
 }
 
+/** Resolves the preferred voice for the configured TTS provider. */
 export function resolvePreferredTtsVoice(config: { tts?: VoiceCallTtsConfig }): string | undefined {
   const providerId = config.tts?.provider;
   if (!providerId) {
