@@ -1,4 +1,5 @@
-// infra system run approval binding helpers and runtime behavior.
+// Binds system-run approvals to argv/cwd/agent/session/env facts so approval
+// ids cannot be replayed against a different command request.
 import crypto from "node:crypto";
 import type {
   SystemRunApprovalBinding,
@@ -38,7 +39,7 @@ function normalizeSystemRunApprovalFileOperand(
   };
 }
 
-/** Reused helper for normalize System Run Approval Plan behavior in src/infra. */
+/** Normalizes serialized approval-plan payloads into the strict persisted shape. */
 export function normalizeSystemRunApprovalPlan(value: unknown): SystemRunApprovalPlan | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return null;
@@ -94,7 +95,7 @@ function hashSystemRunEnvEntries(entries: NormalizedSystemRunEnvEntry[]): string
   return crypto.createHash("sha256").update(JSON.stringify(entries)).digest("hex");
 }
 
-/** Reused helper for build System Run Approval Env Binding behavior in src/infra. */
+/** Hashes allowed host env overrides after key normalization for approval binding. */
 export function buildSystemRunApprovalEnvBinding(env: unknown): {
   envHash: string | null;
   envKeys: string[];
@@ -106,7 +107,7 @@ export function buildSystemRunApprovalEnvBinding(env: unknown): {
   };
 }
 
-/** Reused helper for build System Run Approval Binding behavior in src/infra. */
+/** Builds the command/request facts embedded into a system-run approval id. */
 export function buildSystemRunApprovalBinding(params: {
   argv: unknown;
   cwd?: unknown;
@@ -139,7 +140,7 @@ function argvMatches(expectedArgv: string[], actualArgv: string[]): boolean {
   return true;
 }
 
-/** Shared type for System Run Approval Match Result in src/infra. */
+/** Result of comparing an approval id binding with the attempted system run. */
 export type SystemRunApprovalMatchResult =
   | { ok: true }
   | {
@@ -162,7 +163,7 @@ function requestMismatch(details?: Record<string, unknown>): SystemRunApprovalMa
   };
 }
 
-/** Reused helper for match System Run Approval Env Hash behavior in src/infra. */
+/** Verifies env override hashes, failing closed when env keys are unbound. */
 export function matchSystemRunApprovalEnvHash(params: {
   expectedEnvHash: string | null;
   actualEnvHash: string | null;
@@ -204,7 +205,7 @@ export function matchSystemRunApprovalEnvHash(params: {
   return { ok: true };
 }
 
-/** Reused helper for match System Run Approval Binding behavior in src/infra. */
+/** Checks argv/cwd/agent/session/env facts against the approved binding. */
 export function matchSystemRunApprovalBinding(params: {
   expected: SystemRunApprovalBinding;
   actual: SystemRunApprovalBinding;
@@ -229,7 +230,7 @@ export function matchSystemRunApprovalBinding(params: {
   });
 }
 
-/** Reused helper for missing System Run Approval Binding behavior in src/infra. */
+/** Creates the mismatch result used when an approval id has no binding payload. */
 export function missingSystemRunApprovalBinding(params: {
   actualEnvKeys: string[];
 }): SystemRunApprovalMatchResult {
@@ -238,7 +239,7 @@ export function missingSystemRunApprovalBinding(params: {
   });
 }
 
-/** Reused helper for to System Run Approval Mismatch Error behavior in src/infra. */
+/** Converts a failed binding match into the JSON error shape returned to callers. */
 export function toSystemRunApprovalMismatchError(params: {
   runId: string;
   match: SystemRunApprovalMismatch;
