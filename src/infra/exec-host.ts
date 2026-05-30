@@ -1,8 +1,9 @@
-// infra exec host helpers and runtime behavior.
+// Socket client for delegating command execution to the local exec host.
+// Requests are HMAC-bound to nonce, timestamp, and payload to prevent replay/tamper.
 import crypto from "node:crypto";
 import { requestJsonlSocket } from "./jsonl-socket.js";
 
-/** Shared type for Exec Host Request in src/infra. */
+/** Command execution request sent over the local authenticated exec-host socket. */
 export type ExecHostRequest = {
   command: string[];
   rawCommand?: string | null;
@@ -15,7 +16,7 @@ export type ExecHostRequest = {
   approvalDecision?: "allow-once" | "allow-always" | null;
 };
 
-/** Shared type for Exec Host Run Result in src/infra. */
+/** Normalized process result returned by the exec host after command completion. */
 export type ExecHostRunResult = {
   exitCode?: number;
   timedOut: boolean;
@@ -31,12 +32,12 @@ type ExecHostError = {
   reason?: string;
 };
 
-/** Shared type for Exec Host Response in src/infra. */
+/** Exec-host wire response; transport failures are represented by a null caller result. */
 export type ExecHostResponse =
   | { ok: true; payload: ExecHostRunResult }
   | { ok: false; error: ExecHostError };
 
-/** Reused helper for request Exec Host Via Socket behavior in src/infra. */
+/** Send one authenticated exec request and wait for the matching JSONL response frame. */
 export async function requestExecHostViaSocket(params: {
   socketPath: string;
   token: string;

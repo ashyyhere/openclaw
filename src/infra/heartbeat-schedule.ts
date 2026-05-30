@@ -1,4 +1,5 @@
-// infra heartbeat schedule helpers and runtime behavior.
+// Deterministic heartbeat scheduling helpers.
+// Agents get stable phase offsets so periodic heartbeats spread across the interval.
 import { createHash } from "node:crypto";
 import { resolveIntegerOption } from "./numeric-options.js";
 
@@ -10,7 +11,7 @@ function normalizeModulo(value: number, divisor: number) {
   return ((value % divisor) + divisor) % divisor;
 }
 
-/** Reused helper for resolve Heartbeat Phase Ms behavior in src/infra. */
+/** Derive a stable per-agent phase offset within the heartbeat interval. */
 export function resolveHeartbeatPhaseMs(params: {
   schedulerSeed: string;
   agentId: string;
@@ -21,7 +22,7 @@ export function resolveHeartbeatPhaseMs(params: {
   return digest.readUInt32BE(0) % intervalMs;
 }
 
-/** Reused helper for compute Next Heartbeat Phase Due Ms behavior in src/infra. */
+/** Compute the next future timestamp that matches a phase-aligned heartbeat slot. */
 export function computeNextHeartbeatPhaseDueMs(params: {
   nowMs: number;
   intervalMs: number;
@@ -41,7 +42,7 @@ export function computeNextHeartbeatPhaseDueMs(params: {
   return nowMs + deltaMs;
 }
 
-/** Reused helper for resolve Next Heartbeat Due Ms behavior in src/infra. */
+/** Keep an existing future schedule when interval and phase have not changed. */
 export function resolveNextHeartbeatDueMs(params: {
   nowMs: number;
   intervalMs: number;
@@ -86,7 +87,7 @@ const MAX_SEEK_HORIZON_MS = 7 * 24 * 60 * 60_000;
 // Prevent pathological sub-minute intervals from blocking the event loop.
 const MAX_SEEK_ITERATIONS = 10_080; // 7 days at 1-minute steps
 
-/** Reused helper for seek Next Active Phase Due Ms behavior in src/infra. */
+/** Seek the next phase-aligned slot that satisfies active-hours constraints. */
 export function seekNextActivePhaseDueMs(params: {
   startMs: number;
   intervalMs: number;

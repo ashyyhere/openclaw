@@ -1,4 +1,5 @@
-// infra exec safe bin runtime policy helpers and runtime behavior.
+// Runtime policy assembly for exec safe-bin allowlists, profiles, and trusted dirs.
+// The merged result feeds approval decisions and operator warnings.
 import { resolveSafeBins } from "./exec-approvals-allowlist.js";
 import {
   normalizeSafeBinProfileFixtures,
@@ -67,7 +68,7 @@ const INTERPRETER_LIKE_PATTERNS = [
   /^node\d+(?:\.\d+)?$/,
 ];
 
-/** Reused helper for is Interpreter Like Safe Bin behavior in src/infra. */
+/** Detect safe-bin names that can interpret arbitrary scripts or command strings. */
 export function isInterpreterLikeSafeBin(raw: string): boolean {
   const normalized = normalizeSafeBinName(raw);
   if (!normalized) {
@@ -79,7 +80,7 @@ export function isInterpreterLikeSafeBin(raw: string): boolean {
   return INTERPRETER_LIKE_PATTERNS.some((pattern) => pattern.test(normalized));
 }
 
-/** Reused helper for list Interpreter Like Safe Bins behavior in src/infra. */
+/** Return normalized interpreter-like safe bins for profile warnings and diagnostics. */
 export function listInterpreterLikeSafeBins(entries: Iterable<string>): string[] {
   return Array.from(entries)
     .map((entry) => normalizeSafeBinName(entry))
@@ -87,7 +88,7 @@ export function listInterpreterLikeSafeBins(entries: Iterable<string>): string[]
     .toSorted();
 }
 
-/** Reused helper for resolve Merged Safe Bin Profile Fixtures behavior in src/infra. */
+/** Merge global then local profile fixtures so local config can override shared policy. */
 export function resolveMergedSafeBinProfileFixtures(params: {
   global?: ExecSafeBinConfigScope | null;
   local?: ExecSafeBinConfigScope | null;
@@ -103,7 +104,7 @@ export function resolveMergedSafeBinProfileFixtures(params: {
   };
 }
 
-/** Reused helper for resolve Exec Safe Bin Runtime Policy behavior in src/infra. */
+/** Resolve safe-bin runtime policy plus warnings for writable explicitly trusted dirs. */
 export function resolveExecSafeBinRuntimePolicy(params: {
   global?: ExecSafeBinConfigScope | null;
   local?: ExecSafeBinConfigScope | null;

@@ -1,4 +1,5 @@
-// infra openclaw root helpers and runtime behavior.
+// OpenClaw package-root discovery for CLI, package, and symlinked binary launches.
+// Results are process-local cached because package layout does not change at runtime.
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { openClawRootFs, openClawRootFsSync } from "./openclaw-root.fs.runtime.js";
@@ -107,7 +108,7 @@ function candidateDirsFromArgv1(argv1: string): string[] {
   return [...deduped];
 }
 
-/** Reused helper for resolve Open Claw Package Root behavior in src/infra. */
+/** Resolve the installed OpenClaw package root from module, argv, and cwd hints. */
 export async function resolveOpenClawPackageRoot(opts: {
   cwd?: string;
   argv1?: string;
@@ -130,7 +131,7 @@ export async function resolveOpenClawPackageRoot(opts: {
   return null;
 }
 
-/** Reused helper for resolve Open Claw Package Root Sync behavior in src/infra. */
+/** Synchronous package-root resolver for startup paths that cannot await filesystem work. */
 export function resolveOpenClawPackageRootSync(opts: {
   cwd?: string;
   argv1?: string;
@@ -191,7 +192,7 @@ function createPackageRootCacheKey(candidates: readonly string[]): string {
   return candidates.join("\0");
 }
 
-/** Reused constant for testing behavior in src/infra. */
+/** Test-only cache controls for deterministic package-root discovery cases. */
 export const testing = {
   clearOpenClawPackageRootCaches(): void {
     packageNameCache.clear();
@@ -199,5 +200,5 @@ export const testing = {
     argv1CandidateCache.clear();
   },
 };
-/** Re-exported API for src/infra, starting with testing. */
+/** Stable test hook alias used by existing root-discovery tests. */
 export { testing as __testing };

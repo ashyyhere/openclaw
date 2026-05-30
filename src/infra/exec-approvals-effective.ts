@@ -1,4 +1,5 @@
-// infra exec approvals effective helpers and runtime behavior.
+// Exec approval policy summary helpers for CLI diagnostics and operator views.
+// They explain how requested config, host policy, and agent overrides combine.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { DEFAULT_AGENT_ID } from "../routing/session-key.js";
 import { sortUniqueStrings } from "../shared/string-normalization.js";
@@ -46,7 +47,7 @@ type ExecPolicyFieldSummary<TValue extends ExecSecurity | ExecAsk> = {
   note: string;
 };
 
-/** Shared type for Exec Policy Scope Snapshot in src/infra. */
+/** Effective exec approval policy for one global or agent-specific config scope. */
 export type ExecPolicyScopeSnapshot = {
   scopeLabel: string;
   configPath: string;
@@ -287,7 +288,7 @@ function resolveAskNote(params: {
   return "more aggressive ask wins";
 }
 
-/** Reused helper for collect Exec Policy Scope Snapshots behavior in src/infra. */
+/** Collect global and per-agent effective policy snapshots in stable display order. */
 export function collectExecPolicyScopeSnapshots(params: {
   cfg: OpenClawConfig;
   approvals: ExecApprovalsFile;
@@ -329,7 +330,7 @@ export function collectExecPolicyScopeSnapshots(params: {
   return snapshots;
 }
 
-/** Reused helper for resolve Exec Policy Scope Summary behavior in src/infra. */
+/** Resolve a display summary while omitting decision details used by enforcement checks. */
 export function resolveExecPolicyScopeSummary(params: {
   approvals: ExecApprovalsFile;
   scopeExecConfig?: ExecPolicyConfig | undefined;
@@ -344,7 +345,7 @@ export function resolveExecPolicyScopeSummary(params: {
   return summary;
 }
 
-/** Reused helper for resolve Exec Policy Scope Snapshot behavior in src/infra. */
+/** Resolve one scope with host policy taking the stricter security and more eager ask mode. */
 export function resolveExecPolicyScopeSnapshot(params: {
   approvals: ExecApprovalsFile;
   scopeExecConfig?: ExecPolicyConfig | undefined;

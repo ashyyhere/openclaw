@@ -1,4 +1,5 @@
-// infra heartbeat summary helpers and runtime behavior.
+// Heartbeat config summary helpers for CLI/status display.
+// Defaults, agent overrides, and disabled state are normalized into one view model.
 import { resolveAgentConfig, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import {
   DEFAULT_HEARTBEAT_ACK_MAX_CHARS,
@@ -13,7 +14,7 @@ import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 type HeartbeatConfig = AgentDefaultsConfig["heartbeat"];
 
-/** Shared type for Heartbeat Summary in src/infra. */
+/** Resolved heartbeat settings for one agent as displayed to operators. */
 export type HeartbeatSummary = {
   enabled: boolean;
   every: string;
@@ -31,7 +32,7 @@ function hasExplicitHeartbeatAgents(cfg: OpenClawConfig) {
   return list.some((entry) => Boolean(entry?.heartbeat));
 }
 
-/** Reused helper for is Heartbeat Enabled For Agent behavior in src/infra. */
+/** Decide whether heartbeat should run for an agent under default/explicit config rules. */
 export function isHeartbeatEnabledForAgent(cfg: OpenClawConfig, agentId?: string): boolean {
   const resolvedAgentId = normalizeAgentId(agentId ?? resolveDefaultAgentId(cfg));
   const list = cfg.agents?.list ?? [];
@@ -47,7 +48,7 @@ export function isHeartbeatEnabledForAgent(cfg: OpenClawConfig, agentId?: string
   return resolvedAgentId === resolveDefaultAgentId(cfg);
 }
 
-/** Reused helper for resolve Heartbeat Interval Ms behavior in src/infra. */
+/** Parse heartbeat interval text, returning null for disabled or invalid values. */
 export function resolveHeartbeatIntervalMs(
   cfg: OpenClawConfig,
   overrideEvery?: string,
@@ -77,7 +78,7 @@ export function resolveHeartbeatIntervalMs(
   return ms;
 }
 
-/** Reused helper for resolve Heartbeat Summary For Agent behavior in src/infra. */
+/** Resolve the operator-facing heartbeat summary for one agent. */
 export function resolveHeartbeatSummaryForAgent(
   cfg: OpenClawConfig,
   agentId?: string,

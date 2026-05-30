@@ -1,4 +1,5 @@
-// infra exec approval channel runtime helpers and runtime behavior.
+// Shared gateway-backed runtime for native exec/plugin approval notifications.
+// It handles replay, expiration, and out-of-order request/resolution delivery.
 import { readConnectErrorDetailCode } from "../../packages/gateway-protocol/src/connect-error-details.js";
 import type { EventFrame } from "../../packages/gateway-protocol/src/index.js";
 import { startGatewayClientWhenEventLoopReady } from "../gateway/client-start-readiness.js";
@@ -13,7 +14,7 @@ import type {
 } from "./exec-approval-channel-runtime.types.js";
 import type { ExecApprovalRequest, ExecApprovalResolved } from "./exec-approvals.js";
 import type { PluginApprovalRequest, PluginApprovalResolved } from "./plugin-approvals.js";
-/** Re-exported API for src/infra. */
+/** Approval-channel runtime contracts shared by native adapters and tests. */
 export type {
   ExecApprovalChannelRuntime,
   ExecApprovalChannelRuntimeAdapter,
@@ -23,7 +24,7 @@ export type {
 type ApprovalRequestEvent = ExecApprovalRequest | PluginApprovalRequest;
 type ApprovalResolvedEvent = ExecApprovalResolved | PluginApprovalResolved;
 
-/** Reused class for Exec Approval Channel Runtime Terminal Start Error behavior in src/infra. */
+/** Startup failure raised when gateway auth pauses reconnect before the runtime is ready. */
 export class ExecApprovalChannelRuntimeTerminalStartError extends Error {
   readonly detailCode: string | null;
 
@@ -38,7 +39,7 @@ export class ExecApprovalChannelRuntimeTerminalStartError extends Error {
   }
 }
 
-/** Reused helper for is Exec Approval Channel Runtime Terminal Start Error behavior in src/infra. */
+/** Narrow terminal startup failures without depending on gateway client internals. */
 export function isExecApprovalChannelRuntimeTerminalStartError(
   error: unknown,
 ): error is ExecApprovalChannelRuntimeTerminalStartError {
@@ -77,7 +78,12 @@ function readGatewayConnectErrorDetailCode(error: unknown): string | null {
   return readConnectErrorDetailCode((error as { details?: unknown }).details);
 }
 
-/** Reused helper for create Exec Approval Channel Runtime behavior in src/infra. */
+/**
+ * Build a gateway approval runtime around an adapter for a specific delivery surface.
+ *
+ * Resolutions can arrive while a request is still being delivered to a channel, so the
+ * pending entry stores a deferred resolution and finalizes it after delivery succeeds.
+ */
 export function createExecApprovalChannelRuntime<
   TPending,
   TRequest extends ApprovalRequestEvent = ExecApprovalRequest,
