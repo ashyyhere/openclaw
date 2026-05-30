@@ -1,8 +1,9 @@
-// ui/src/ui/controllers exec approvals helpers and runtime behavior.
+// Control UI controller for exec approval files. Loads, edits, and saves
+// gateway or node-scoped approvals while tracking dirty form state.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import { cloneConfigObject, removePathValue, setPathValue } from "./config/form-utils.ts";
 
-/** Shared type for Exec Approvals Defaults in ui/src/ui/controllers. */
+/** Default exec approval modes applied across agents. */
 export type ExecApprovalsDefaults = {
   security?: string;
   ask?: string;
@@ -10,7 +11,7 @@ export type ExecApprovalsDefaults = {
   autoAllowSkills?: boolean;
 };
 
-/** Shared type for Exec Approvals Allowlist Entry in ui/src/ui/controllers. */
+/** Persisted exec command allowlist entry shown in the approvals editor. */
 export type ExecApprovalsAllowlistEntry = {
   id?: string;
   pattern: string;
@@ -22,12 +23,12 @@ export type ExecApprovalsAllowlistEntry = {
   lastResolvedPath?: string;
 };
 
-/** Shared type for Exec Approvals Agent in ui/src/ui/controllers. */
+/** Per-agent exec approval defaults and allowlist entries. */
 export type ExecApprovalsAgent = ExecApprovalsDefaults & {
   allowlist?: ExecApprovalsAllowlistEntry[];
 };
 
-/** Shared type for Exec Approvals File in ui/src/ui/controllers. */
+/** On-disk exec approvals file shape edited by the UI. */
 export type ExecApprovalsFile = {
   version?: number;
   socket?: { path?: string };
@@ -35,7 +36,7 @@ export type ExecApprovalsFile = {
   agents?: Record<string, ExecApprovalsAgent>;
 };
 
-/** Shared type for Exec Approvals Snapshot in ui/src/ui/controllers. */
+/** Loaded exec approvals file plus path/existence/hash metadata. */
 export type ExecApprovalsSnapshot = {
   path: string;
   exists: boolean;
@@ -43,10 +44,10 @@ export type ExecApprovalsSnapshot = {
   file: ExecApprovalsFile;
 };
 
-/** Shared type for Exec Approvals Target in ui/src/ui/controllers. */
+/** Gateway or remote node target for exec approvals RPCs. */
 export type ExecApprovalsTarget = { kind: "gateway" } | { kind: "node"; nodeId: string };
 
-/** Shared type for Exec Approvals State in ui/src/ui/controllers. */
+/** Mutable app state required by the exec approvals controller. */
 export type ExecApprovalsState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -87,7 +88,7 @@ function resolveExecApprovalsSaveRpc(
   return { method: "exec.approvals.node.set", params: { ...params, nodeId } };
 }
 
-/** Reused helper for load Exec Approvals behavior in ui/src/ui/controllers. */
+/** Loads exec approvals from the selected gateway or node target. */
 export async function loadExecApprovals(
   state: ExecApprovalsState,
   target?: ExecApprovalsTarget | null,
@@ -122,7 +123,7 @@ function applyExecApprovalsSnapshot(state: ExecApprovalsState, snapshot: ExecApp
   }
 }
 
-/** Reused helper for save Exec Approvals behavior in ui/src/ui/controllers. */
+/** Saves dirty exec approvals back to the selected gateway or node target. */
 export async function saveExecApprovals(
   state: ExecApprovalsState,
   target?: ExecApprovalsTarget | null,
@@ -154,7 +155,7 @@ export async function saveExecApprovals(
   }
 }
 
-/** Reused helper for update Exec Approvals Form Value behavior in ui/src/ui/controllers. */
+/** Updates one nested value in the editable exec approvals form. */
 export function updateExecApprovalsFormValue(
   state: ExecApprovalsState,
   path: Array<string | number>,
@@ -168,7 +169,7 @@ export function updateExecApprovalsFormValue(
   state.execApprovalsDirty = true;
 }
 
-/** Reused helper for remove Exec Approvals Form Value behavior in ui/src/ui/controllers. */
+/** Removes one nested value from the editable exec approvals form. */
 export function removeExecApprovalsFormValue(
   state: ExecApprovalsState,
   path: Array<string | number>,
