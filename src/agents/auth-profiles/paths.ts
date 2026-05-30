@@ -3,7 +3,7 @@ import fs from "node:fs";
 import { saveJsonFile } from "../../infra/json-file.js";
 import { AUTH_STORE_VERSION } from "./constants.js";
 import type { AuthProfileSecretsStore } from "./types.js";
-/** Re-exported API for src/agents/auth-profiles. */
+/** Auth profile path resolution helpers. */
 export {
   resolveAuthStatePath,
   resolveAuthStatePathForDisplay,
@@ -13,7 +13,7 @@ export {
   resolveOAuthRefreshLockPath,
 } from "./path-resolve.js";
 
-/** Reused helper for ensure Auth Store File behavior in src/agents/auth-profiles. */
+/** Creates an empty auth profile store file when missing. */
 export function ensureAuthStoreFile(pathname: string) {
   if (fs.existsSync(pathname)) {
     return;

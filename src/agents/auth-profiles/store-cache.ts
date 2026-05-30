@@ -13,7 +13,7 @@ const loadedAuthStoreCache = new Map<
   }
 >();
 
-/** Reused helper for read Cached Auth Profile Store behavior in src/agents/auth-profiles. */
+/** Reads a fresh cloned auth store from the mtime-keyed cache. */
 export function readCachedAuthProfileStore(params: {
   authPath: string;
   authMtimeMs: number | null;
@@ -33,7 +33,7 @@ export function readCachedAuthProfileStore(params: {
   return cloneAuthProfileStore(cached.store);
 }
 
-/** Reused helper for write Cached Auth Profile Store behavior in src/agents/auth-profiles. */
+/** Writes a cloned auth store into the mtime-keyed cache. */
 export function writeCachedAuthProfileStore(params: {
   authPath: string;
   authMtimeMs: number | null;
@@ -48,7 +48,7 @@ export function writeCachedAuthProfileStore(params: {
   });
 }
 
-/** Reused helper for clear Loaded Auth Store Cache behavior in src/agents/auth-profiles. */
+/** Clears the loaded auth store cache. */
 export function clearLoadedAuthStoreCache(): void {
   loadedAuthStoreCache.clear();
 }

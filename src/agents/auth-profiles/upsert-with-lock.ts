@@ -27,7 +27,7 @@ function normalizeAuthProfileCredential(credential: AuthProfileCredential): Auth
   return credential;
 }
 
-/** Reused helper for upsert Auth Profile With Lock behavior in src/agents/auth-profiles. */
+/** Upserts one auth profile while holding the auth store file lock. */
 export async function upsertAuthProfileWithLock(params: {
   profileId: string;
   credential: AuthProfileCredential;

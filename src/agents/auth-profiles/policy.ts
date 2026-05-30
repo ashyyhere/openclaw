@@ -125,7 +125,7 @@ function collectOAuthSecretRefPolicyViolations(params: {
   return violations;
 }
 
-/** Reused helper for assert No OAuth Secret Ref Policy Violations behavior in src/agents/auth-profiles. */
+/** Throws when OAuth profiles contain disallowed secret references. */
 export function assertNoOAuthSecretRefPolicyViolations(params: {
   store: AuthProfileStore;
   cfg?: OpenClawConfig;

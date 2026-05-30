@@ -1,3 +1,4 @@
+/** Resolves external CLI auth overlay scope for a selected provider/model. */
 import {
   findNormalizedProviderValue,
   normalizeProviderId,
@@ -10,7 +11,7 @@ import type { AuthProfileStore } from "./types.js";
 
 const CLAUDE_CLI_PROVIDER_ID = "claude-cli";
 
-/** Reused helper for resolve External Cli Auth Overlay Scope From Selection behavior in src/agents/auth-profiles. */
+/** Resolves external CLI auth overlay scope from a provider/model selection. */
 export function resolveExternalCliAuthOverlayScopeFromSelection(params: {
   provider: string;
   cfg?: OpenClawConfig;

@@ -6,7 +6,7 @@ import type { AuthProfileFailureReason, ProfileUsageStats } from "./types.js";
 
 const observationLog = createSubsystemLogger("agent/embedded");
 
-/** Reused helper for log Auth Profile Failure State Change behavior in src/agents/auth-profiles. */
+/** Logs meaningful auth profile cooldown or blocked-state changes. */
 export function logAuthProfileFailureStateChange(params: {
   runId?: string;
   profileId: string;
