@@ -1,4 +1,4 @@
-// scripts label open issues helpers and runtime behavior.
+// Open issue labeler classifies GitHub issues and PRs with model-assisted labels.
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
@@ -1006,6 +1006,7 @@ async function main() {
   logInfo(`Added r: skill labels (PRs): ${prSkillCount}`);
 }
 
+/** Test seam exposing pure classification helpers without running the labeler CLI. */
 export const testing = {
   classifyItem,
   normalizeClassification,

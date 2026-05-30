@@ -1,4 +1,4 @@
-// scripts generate prompt snapshots helpers and runtime behavior.
+// Prompt snapshot generator writes and checks formatted happy-path prompt artifacts.
 import { execFile } from "node:child_process";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -60,6 +60,7 @@ async function readSnapshotFiles(root: string, files: PromptSnapshotFile[]) {
   );
 }
 
+/** Creates prompt snapshot files in a temp tree and returns their formatted content. */
 export async function createFormattedPromptSnapshotFiles(): Promise<PromptSnapshotFile[]> {
   const files = createHappyPathPromptSnapshotFiles();
   const tmpRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-prompt-snapshots-"));
@@ -116,6 +117,7 @@ async function checkSnapshots() {
   console.log(`Prompt snapshots are current (${files.length} files).`);
 }
 
+/** Runs the prompt snapshot generator in write or check mode. */
 export async function runPromptSnapshotGenerator(argv = process.argv.slice(2)) {
   const mode = argv.includes("--write") ? "write" : argv.includes("--check") ? "check" : undefined;
 

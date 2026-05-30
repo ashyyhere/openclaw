@@ -1,4 +1,4 @@
-// scripts gh read helpers and runtime behavior.
+// gh-read mints GitHub App installation tokens and forwards read-only gh commands.
 import { execFileSync, spawnSync } from "node:child_process";
 import { createPrivateKey, createSign } from "node:crypto";
 import { readFileSync } from "node:fs";
@@ -43,6 +43,7 @@ type GitHubJsonOptions = {
   timeoutMs?: number;
 };
 
+/** Extracts an owner/repo value from gh-style `-R` or `--repo` arguments. */
 export function parseRepoArg(args: string[]): string | null {
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
@@ -59,6 +60,7 @@ export function parseRepoArg(args: string[]): string | null {
   return null;
 }
 
+/** Normalizes GitHub remote, URL, or owner/repo input to `owner/repo`. */
 export function normalizeRepo(value: string | null | undefined): string | null {
   const trimmed = value?.trim();
   if (!trimmed) {
@@ -76,6 +78,7 @@ export function normalizeRepo(value: string | null | undefined): string | null {
   return `${parts[parts.length - 2]}/${parts[parts.length - 1]}`;
 }
 
+/** Parses requested installation permission keys from env config. */
 export function parsePermissionKeys(raw: string | null | undefined): string[] {
   const trimmed = raw?.trim();
   if (!trimmed) {
@@ -88,6 +91,7 @@ export function parsePermissionKeys(raw: string | null | undefined): string[] {
     .filter(Boolean);
 }
 
+/** Downgrades granted installation permissions to read permissions for token creation. */
 export function buildReadPermissions(
   grantedPermissions: GrantedPermissions | null | undefined,
   requestedKeys: readonly string[],
@@ -102,6 +106,7 @@ export function buildReadPermissions(
   return permissions;
 }
 
+/** Resolves the GitHub API timeout used by gh-read network calls. */
 export function resolveGitHubFetchTimeoutMs(raw = process.env.OPENCLAW_GH_READ_FETCH_TIMEOUT_MS) {
   return parseStrictIntegerOption({
     fallback: DEFAULT_GITHUB_FETCH_TIMEOUT_MS,
@@ -194,6 +199,7 @@ async function withGitHubFetchTimeout<T>(
   }
 }
 
+/** Reads a bounded GitHub error response body for diagnostics. */
 export async function readBoundedGitHubErrorText(
   response: Response,
   maxChars = GITHUB_ERROR_BODY_MAX_CHARS,
@@ -233,6 +239,7 @@ export async function readBoundedGitHubErrorText(
   return truncated ? `${text}\n[truncated]` : text;
 }
 
+/** Reads and parses a bounded GitHub JSON response body. */
 export async function readBoundedGitHubJson<T>(
   response: Response,
   maxBytes = GITHUB_JSON_BODY_MAX_BYTES,
@@ -246,6 +253,7 @@ export async function readBoundedGitHubJson<T>(
   return JSON.parse(text) as T;
 }
 
+/** Calls the GitHub REST API with an installation bearer token and bounded response handling. */
 export async function githubJson<T>(
   path: string,
   bearerToken: string,
