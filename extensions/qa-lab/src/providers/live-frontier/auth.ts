@@ -1,4 +1,4 @@
-// extensions/qa-lab/src/providers/live-frontier auth helpers and runtime behavior.
+// QA Lab live-frontier auth helpers stage portable credentials for isolated runs.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   applyAuthProfileConfig,
@@ -13,7 +13,9 @@ import {
 import { normalizeStringEntries, uniqueStrings } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { resolveQaAgentAuthDir, writeQaAuthProfiles } from "../shared/auth-store.js";
 
+/** Env var for a QA-only Anthropic setup token staged into the temp agent state. */
 export const QA_LIVE_ANTHROPIC_SETUP_TOKEN_ENV = "OPENCLAW_QA_LIVE_ANTHROPIC_SETUP_TOKEN";
+/** Back-compat env var accepted by live QA lanes for setup-token values. */
 export const QA_LIVE_SETUP_TOKEN_VALUE_ENV = "OPENCLAW_LIVE_SETUP_TOKEN_VALUE";
 const QA_LIVE_ANTHROPIC_SETUP_TOKEN_PROFILE_ENV = "OPENCLAW_QA_LIVE_ANTHROPIC_SETUP_TOKEN_PROFILE";
 const QA_LIVE_ANTHROPIC_SETUP_TOKEN_PROFILE_ID = "anthropic:qa-setup-token";
@@ -174,6 +176,8 @@ function qaLiveRequiresCodexAuth(params: {
   if (forcedRuntime === "codex") {
     return true;
   }
+  // Official OpenAI endpoints default to Codex-backed auth in this lane.
+  // Custom OpenAI-compatible base URLs can use provider API keys instead.
   return qaLiveOpenAiUsesCodexByDefault(params.cfg);
 }
 
@@ -196,6 +200,7 @@ function resolveQaLiveAnthropicSetupToken(env: NodeJS.ProcessEnv = process.env) 
   return { token, profileId };
 }
 
+/** Stages an Anthropic setup-token profile for live QA runs when configured by env. */
 export async function stageQaLiveAnthropicSetupToken(params: {
   cfg: OpenClawConfig;
   stateDir: string;
@@ -223,6 +228,7 @@ export async function stageQaLiveAnthropicSetupToken(params: {
   });
 }
 
+/** Stages live API-key profiles into every QA agent that may issue provider requests. */
 export async function stageQaLiveApiKeyProfiles(params: {
   cfg: OpenClawConfig;
   stateDir: string;
@@ -277,6 +283,7 @@ export async function stageQaLiveApiKeyProfiles(params: {
   return next;
 }
 
+/** Throws when a live-frontier run needs Codex auth but no portable credential source exists. */
 export function assertQaLiveCodexAuthAvailable(params: {
   cfg: OpenClawConfig;
   providerIds: readonly string[];
@@ -298,6 +305,8 @@ export function assertQaLiveCodexAuthAvailable(params: {
   }
   const readCodexCredentials = params.readCodexCredentials ?? readCodexCliCredentialsCached;
   const codexHome = env.CODEX_HOME?.trim();
+  // Keychain prompts are disabled because QA runs are non-interactive and often
+  // execute inside temp agent stores where host OAuth profiles are unavailable.
   const codexCredential = readCodexCredentials({
     ...(codexHome ? { codexHome } : {}),
     allowKeychainPrompt: false,

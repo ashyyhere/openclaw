@@ -1,4 +1,4 @@
-// extensions/qa-lab/src/providers/live-frontier index helpers and runtime behavior.
+// QA Lab live-frontier provider definition configures real model-provider lanes.
 import type { QaProviderDefinition } from "../shared/types.js";
 
 function isOpenAiModel(modelRef: string) {
@@ -21,6 +21,7 @@ function isClaudeOpusModel(modelRef: string) {
   return isAnthropicModel(modelRef) && modelRef.includes("claude-opus");
 }
 
+/** Provider definition for live frontier-model QA lanes. */
 export const liveFrontierProviderDefinition: QaProviderDefinition = {
   mode: "live-frontier",
   kind: "live",
