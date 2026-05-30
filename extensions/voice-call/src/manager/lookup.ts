@@ -1,6 +1,7 @@
-// extensions/voice-call/src/manager lookup helpers and runtime behavior.
+// Voice-call lookup helpers map provider call IDs back to active call records.
 import type { CallId, CallRecord } from "../types.js";
 
+/** Find an active call by provider call ID, falling back to record scans when the map is stale. */
 export function getCallByProviderCallId(params: {
   activeCalls: Map<CallId, CallRecord>;
   providerCallIdMap: Map<string, CallId>;
@@ -19,6 +20,7 @@ export function getCallByProviderCallId(params: {
   return undefined;
 }
 
+/** Find an active call by either internal call ID or provider call ID. */
 export function findCall(params: {
   activeCalls: Map<CallId, CallRecord>;
   providerCallIdMap: Map<string, CallId>;

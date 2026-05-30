@@ -1,4 +1,4 @@
-// extensions/voice-call/src/manager lifecycle helpers and runtime behavior.
+// Voice-call lifecycle helper finalizes calls and clears related runtime state.
 import type { CallRecord, EndReason } from "../types.js";
 import type { CallManagerContext } from "./context.js";
 import { transitionState } from "./state.js";
@@ -24,6 +24,7 @@ function removeProviderCallMapping(
   }
 }
 
+/** Persist a terminal call state, reject waiters, clear timers, and remove active mappings. */
 export function finalizeCall(params: {
   ctx: CallLifecycleContext;
   call: CallRecord;

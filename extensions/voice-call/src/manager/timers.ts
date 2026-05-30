@@ -1,4 +1,4 @@
-// extensions/voice-call/src/manager timers helpers and runtime behavior.
+// Voice-call timer helpers manage max-duration cutoffs and transcript waiters.
 import { TerminalStates, type CallId } from "../types.js";
 import type { CallManagerContext } from "./context.js";
 import { persistCallRecord } from "./store.js";
@@ -17,6 +17,7 @@ type MaxDurationTimerContext = Pick<
 >;
 type TranscriptWaiterContext = Pick<TimerContext, "transcriptWaiters">;
 
+/** Clear and forget a max-duration timer for a call. */
 export function clearMaxDurationTimer(
   ctx: Pick<MaxDurationTimerContext, "maxDurationTimers">,
   callId: CallId,
@@ -28,6 +29,7 @@ export function clearMaxDurationTimer(
   }
 }
 
+/** Start the max-duration timer that persists timeout state before provider hangup. */
 export function startMaxDurationTimer(params: {
   ctx: MaxDurationTimerContext;
   callId: CallId;
@@ -60,6 +62,7 @@ export function startMaxDurationTimer(params: {
   params.ctx.maxDurationTimers.set(params.callId, timer);
 }
 
+/** Clear a pending transcript waiter without resolving or rejecting it. */
 export function clearTranscriptWaiter(ctx: TranscriptWaiterContext, callId: CallId): void {
   const waiter = ctx.transcriptWaiters.get(callId);
   if (!waiter) {
@@ -69,6 +72,7 @@ export function clearTranscriptWaiter(ctx: TranscriptWaiterContext, callId: Call
   ctx.transcriptWaiters.delete(callId);
 }
 
+/** Reject and clear a pending transcript waiter for a call. */
 export function rejectTranscriptWaiter(
   ctx: TranscriptWaiterContext,
   callId: CallId,
@@ -82,6 +86,7 @@ export function rejectTranscriptWaiter(
   waiter.reject(new Error(reason));
 }
 
+/** Resolve a pending transcript waiter when the optional turn token matches. */
 export function resolveTranscriptWaiter(
   ctx: TranscriptWaiterContext,
   callId: CallId,
@@ -100,6 +105,7 @@ export function resolveTranscriptWaiter(
   return true;
 }
 
+/** Wait for one final transcript, rejecting when another waiter already exists or times out. */
 export function waitForFinalTranscript(
   ctx: TimerContext,
   callId: CallId,

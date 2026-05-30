@@ -1,4 +1,4 @@
-// extensions/voice-call/src/manager state helpers and runtime behavior.
+// Voice-call state helpers enforce forward call transitions and transcript mutation.
 import { TerminalStates, type CallRecord, type CallState, type TranscriptEntry } from "../types.js";
 
 const ConversationStates = new Set<CallState>(["speaking", "listening"]);
@@ -12,6 +12,7 @@ const StateOrder: readonly CallState[] = [
   "listening",
 ];
 
+/** Transition a call forward while allowing speaking/listening cycles and terminal exits. */
 export function transitionState(call: CallRecord, newState: CallState): void {
   // No-op for same state or already terminal.
   if (call.state === newState || TerminalStates.has(call.state)) {
@@ -38,6 +39,7 @@ export function transitionState(call: CallRecord, newState: CallState): void {
   }
 }
 
+/** Append a final transcript entry to the call record. */
 export function addTranscriptEntry(call: CallRecord, speaker: "bot" | "user", text: string): void {
   const entry: TranscriptEntry = {
     timestamp: Date.now(),
