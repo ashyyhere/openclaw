@@ -51,7 +51,7 @@ const providerRuntimeDeps = {
 let preparedExtraParamsCache = new WeakMap<OpenClawConfig, Map<string, Record<string, unknown>>>();
 const REQUEST_SCOPED_EXTRA_PARAM_KEYS = new Set(["response_format", "responseFormat", "stop"]);
 
-/** Reused constant for testing behavior in src/agents/embedded-agent-runner. */
+/** Test hook for swapping provider-runtime integration points and clearing cached params. */
 export const testing = {
   setProviderRuntimeDepsForTest(
     deps: Partial<typeof defaultProviderRuntimeDeps> | undefined,
@@ -162,7 +162,7 @@ type CacheRetentionStreamOptions = Partial<SimpleStreamOptions> & {
   seed?: number;
   stop?: string[];
 };
-/** Shared type for Supported Transport in src/agents/embedded-agent-runner. */
+/** Runtime transport modes accepted by provider extra-param resolution. */
 export type SupportedTransport = AgentRuntimeTransport;
 
 function resolveSupportedTransport(value: unknown): SupportedTransport | undefined {
@@ -1050,5 +1050,5 @@ export function applyExtraParamsToAgent(
 
   return { effectiveExtraParams };
 }
-/** Re-exported API for src/agents/embedded-agent-runner, starting with testing. */
+/** Stable test-only alias for provider extra-param dependency injection hooks. */
 export { testing as __testing };
