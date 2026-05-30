@@ -1,4 +1,4 @@
-// plugins setup registry helpers and runtime behavior.
+// Plugin setup runtime registry for providers, backends, migrations, and probes.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -55,7 +55,7 @@ type SetupAutoEnableProbeEntry = {
   probe: PluginSetupAutoEnableProbe;
 };
 
-/** Shared type for Plugin Setup Registry Diagnostic Code in src/plugins. */
+/** Diagnostic code for setup descriptor/runtime drift. */
 export type PluginSetupRegistryDiagnosticCode =
   | "setup-descriptor-runtime-disabled"
   | "setup-descriptor-provider-missing-runtime"
@@ -63,7 +63,7 @@ export type PluginSetupRegistryDiagnosticCode =
   | "setup-descriptor-cli-backend-missing-runtime"
   | "setup-descriptor-cli-backend-runtime-undeclared";
 
-/** Shared type for Plugin Setup Registry Diagnostic in src/plugins. */
+/** Setup registry diagnostic emitted when descriptors and runtime disagree. */
 export type PluginSetupRegistryDiagnostic = {
   pluginId: string;
   code: PluginSetupRegistryDiagnosticCode;
@@ -97,12 +97,12 @@ const NOOP_LOGGER: PluginLogger = {
 const moduleLoaders: PluginModuleLoaderCache = createPluginModuleLoaderCache();
 let moduleLoaderFactoryForTest: PluginModuleLoaderFactory | undefined;
 
-/** Reused helper for clear Plugin Setup Registry Cache behavior in src/plugins. */
+/** Clears cached setup module loaders for tests and registry refreshes. */
 export function clearPluginSetupRegistryCache(): void {
   moduleLoaders.clear();
 }
 
-/** Reused helper for set Plugin Setup Registry Module Loader Factory For Test behavior in src/plugins. */
+/** Overrides setup module loading for tests and clears existing cached loaders. */
 export function setPluginSetupRegistryModuleLoaderFactoryForTest(
   factory: PluginModuleLoaderFactory | undefined,
 ): void {
@@ -456,7 +456,7 @@ function pushSetupDescriptorDriftDiagnostics(params: {
   }
 }
 
-/** Reused helper for resolve Plugin Setup Registry behavior in src/plugins. */
+/** Loads setup runtimes and collects their setup-only registrations. */
 export function resolvePluginSetupRegistry(params?: {
   config?: OpenClawConfig;
   workspaceDir?: string;
@@ -584,7 +584,7 @@ export function resolvePluginSetupRegistry(params?: {
   return registry;
 }
 
-/** Reused helper for resolve Plugin Setup Provider behavior in src/plugins. */
+/** Resolves one setup provider by manifest ownership before executing runtime code. */
 export function resolvePluginSetupProvider(params: {
   provider: string;
   config?: OpenClawConfig;
@@ -648,7 +648,7 @@ export function resolvePluginSetupProvider(params: {
   return matchedProvider;
 }
 
-/** Reused helper for resolve Plugin Setup Cli Backend behavior in src/plugins. */
+/** Resolves one setup CLI backend by descriptor owner and setup runtime. */
 export function resolvePluginSetupCliBackend(params: {
   backend: string;
   config?: OpenClawConfig;
@@ -716,7 +716,7 @@ export function resolvePluginSetupCliBackend(params: {
   return resolvedEntry ?? undefined;
 }
 
-/** Reused helper for run Plugin Setup Config Migrations behavior in src/plugins. */
+/** Runs setup config migrations for configured or matching compatibility plugins. */
 export function runPluginSetupConfigMigrations(params: {
   config: OpenClawConfig;
   workspaceDir?: string;
@@ -749,7 +749,7 @@ export function runPluginSetupConfigMigrations(params: {
   return { config: next, changes };
 }
 
-/** Reused helper for resolve Plugin Setup Auto Enable Reasons behavior in src/plugins. */
+/** Runs setup auto-enable probes and returns deduped plugin reasons. */
 export function resolvePluginSetupAutoEnableReasons(params: {
   config: OpenClawConfig;
   workspaceDir?: string;

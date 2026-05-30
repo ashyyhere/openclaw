@@ -1,4 +1,4 @@
-// plugins plugin control plane context helpers and runtime behavior.
+// Plugin discovery/control-plane fingerprints for cache invalidation.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { hashJson } from "./installed-plugin-index-hash.js";
 import { resolveInstalledPluginIndexPolicyHash } from "./installed-plugin-index-policy.js";
@@ -6,13 +6,13 @@ import type { InstalledPluginIndex } from "./installed-plugin-index.js";
 import { resolveInstalledManifestRegistryIndexFingerprint } from "./manifest-registry-installed.js";
 import { resolvePluginCacheInputs, type PluginSourceRoots } from "./roots.js";
 
-/** Shared type for Plugin Discovery Context in src/plugins. */
+/** Plugin source roots and load paths that define discovery inputs. */
 export type PluginDiscoveryContext = {
   roots: PluginSourceRoots;
   loadPaths: readonly string[];
 };
 
-/** Shared type for Plugin Control Plane Context in src/plugins. */
+/** Inputs that affect plugin discovery, policy, inventory, and activation state. */
 export type PluginControlPlaneContext = {
   discovery: PluginDiscoveryContext;
   policyFingerprint: string;
@@ -20,7 +20,7 @@ export type PluginControlPlaneContext = {
   activationFingerprint?: string;
 };
 
-/** Shared type for Resolve Plugin Discovery Context Params in src/plugins. */
+/** Parameters used to resolve plugin source roots and load paths. */
 export type ResolvePluginDiscoveryContextParams = {
   config?: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -28,7 +28,7 @@ export type ResolvePluginDiscoveryContextParams = {
   loadPaths?: readonly string[];
 };
 
-/** Shared type for Resolve Plugin Control Plane Context Params in src/plugins. */
+/** Parameters used to build a full plugin control-plane fingerprint context. */
 export type ResolvePluginControlPlaneContextParams = ResolvePluginDiscoveryContextParams & {
   activationFingerprint?: string;
   index?: InstalledPluginIndex;
@@ -43,7 +43,7 @@ function resolveConfiguredPluginLoadPaths(
   return Array.isArray(paths) ? paths : undefined;
 }
 
-/** Reused helper for resolve Plugin Discovery Context behavior in src/plugins. */
+/** Resolves discovery roots and load paths from config, env, and workspace. */
 export function resolvePluginDiscoveryContext(
   params: ResolvePluginDiscoveryContextParams = {},
 ): PluginDiscoveryContext {
@@ -54,19 +54,19 @@ export function resolvePluginDiscoveryContext(
   });
 }
 
-/** Reused helper for resolve Plugin Discovery Fingerprint behavior in src/plugins. */
+/** Resolves and hashes plugin discovery inputs. */
 export function resolvePluginDiscoveryFingerprint(
   params: ResolvePluginDiscoveryContextParams = {},
 ): string {
   return fingerprintPluginDiscoveryContext(resolvePluginDiscoveryContext(params));
 }
 
-/** Reused helper for fingerprint Plugin Discovery Context behavior in src/plugins. */
+/** Hashes plugin discovery context for cache keys. */
 export function fingerprintPluginDiscoveryContext(context: PluginDiscoveryContext): string {
   return hashJson(context);
 }
 
-/** Reused helper for resolve Plugin Control Plane Context behavior in src/plugins. */
+/** Builds the full plugin control-plane context used for invalidation. */
 export function resolvePluginControlPlaneContext(
   params: ResolvePluginControlPlaneContextParams = {},
 ): PluginControlPlaneContext {
@@ -83,7 +83,7 @@ export function resolvePluginControlPlaneContext(
   };
 }
 
-/** Reused helper for resolve Plugin Control Plane Fingerprint behavior in src/plugins. */
+/** Resolves and hashes the full plugin control-plane context. */
 export function resolvePluginControlPlaneFingerprint(
   params: ResolvePluginControlPlaneContextParams = {},
 ): string {

@@ -1,16 +1,16 @@
-// plugins web provider resolution shared helpers and runtime behavior.
+// Shared web-search/web-fetch provider discovery and sorting helpers.
 import { resolveBundledPluginCompatibleLoadValues } from "./activation-context.js";
 import type { PluginLoadOptions } from "./loader.js";
 import { loadManifestMetadataSnapshot } from "./manifest-contract-eligibility.js";
 import type { PluginManifestRecord } from "./manifest-registry.js";
 import { createPluginIdScopeSet, normalizePluginIdScope } from "./plugin-scope.js";
 
-/** Shared type for Web Provider Contract in src/plugins. */
+/** Manifest contract key used for web provider lookup. */
 export type WebProviderContract = "webSearchProviders" | "webFetchProviders";
-/** Shared type for Web Provider Config Key in src/plugins. */
+/** Config key whose schema/UI hints can imply web provider support. */
 export type WebProviderConfigKey = "webSearch" | "webFetch";
 
-/** Shared type for Web Provider Candidate Resolution in src/plugins. */
+/** Candidate plugin ids plus manifest records reused by provider resolution. */
 export type WebProviderCandidateResolution = {
   pluginIds: string[] | undefined;
   manifestRecords?: readonly PluginManifestRecord[];
@@ -29,14 +29,14 @@ function comparePluginProvidersAlphabetically(
   return left.id.localeCompare(right.id) || left.pluginId.localeCompare(right.pluginId);
 }
 
-/** Reused helper for sort Plugin Providers behavior in src/plugins. */
+/** Sorts plugin providers deterministically by provider id then plugin id. */
 export function sortPluginProviders<T extends Pick<WebProviderSortEntry, "id" | "pluginId">>(
   providers: T[],
 ): T[] {
   return providers.toSorted(comparePluginProvidersAlphabetically);
 }
 
-/** Reused helper for sort Plugin Providers For Auto Detect behavior in src/plugins. */
+/** Sorts auto-detected providers by explicit priority before stable ids. */
 export function sortPluginProvidersForAutoDetect<T extends WebProviderSortEntry>(
   providers: T[],
 ): T[] {
@@ -81,7 +81,7 @@ function loadInstalledWebProviderManifestRecords(params: {
   return pluginIdSet ? records.filter((plugin) => pluginIdSet.has(plugin.id)) : records;
 }
 
-/** Reused helper for resolve Manifest Declared Web Provider Candidate Plugin Ids behavior in src/plugins. */
+/** Resolves candidate plugin ids from manifests that declare web provider support. */
 export function resolveManifestDeclaredWebProviderCandidatePluginIds(params: {
   contract: WebProviderContract;
   configKey: WebProviderConfigKey;
@@ -94,7 +94,7 @@ export function resolveManifestDeclaredWebProviderCandidatePluginIds(params: {
   return resolveManifestDeclaredWebProviderCandidates(params).pluginIds;
 }
 
-/** Reused helper for resolve Manifest Declared Web Provider Candidates behavior in src/plugins. */
+/** Resolves web provider candidates from contracts, config schema, and UI hints. */
 export function resolveManifestDeclaredWebProviderCandidates(params: {
   contract: WebProviderContract;
   configKey: WebProviderConfigKey;
@@ -151,7 +151,7 @@ function resolveBundledWebProviderCompatPluginIds(params: {
     .toSorted((left, right) => left.localeCompare(right));
 }
 
-/** Reused helper for resolve Bundled Web Provider Resolution Config behavior in src/plugins. */
+/** Applies bundled-plugin compat activation for web provider resolution. */
 export function resolveBundledWebProviderResolutionConfig(params: {
   contract: WebProviderContract;
   config?: PluginLoadOptions["config"];
@@ -185,7 +185,7 @@ export function resolveBundledWebProviderResolutionConfig(params: {
   };
 }
 
-/** Reused helper for map Registry Providers behavior in src/plugins. */
+/** Projects registry provider entries through plugin-id filtering and sorting. */
 export function mapRegistryProviders<TProvider extends { id: string }>(params: {
   entries: readonly { pluginId: string; provider: TProvider }[];
   onlyPluginIds?: readonly string[];
