@@ -1,5 +1,5 @@
-// gateway talk session registry helpers and runtime behavior.
-/** Shared type for Unified Talk Session Record in src/gateway. */
+// In-memory registry for active realtime/transcription/managed Talk sessions.
+/** Stored ownership record for one active Talk session id. */
 export type UnifiedTalkSessionRecord =
   | {
       kind: "realtime-relay";
@@ -20,7 +20,7 @@ export type UnifiedTalkSessionRecord =
 
 const unifiedTalkSessions = new Map<string, UnifiedTalkSessionRecord>();
 
-/** Reused helper for remember Unified Talk Session behavior in src/gateway. */
+/** Register a Talk session so later gateway calls can resolve its owner/transport. */
 export function rememberUnifiedTalkSession(
   sessionId: string,
   session: UnifiedTalkSessionRecord,
@@ -28,7 +28,7 @@ export function rememberUnifiedTalkSession(
   unifiedTalkSessions.set(sessionId, session);
 }
 
-/** Reused helper for get Unified Talk Session behavior in src/gateway. */
+/** Resolve a Talk session or throw the public "unknown session" error. */
 export function getUnifiedTalkSession(sessionId: string): UnifiedTalkSessionRecord {
   const session = unifiedTalkSessions.get(sessionId);
   if (!session) {
@@ -37,12 +37,12 @@ export function getUnifiedTalkSession(sessionId: string): UnifiedTalkSessionReco
   return session;
 }
 
-/** Reused helper for forget Unified Talk Session behavior in src/gateway. */
+/** Remove a Talk session after close or failed setup. */
 export function forgetUnifiedTalkSession(sessionId: string): void {
   unifiedTalkSessions.delete(sessionId);
 }
 
-/** Reused helper for require Unified Talk Session Conn behavior in src/gateway. */
+/** Enforce that a connection-scoped Talk session is controlled by the caller connection. */
 export function requireUnifiedTalkSessionConn(
   session: Extract<UnifiedTalkSessionRecord, { connId: string }>,
   connId: string | undefined,
@@ -53,7 +53,7 @@ export function requireUnifiedTalkSessionConn(
   return connId;
 }
 
-/** Reused helper for clear Unified Talk Sessions For Test behavior in src/gateway. */
+/** Reset the process-local Talk registry for isolated tests. */
 export function clearUnifiedTalkSessionsForTest(): void {
   unifiedTalkSessions.clear();
 }

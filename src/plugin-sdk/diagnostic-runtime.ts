@@ -1,17 +1,17 @@
 // Diagnostic flag/event helpers for plugins that want narrow runtime gating.
 
-/** Re-exported API for src/plugin-sdk, starting with is Diagnostic Flag Enabled. */
+/** Diagnostic feature-flag lookup for plugins that gate extra telemetry. */
 export { isDiagnosticFlagEnabled } from "../infra/diagnostic-flags.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Diagnostic event payload types visible to SDK consumers. */
 export type {
   DiagnosticEventMetadata,
   DiagnosticEventPayload,
   DiagnosticEventPrivateData,
   DiagnosticModelCallContent,
 } from "../infra/diagnostic-events.js";
-/** Re-exported API for src/plugin-sdk, starting with Diagnostic Model Content Capture Policy. */
+/** Policy type describing whether diagnostic events may include model content. */
 export type { DiagnosticModelContentCapturePolicy } from "../infra/diagnostic-llm-content.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Diagnostic event emitters and test drains exposed through the SDK runtime barrel. */
 export {
   emitDiagnosticEvent,
   emitTrustedDiagnosticEvent,
@@ -24,11 +24,11 @@ export {
   resetDiagnosticEventsForTest,
   waitForDiagnosticEventsDrained,
 } from "../infra/diagnostic-events.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Diagnostic Model Content Capture Policy. */
+/** Resolve model-content capture policy from config/env for diagnostics. */
 export { resolveDiagnosticModelContentCapturePolicy } from "../infra/diagnostic-llm-content.js";
-/** Re-exported API for src/plugin-sdk, starting with Diagnostic Trace Context. */
+/** Trace context propagated across plugin and runtime diagnostic events. */
 export type { DiagnosticTraceContext } from "../infra/diagnostic-trace-context.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Trace context creation, validation, and traceparent parsing helpers. */
 export {
   createChildDiagnosticTraceContext,
   createDiagnosticTraceContext,

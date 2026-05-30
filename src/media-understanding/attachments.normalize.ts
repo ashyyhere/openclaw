@@ -1,11 +1,11 @@
-// media-understanding attachments normalize helpers and runtime behavior.
+// Normalizes inbound message media fields into attachment records for understanding providers.
 import type { MsgContext } from "../auto-reply/templating.js";
 import { assertNoWindowsNetworkPath, safeFileURLToPath } from "../infra/local-file-access.js";
 import { getFileExtension, isAudioFileName, kindFromMime } from "../media/mime.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { MediaAttachment } from "./types.js";
 
-/** Reused helper for normalize Attachment Path behavior in src/media-understanding. */
+/** Normalize a local attachment path or file URL, rejecting unsafe network paths. */
 export function normalizeAttachmentPath(raw?: string | null): string | undefined {
   const value = normalizeOptionalString(raw);
   if (!value) {
@@ -26,7 +26,7 @@ export function normalizeAttachmentPath(raw?: string | null): string | undefined
   return value;
 }
 
-/** Reused helper for normalize Attachments behavior in src/media-understanding. */
+/** Convert message context media arrays/singletons into ordered media attachment records. */
 export function normalizeAttachments(ctx: MsgContext): MediaAttachment[] {
   const pathsFromArray = Array.isArray(ctx.MediaPaths) ? ctx.MediaPaths : undefined;
   const urlsFromArray = Array.isArray(ctx.MediaUrls) ? ctx.MediaUrls : undefined;
@@ -87,7 +87,7 @@ export function normalizeAttachments(ctx: MsgContext): MediaAttachment[] {
   ];
 }
 
-/** Reused helper for resolve Attachment Kind behavior in src/media-understanding. */
+/** Infer attachment kind from MIME type first, then filename/URL extension. */
 export function resolveAttachmentKind(
   attachment: MediaAttachment,
 ): "image" | "audio" | "video" | "document" | "unknown" {
@@ -112,17 +112,17 @@ export function resolveAttachmentKind(
   return "unknown";
 }
 
-/** Reused helper for is Video Attachment behavior in src/media-understanding. */
+/** Check whether an attachment should route to video understanding. */
 export function isVideoAttachment(attachment: MediaAttachment): boolean {
   return resolveAttachmentKind(attachment) === "video";
 }
 
-/** Reused helper for is Audio Attachment behavior in src/media-understanding. */
+/** Check whether an attachment should route to audio understanding/transcription. */
 export function isAudioAttachment(attachment: MediaAttachment): boolean {
   return resolveAttachmentKind(attachment) === "audio";
 }
 
-/** Reused helper for is Image Attachment behavior in src/media-understanding. */
+/** Check whether an attachment should route to image understanding. */
 export function isImageAttachment(attachment: MediaAttachment): boolean {
   return resolveAttachmentKind(attachment) === "image";
 }

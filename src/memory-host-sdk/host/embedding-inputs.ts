@@ -1,27 +1,27 @@
-// memory-host-sdk/host embedding inputs helpers and runtime behavior.
-/** Shared type for Embedding Input Text Part in src/memory-host-sdk/host. */
+// Memory host SDK input shapes for text and multimodal embedding providers.
+/** Text part included in an embedding input. */
 export type EmbeddingInputTextPart = {
   type: "text";
   text: string;
 };
 
-/** Shared type for Embedding Input Inline Data Part in src/memory-host-sdk/host. */
+/** Inline binary payload part included in an embedding input. */
 export type EmbeddingInputInlineDataPart = {
   type: "inline-data";
   mimeType: string;
   data: string;
 };
 
-/** Shared type for Embedding Input Part in src/memory-host-sdk/host. */
+/** Union of embedding input parts supported by memory providers. */
 export type EmbeddingInputPart = EmbeddingInputTextPart | EmbeddingInputInlineDataPart;
 
-/** Shared type for Embedding Input in src/memory-host-sdk/host. */
+/** Canonical embedding request input passed across the memory host boundary. */
 export type EmbeddingInput = {
   text: string;
   parts?: EmbeddingInputPart[];
 };
 
-/** Reused helper for build Text Embedding Input behavior in src/memory-host-sdk/host. */
+/** Build a text-only embedding input. */
 export function buildTextEmbeddingInput(text: string): EmbeddingInput {
   return { text };
 }
@@ -32,7 +32,7 @@ function isInlineDataEmbeddingInputPart(
   return part.type === "inline-data";
 }
 
-/** Reused helper for has Non Text Embedding Parts behavior in src/memory-host-sdk/host. */
+/** Detect whether an embedding input contains inline data in addition to text. */
 export function hasNonTextEmbeddingParts(input: EmbeddingInput | undefined): boolean {
   if (!input?.parts?.length) {
     return false;

@@ -29,9 +29,9 @@ import {
 import { listTaskRecords, type TaskRecord } from "../tasks/runtime-internal.js";
 import { INTERNAL_MESSAGE_CHANNEL } from "../utils/message-channel.js";
 
-/** Re-exported API for src/plugin-sdk, starting with Task Record. */
+/** Task record shape returned by scoped agent harness task helpers. */
 export type { TaskRecord as AgentHarnessTaskRecord };
-/** Re-exported API for src/plugin-sdk, starting with Agent Harness Task Runtime Scope. */
+/** Scope object that binds harness tasks to a requester session. */
 export type { AgentHarnessTaskRuntimeScope };
 
 type AgentHarnessTaskRuntimeId = Parameters<typeof createRunningTaskRun>[0]["runtime"];
@@ -48,7 +48,7 @@ export type AgentHarnessTaskRuntimeScopeParams = {
   runIdPrefix?: string;
 };
 
-/** Shared type for Agent Harness Scoped Create Running Task Run Params in src/plugin-sdk. */
+/** Create-task params after runtime/session ownership is supplied by the scope. */
 export type AgentHarnessScopedCreateRunningTaskRunParams = Omit<
   CreateRunningTaskRunParams,
   "runtime" | "taskKind" | "requesterSessionKey" | "ownerKey" | "scopeKind"
@@ -56,19 +56,19 @@ export type AgentHarnessScopedCreateRunningTaskRunParams = Omit<
   runId: string;
 };
 
-/** Shared type for Agent Harness Scoped Record Task Run Progress Params in src/plugin-sdk. */
+/** Progress params after runtime/session ownership is supplied by the scope. */
 export type AgentHarnessScopedRecordTaskRunProgressParams = Omit<
   RecordTaskRunProgressParams,
   "runtime" | "sessionKey"
 >;
 
-/** Shared type for Agent Harness Scoped Finalize Task Run Params in src/plugin-sdk. */
+/** Finalization params after runtime/session ownership is supplied by the scope. */
 export type AgentHarnessScopedFinalizeTaskRunParams = Omit<
   FinalizeTaskRunParams,
   "runtime" | "sessionKey"
 >;
 
-/** Shared type for Agent Harness Scoped Set Delivery Status Params in src/plugin-sdk. */
+/** Delivery-status params after runtime/session ownership is supplied by the scope. */
 export type AgentHarnessScopedSetDeliveryStatusParams = Omit<
   SetDeliveryStatusParams,
   "runtime" | "sessionKey"
@@ -88,7 +88,7 @@ export type AgentHarnessTaskRuntime = {
 /** External completion state labels accepted by harness task announcers. */
 export type AgentHarnessCompletionStatus = "succeeded" | "failed" | "cancelled";
 
-/** Shared type for Agent Harness Completion Delivery in src/plugin-sdk. */
+/** Delivery result returned after announcing a harness task completion. */
 export type AgentHarnessCompletionDelivery = Awaited<
   ReturnType<typeof deliverSubagentAnnouncement>
 >;

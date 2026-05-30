@@ -1,4 +1,4 @@
-// gateway server startup post attach helpers and runtime behavior.
+// Starts post-attach gateway sidecars after the HTTP/WebSocket server is listening.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -92,7 +92,7 @@ export type GatewayPostReadySidecarHandle = {
   stop: () => Awaitable<void>;
 };
 
-/** Reused helper for stop Post Ready Sidecars After Close Started behavior in src/gateway. */
+/** Stop sidecars immediately when shutdown already began before startup finished. */
 export function stopPostReadySidecarsAfterCloseStarted(params: {
   postReadySidecars: readonly GatewayPostReadySidecarHandle[];
   closeStarted: boolean;
@@ -669,7 +669,7 @@ function schedulePrimaryModelPrewarm(
   });
 }
 
-/** Reused helper for start Gateway Sidecars behavior in src/gateway. */
+/** Start channels, hooks, plugin services, and deferred sidecars after gateway attach. */
 export async function startGatewaySidecars(params: {
   cfg: OpenClawConfig;
   pluginRegistry: ReturnType<typeof loadOpenClawPlugins>;
@@ -1057,7 +1057,7 @@ function createDeferredGatewayUpdateCheck(params: {
   return { start, stop };
 }
 
-/** Reused helper for start Gateway Post Attach Runtime behavior in src/gateway. */
+/** Start the full post-attach runtime: sidecars, update checks, Tailscale, and broadcasts. */
 export async function startGatewayPostAttachRuntime(
   params: {
     minimalTestGateway: boolean;
@@ -1356,7 +1356,7 @@ export async function startGatewayPostAttachRuntime(
   };
 }
 
-/** Reused constant for testing behavior in src/gateway. */
+/** Internal test hooks for post-attach startup scheduling and cleanup behavior. */
 export const testing = {
   hasRestartSentinelFileFast,
   prewarmConfiguredPrimaryModel,
@@ -1369,5 +1369,5 @@ export const testing = {
   shouldSkipStartupModelPrewarm,
   stopPostReadySidecarsAfterCloseStarted,
 };
-/** Re-exported API for src/gateway, starting with testing. */
+/** Test-only alias that keeps production exports explicit. */
 export { testing as __testing };

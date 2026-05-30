@@ -7,19 +7,19 @@ import { loadBundledPluginPublicSurfaceModuleSync } from "./facade-loader.js";
 
 /** Default browser feature enablement when config does not override it. */
 export const DEFAULT_OPENCLAW_BROWSER_ENABLED = true;
-/** Reused constant for DEFAULT BROWSER EVALUATE ENABLED behavior in src/plugin-sdk. */
+/** Default permission for browser-page JavaScript evaluation. */
 export const DEFAULT_BROWSER_EVALUATE_ENABLED = true;
-/** Reused constant for DEFAULT OPENCLAW BROWSER COLOR behavior in src/plugin-sdk. */
+/** Default profile color used in browser UI/account presentation. */
 export const DEFAULT_OPENCLAW_BROWSER_COLOR = "#FF4500";
-/** Reused constant for DEFAULT OPENCLAW BROWSER PROFILE NAME behavior in src/plugin-sdk. */
+/** Default named OpenClaw-managed browser profile. */
 export const DEFAULT_OPENCLAW_BROWSER_PROFILE_NAME = "openclaw";
-/** Reused constant for DEFAULT BROWSER DEFAULT PROFILE NAME behavior in src/plugin-sdk. */
+/** Default profile selected when config omits `browser.defaultProfile`. */
 export const DEFAULT_BROWSER_DEFAULT_PROFILE_NAME = "openclaw";
-/** Reused constant for DEFAULT BROWSER ACTION TIMEOUT MS behavior in src/plugin-sdk. */
+/** Default timeout for browser actions that do not specify their own limit. */
 export const DEFAULT_BROWSER_ACTION_TIMEOUT_MS = 60_000;
-/** Reused constant for DEFAULT AI SNAPSHOT MAX CHARS behavior in src/plugin-sdk. */
+/** Maximum text length included in AI-visible browser snapshots by default. */
 export const DEFAULT_AI_SNAPSHOT_MAX_CHARS = 80_000;
-/** Reused constant for DEFAULT UPLOAD DIR behavior in src/plugin-sdk. */
+/** Default local staging directory for files uploaded through browser tooling. */
 export const DEFAULT_UPLOAD_DIR = path.join(resolvePreferredOpenClawTmpDir(), "uploads");
 
 /** Normalized browser tab cleanup policy used by maintenance workers. */

@@ -1,11 +1,11 @@
-// gateway server runtime services helpers and runtime behavior.
+// Starts gateway background services after config and plugin metadata are available.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { isVitestRuntimeEnv } from "../infra/env.js";
 import { startHeartbeatRunner, type HeartbeatRunner } from "../infra/heartbeat-runner.js";
 import type { PluginMetadataRegistryView } from "../plugins/plugin-metadata-snapshot.types.js";
 import { isGatewayModelPricingEnabled } from "./model-pricing-config.js";
 import type { startGatewayMaintenanceTimers } from "./server-maintenance.js";
-/** Re-exported API for src/gateway. */
+/** Runtime startup services re-exported for gateway assembly code. */
 export {
   startGatewayChannelHealthMonitor,
   startGatewayRuntimeServices,
@@ -23,7 +23,7 @@ type GatewayRuntimeServiceLogger = {
 type GatewayPostReadyLogger = {
   warn: (message: string) => void;
 };
-/** Shared type for Gateway Maintenance Handles in src/gateway. */
+/** Timer handles returned by gateway maintenance startup. */
 export type GatewayMaintenanceHandles = NonNullable<
   Awaited<ReturnType<typeof startGatewayMaintenanceTimers>>
 >;
@@ -35,7 +35,7 @@ function createNoopHeartbeatRunner(): HeartbeatRunner {
   };
 }
 
-/** Reused helper for start Gateway Cron With Logging behavior in src/gateway. */
+/** Start cron asynchronously and route startup failures to the cron logger. */
 export function startGatewayCronWithLogging(params: {
   cron: { start: () => Promise<void> };
   logCron: { error: (message: string) => void };
@@ -55,7 +55,7 @@ function clearGatewayMaintenanceHandles(maintenance: GatewayMaintenanceHandles |
   }
 }
 
-/** Reused helper for run Gateway Post Ready Maintenance behavior in src/gateway. */
+/** Start maintenance timers and deferred cron once the gateway is ready. */
 export async function runGatewayPostReadyMaintenance(params: {
   startMaintenance: () => Promise<GatewayMaintenanceHandles | null>;
   applyMaintenance: (maintenance: GatewayMaintenanceHandles) => void;
@@ -84,7 +84,7 @@ export async function runGatewayPostReadyMaintenance(params: {
   params.recordPostReadyMemory();
 }
 
-/** Reused helper for schedule Gateway Post Ready Maintenance behavior in src/gateway. */
+/** Schedule post-ready maintenance while honoring shutdown races. */
 export function scheduleGatewayPostReadyMaintenance(params: {
   delayMs: number;
   isClosing: () => boolean;
@@ -205,7 +205,7 @@ function startGatewayModelPricingRefreshOnDemand(params: {
   };
 }
 
-/** Reused helper for activate Gateway Scheduled Services behavior in src/gateway. */
+/** Activate heartbeat, cron, delivery recovery, and model-pricing refresh services. */
 export function activateGatewayScheduledServices(params: {
   minimalTestGateway: boolean;
   cfgAtStart: OpenClawConfig;
