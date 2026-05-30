@@ -1,9 +1,9 @@
-// ui/src/ui/components dashboard header helpers and runtime behavior.
+// Dashboard header component with tab title, agent label, and overview navigation.
 import { LitElement, html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { pathForTab, titleForTab, type Tab } from "../navigation.js";
 
-/** Reused class for Dashboard Header behavior in ui/src/ui/components. */
+/** Lit component for the Control UI dashboard header and breadcrumb navigation. */
 export class DashboardHeader extends LitElement {
   override createRenderRoot() {
     return this;

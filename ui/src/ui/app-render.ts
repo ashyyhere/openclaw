@@ -1,4 +1,4 @@
-// ui/src/ui app render helpers and runtime behavior.
+// Top-level Control UI rendering, tab composition, and quick-settings extraction.
 import { html, nothing } from "lit";
 import { styleMap } from "lit/directives/style-map.js";
 import { t } from "../i18n/index.ts";
@@ -774,7 +774,7 @@ function extractMcpServerCount(state: AppViewState): number {
   return Object.keys(servers).length;
 }
 
-/** Reused helper for extract Quick Settings Security behavior in ui/src/ui. */
+/** Extract compact security/tool settings for the quick settings dashboard card. */
 export function extractQuickSettingsSecurity(state: AppViewState): {
   gatewayAuth: string;
   execPolicy: string;
@@ -924,7 +924,7 @@ function renderCronQuickCreateForTab(
   });
 }
 
-/** Reused helper for render App behavior in ui/src/ui. */
+/** Render the full Control UI app shell for the current view state. */
 export function renderApp(state: AppViewState) {
   const updatableState = state as AppViewState & { requestUpdate?: () => void };
   const requestHostUpdate =
