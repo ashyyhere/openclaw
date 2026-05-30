@@ -1,4 +1,4 @@
-// packages/gateway-protocol/src connect error details helpers and runtime behavior.
+// Helpers for normalizing gateway connect errors into stable client recovery details.
 function normalizeOptionalString(value: unknown): string | undefined {
   if (typeof value !== "string") {
     return undefined;
@@ -19,7 +19,7 @@ function normalizeArrayBackedTrimmedStringList(value: unknown): string[] | undef
   return values.length > 0 ? values : undefined;
 }
 
-/** Public constant for Connect Error Detail Codes behavior in packages/gateway-protocol. */
+/** Stable connect error detail codes used by clients to choose recovery flows. */
 export const ConnectErrorDetailCodes = {
   AUTH_REQUIRED: "AUTH_REQUIRED",
   AUTH_UNAUTHORIZED: "AUTH_UNAUTHORIZED",
@@ -52,11 +52,11 @@ export const ConnectErrorDetailCodes = {
   CLIENT_VERSION_MISMATCH: "CLIENT_VERSION_MISMATCH",
 } as const;
 
-/** Public type describing Connect Error Detail Code for packages/gateway-protocol. */
+/** Union of all stable connect error detail codes. */
 export type ConnectErrorDetailCode =
   (typeof ConnectErrorDetailCodes)[keyof typeof ConnectErrorDetailCodes];
 
-/** Public constant for Connect Pairing Required Reasons behavior in packages/gateway-protocol. */
+/** Pairing-required reasons that distinguish first approval from upgrade approvals. */
 export const ConnectPairingRequiredReasons = {
   NOT_PAIRED: "not-paired",
   ROLE_UPGRADE: "role-upgrade",
@@ -64,11 +64,11 @@ export const ConnectPairingRequiredReasons = {
   METADATA_UPGRADE: "metadata-upgrade",
 } as const;
 
-/** Public type describing Connect Pairing Required Reason for packages/gateway-protocol. */
+/** Union of pairing-required reason values. */
 export type ConnectPairingRequiredReason =
   (typeof ConnectPairingRequiredReasons)[keyof typeof ConnectPairingRequiredReasons];
 
-/** Public type describing Connect Recovery Next Step for packages/gateway-protocol. */
+/** Recommended next action clients can present for recoverable connect failures. */
 export type ConnectRecoveryNextStep =
   | "retry_with_device_token"
   | "update_auth_configuration"
@@ -76,13 +76,13 @@ export type ConnectRecoveryNextStep =
   | "wait_then_retry"
   | "review_auth_configuration";
 
-/** Public type describing Connect Error Recovery Advice for packages/gateway-protocol. */
+/** Parsed recovery advice attached to a connect error details object. */
 export type ConnectErrorRecoveryAdvice = {
   canRetryWithDeviceToken?: boolean;
   recommendedNextStep?: ConnectRecoveryNextStep;
 };
 
-/** Public type describing Pairing Connect Error Details for packages/gateway-protocol. */
+/** Structured details carried when a connection is blocked on pairing approval. */
 export type PairingConnectErrorDetails = {
   code: typeof ConnectErrorDetailCodes.PAIRING_REQUIRED;
   reason?: ConnectPairingRequiredReason;
@@ -98,7 +98,7 @@ export type PairingConnectErrorDetails = {
   approvedScopes?: string[];
 };
 
-/** Public type describing Connect Pairing Required Details for packages/gateway-protocol. */
+/** Minimal pairing details exposed to callers that only need reason and request id. */
 export type ConnectPairingRequiredDetails = Pick<
   PairingConnectErrorDetails,
   "reason" | "requestId"
@@ -161,7 +161,7 @@ const CONNECT_PAIRING_REQUIRED_MESSAGE_BY_REASON: Readonly<
   "metadata-upgrade": "device metadata change pending approval",
 };
 
-/** Public helper for resolve Auth Connect Error Detail Code behavior in packages/gateway-protocol. */
+/** Map auth failure reasons from gateway internals to stable connect detail codes. */
 export function resolveAuthConnectErrorDetailCode(
   reason: string | undefined,
 ): ConnectErrorDetailCode {
@@ -201,7 +201,7 @@ export function resolveAuthConnectErrorDetailCode(
   }
 }
 
-/** Public helper for resolve Device Auth Connect Error Detail Code behavior in packages/gateway-protocol. */
+/** Map device-auth failure reasons to stable connect detail codes. */
 export function resolveDeviceAuthConnectErrorDetailCode(
   reason: string | undefined,
 ): ConnectErrorDetailCode {
@@ -223,7 +223,7 @@ export function resolveDeviceAuthConnectErrorDetailCode(
   }
 }
 
-/** Public helper for read Connect Error Detail Code behavior in packages/gateway-protocol. */
+/** Read a string detail code from an arbitrary connect error details payload. */
 export function readConnectErrorDetailCode(details: unknown): string | null {
   if (!details || typeof details !== "object" || Array.isArray(details)) {
     return null;
@@ -232,7 +232,7 @@ export function readConnectErrorDetailCode(details: unknown): string | null {
   return typeof code === "string" && code.trim().length > 0 ? code : null;
 }
 
-/** Public helper for read Connect Error Recovery Advice behavior in packages/gateway-protocol. */
+/** Parse supported retry advice fields from an arbitrary connect error details payload. */
 export function readConnectErrorRecoveryAdvice(details: unknown): ConnectErrorRecoveryAdvice {
   if (!details || typeof details !== "object" || Array.isArray(details)) {
     return {};
@@ -262,7 +262,7 @@ function normalizePairingConnectReason(value: unknown): ConnectPairingRequiredRe
     : undefined;
 }
 
-/** Public helper for normalize Pairing Connect Request Id behavior in packages/gateway-protocol. */
+/** Normalize pairing request ids and reject values that are unsafe for close reasons. */
 export function normalizePairingConnectRequestId(value: unknown): string | undefined {
   const normalized = normalizeOptionalString(value);
   return normalized && PAIRING_CONNECT_REQUEST_ID_PATTERN.test(normalized) ? normalized : undefined;
@@ -301,7 +301,7 @@ function createPairingConnectErrorDetails(params: {
   };
 }
 
-/** Public helper for describe Pairing Connect Requirement behavior in packages/gateway-protocol. */
+/** Return a human-readable pairing requirement for a normalized reason. */
 export function describePairingConnectRequirement(
   reason: ConnectPairingRequiredReason | undefined,
 ): string {
@@ -310,7 +310,7 @@ export function describePairingConnectRequirement(
     : "device approval is required";
 }
 
-/** Public helper for build Pairing Connect Error Message behavior in packages/gateway-protocol. */
+/** Build the gateway close/error message for a pairing-required connection. */
 export function buildPairingConnectErrorMessage(
   reason: ConnectPairingRequiredReason | undefined,
 ): string {
@@ -327,7 +327,7 @@ function buildPairingConnectRemediationHint(
     : "Approve the pending device request before retrying.";
 }
 
-/** Public helper for build Pairing Connect Recovery Title behavior in packages/gateway-protocol. */
+/** Build the client-facing recovery title for a pairing-required connection. */
 export function buildPairingConnectRecoveryTitle(
   reason: ConnectPairingRequiredReason | undefined,
 ): string {
@@ -336,7 +336,7 @@ export function buildPairingConnectRecoveryTitle(
     : "Gateway pairing approval required.";
 }
 
-/** Public helper for build Pairing Connect Error Details behavior in packages/gateway-protocol. */
+/** Build normalized pairing-required details with optional role/scope context. */
 export function buildPairingConnectErrorDetails(params: {
   reason: ConnectPairingRequiredReason | undefined;
   requestId?: string;
@@ -374,7 +374,7 @@ export function buildPairingConnectErrorDetails(params: {
   });
 }
 
-/** Public helper for build Pairing Connect Close Reason behavior in packages/gateway-protocol. */
+/** Build a compact close reason that preserves the normalized pairing request id. */
 export function buildPairingConnectCloseReason(params: {
   reason: ConnectPairingRequiredReason | undefined;
   requestId?: string;
@@ -384,7 +384,7 @@ export function buildPairingConnectCloseReason(params: {
   return requestId ? `${message} (requestId: ${requestId})` : message;
 }
 
-/** Public helper for read Pairing Connect Error Details behavior in packages/gateway-protocol. */
+/** Parse and normalize pairing-required details from an arbitrary details payload. */
 export function readPairingConnectErrorDetails(
   details: unknown,
 ): PairingConnectErrorDetails | null {
@@ -437,7 +437,7 @@ export function readPairingConnectErrorDetails(
   });
 }
 
-/** Public helper for read Connect Pairing Required Details behavior in packages/gateway-protocol. */
+/** Read minimal pairing-required details from structured connect error details. */
 export function readConnectPairingRequiredDetails(
   details: unknown,
 ): ConnectPairingRequiredDetails | null {
@@ -451,7 +451,7 @@ export function readConnectPairingRequiredDetails(
   };
 }
 
-/** Public helper for read Connect Pairing Required Message behavior in packages/gateway-protocol. */
+/** Recover pairing-required details from legacy close/error message text. */
 export function readConnectPairingRequiredMessage(
   message: string | null | undefined,
 ): ConnectPairingRequiredDetails | null {
@@ -484,7 +484,7 @@ export function readConnectPairingRequiredMessage(
   };
 }
 
-/** Public helper for format Connect Pairing Required Message behavior in packages/gateway-protocol. */
+/** Format a compact pairing-required message for client surfaces. */
 export function formatConnectPairingRequiredMessage(details: unknown): string {
   const pairing = readPairingConnectErrorDetails(details);
   const base =
@@ -494,7 +494,7 @@ export function formatConnectPairingRequiredMessage(details: unknown): string {
   return pairing?.requestId ? `${base} (requestId: ${pairing.requestId})` : base;
 }
 
-/** Public helper for format Connect Error Message behavior in packages/gateway-protocol. */
+/** Format connect error text, specializing pairing and protocol mismatch details. */
 export function formatConnectErrorMessage(params: { message?: string; details?: unknown }): string {
   if (readConnectErrorDetailCode(params.details) === ConnectErrorDetailCodes.PAIRING_REQUIRED) {
     return formatConnectPairingRequiredMessage(params.details);

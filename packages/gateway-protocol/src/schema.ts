@@ -1,4 +1,4 @@
-// packages/gateway-protocol/src schema helpers and runtime behavior.
+// Public gateway protocol schema barrel for clients, server code, and generated types.
 export * from "./schema/primitives.js";
 export * from "./schema/agent.js";
 export * from "./schema/agents-models-skills.js";
