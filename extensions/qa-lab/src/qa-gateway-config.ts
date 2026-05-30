@@ -1,4 +1,4 @@
-// extensions/qa-lab/src qa gateway config helpers and runtime behavior.
+// QA Lab gateway config helpers build isolated runtime configs for scenarios.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { ModelProviderConfig } from "openclaw/plugin-sdk/provider-model-shared";
 import { uniqueStrings } from "openclaw/plugin-sdk/string-coerce-runtime";
@@ -13,8 +13,10 @@ import { DEFAULT_QA_PROVIDER_MODE } from "./providers/index.js";
 import type { QaThinkingLevel } from "./qa-thinking.js";
 import type { QaTransportGatewayConfig } from "./qa-transport.js";
 
+/** Thinking-level helpers re-exported for QA gateway config callers. */
 export { normalizeQaThinkingLevel, type QaThinkingLevel } from "./qa-thinking.js";
 
+/** Control UI origins allowed by default for local QA dashboards. */
 export const DEFAULT_QA_CONTROL_UI_ALLOWED_ORIGINS = Object.freeze([
   "http://127.0.0.1:18789",
   "http://localhost:18789",
@@ -22,8 +24,10 @@ export const DEFAULT_QA_CONTROL_UI_ALLOWED_ORIGINS = Object.freeze([
   "http://localhost:43124",
 ]);
 
+/** Base plugins always enabled inside QA gateway children. */
 export const QA_BASE_RUNTIME_PLUGIN_IDS = Object.freeze(["acpx", "memory-core"]);
 
+/** Merges user-provided Control UI origins with QA Lab defaults. */
 export function mergeQaControlUiAllowedOrigins(extraOrigins?: string[]) {
   const normalizedExtra = (extraOrigins ?? [])
     .map((origin) => origin.trim())
@@ -41,6 +45,7 @@ function buildQaModelSelection(primaryModel: string, alternateModel: string) {
   return fallbacks ? { primary: primaryModel, fallbacks } : { primary: primaryModel };
 }
 
+/** Builds the OpenClaw config used by an isolated QA gateway child. */
 export function buildQaGatewayConfig(params: {
   bind: "loopback" | "lan";
   gatewayPort: number;
@@ -114,6 +119,9 @@ export function buildQaGatewayConfig(params: {
   const allowedPlugins = [
     ...new Set([...QA_BASE_RUNTIME_PLUGIN_IDS, ...selectedPluginIds, ...transportPluginIds]),
   ];
+  // Provider modes own whether model providers are real plugin entries or a
+  // mock provider map. Keep plugin allowlists derived from selected models so
+  // scenario configs do not need duplicated provider/plugin policy.
   const resolveModelParams = (modelRef: string) =>
     provider.resolveModelParams({
       modelRef,

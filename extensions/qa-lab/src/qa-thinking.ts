@@ -1,4 +1,5 @@
-// extensions/qa-lab/src qa thinking helpers and runtime behavior.
+// QA Lab thinking helpers normalize user-facing reasoning effort labels.
+/** Thinking effort levels accepted by QA Lab runtime and CLI options. */
 export type QaThinkingLevel =
   | "off"
   | "minimal"
@@ -9,6 +10,7 @@ export type QaThinkingLevel =
   | "adaptive"
   | "max";
 
+/** Normalizes CLI/config thinking aliases into canonical QA thinking levels. */
 export function normalizeQaThinkingLevel(input: unknown): QaThinkingLevel | undefined {
   const value = typeof input === "string" ? input.trim().toLowerCase() : "";
   const collapsed = value.replace(/[\s_-]+/g, "");

@@ -1,4 +1,4 @@
-// extensions/qa-lab/src gateway rpc client helpers and runtime behavior.
+// QA Lab gateway RPC client serializes CLI-backed requests to a child gateway.
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { callGatewayFromCli } from "openclaw/plugin-sdk/gateway-runtime";
 import { formatQaGatewayLogsForError } from "./gateway-log-redaction.js";
@@ -27,6 +27,7 @@ function runQueuedQaGatewayRpc<T>(queue: Promise<void>, task: () => Promise<T>) 
   return { run, nextQueue };
 }
 
+/** Starts a queued JSON-RPC client for a QA child gateway WebSocket endpoint. */
 export async function startQaGatewayRpcClient(params: {
   wsUrl: string;
   token: string;
@@ -42,6 +43,9 @@ export async function startQaGatewayRpcClient(params: {
         throw wrapError(new Error("gateway rpc client already stopped"));
       }
       try {
+        // callGatewayFromCli opens a short-lived client per request. Queueing
+        // avoids overlapping handshakes and makes retry logs attributable to a
+        // single QA step.
         const { run, nextQueue } = runQueuedQaGatewayRpc(
           queue,
           async () =>

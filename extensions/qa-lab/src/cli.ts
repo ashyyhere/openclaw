@@ -1,4 +1,4 @@
-// extensions/qa-lab/src cli helpers and runtime behavior.
+// QA Lab CLI registration wires private QA commands onto the OpenClaw CLI.
 import type { Command } from "commander";
 import { parseStrictPositiveInteger } from "openclaw/plugin-sdk/number-runtime";
 import { collectString } from "./cli-options.js";
@@ -21,6 +21,8 @@ type QaLabCliRuntime = typeof import("./cli.runtime.js");
 let qaLabCliRuntimePromise: Promise<QaLabCliRuntime> | null = null;
 
 async function loadQaLabCliRuntime(): Promise<QaLabCliRuntime> {
+  // Keep the heavy runtime behind a lazy import so normal OpenClaw CLI startup
+  // does not load QA providers, Docker helpers, or live transport dependencies.
   qaLabCliRuntimePromise ??= import("./cli.runtime.js");
   return await qaLabCliRuntimePromise;
 }
@@ -270,6 +272,7 @@ async function runQaProviderServer(
   await runtime.runQaProviderServerCommand(providerMode, opts);
 }
 
+/** Reports whether the QA scenario pack is available in this checkout. */
 export function isQaLabCliAvailable(): boolean {
   return hasQaScenarioPack();
 }
@@ -280,6 +283,7 @@ function assertNoQaSubcommandCollision(qa: Command, commandName: string) {
   }
 }
 
+/** Registers all QA Lab commands on a Commander program. */
 export function registerQaLabCli(program: Command) {
   const qa = program
     .command("qa")

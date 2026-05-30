@@ -1,4 +1,4 @@
-// extensions/qa-lab/src harness parity helpers and runtime behavior.
+// QA Lab harness parity helpers compare prompt, transcript, and tool-call drift.
 import { createHash } from "node:crypto";
 import type {
   RuntimeId,
@@ -9,6 +9,7 @@ import type {
 } from "./runtime-parity.js";
 import type { RuntimeParityComparisonMode } from "./runtime-tool-metadata.js";
 
+/** Runtime/model variant participating in a harness parity comparison. */
 export type HarnessVariant = {
   id: string;
   label: string;
@@ -19,12 +20,14 @@ export type HarnessVariant = {
   toolDescriptionOverlay?: Record<string, string>;
 };
 
+/** Drift categories emitted by harness parity reports. */
 export type HarnessParityDrift =
   | RuntimeParityDrift
   | "system-prompt"
   | "tool-description"
   | "tool-schema";
 
+/** Prompt and tool-size counters used to explain parity drift. */
 export type HarnessParityPromptStats = {
   systemPromptChars: number;
   projectContextChars: number;
@@ -35,6 +38,7 @@ export type HarnessParityPromptStats = {
   toolCount: number;
 };
 
+/** Prompt report shape captured from a runtime parity lane. */
 export type RuntimeParitySystemPromptReport = {
   systemPrompt?: {
     chars?: number;
@@ -66,10 +70,12 @@ export type RuntimeParitySystemPromptReport = {
   };
 };
 
+/** Runtime parity cell enriched with prompt report metadata. */
 export type HarnessRuntimeParityCell = RuntimeParityCell & {
   systemPromptReport?: RuntimeParitySystemPromptReport;
 };
 
+/** Normalized parity cell with hashes and usage metrics ready for comparison. */
 export type HarnessParityCell = HarnessRuntimeParityCell & {
   variant: HarnessVariant;
   promptStats: HarnessParityPromptStats;
@@ -80,6 +86,7 @@ export type HarnessParityCell = HarnessRuntimeParityCell & {
   tokenUsageSource: "live-usage" | "mock-estimate";
 };
 
+/** Result for one scenario compared across two harness variants. */
 export type HarnessParityResult = {
   scenarioId: string;
   left: HarnessParityCell;
@@ -98,6 +105,7 @@ export type HarnessParityResult = {
   firstDriftTurn?: number;
 };
 
+/** Full harness parity report written by QA Lab parity lanes. */
 export type HarnessParityReport = {
   generatedAt: string;
   providerMode: string;
@@ -152,6 +160,8 @@ function normalizeForStableHash(value: unknown): unknown {
   return value;
 }
 
+// Stable hashes sort object keys recursively so prompt/tool schema drift is
+// based on content, not insertion order from providers or runtime serializers.
 function stableHash(value: unknown) {
   return sha256(JSON.stringify(normalizeForStableHash(value)) ?? "null");
 }
@@ -247,6 +257,7 @@ function firstDriftTurn(leftTranscript: string, rightTranscript: string): number
   return undefined;
 }
 
+/** Builds a normalized parity cell with prompt hashes and token usage. */
 export function buildHarnessParityCell(params: {
   variant: HarnessVariant;
   cell: HarnessRuntimeParityCell;
@@ -296,6 +307,7 @@ export function buildHarnessParityCell(params: {
   };
 }
 
+/** Compares two harness parity cells and classifies the first meaningful drift. */
 export function buildHarnessParityResult(params: {
   scenarioId: string;
   left: HarnessParityCell;
@@ -459,6 +471,7 @@ function formatPercent(value: number) {
   return `${prefix}${normalized.toFixed(1)}%`;
 }
 
+/** Renders a harness parity report as Markdown for CI artifacts. */
 export function renderHarnessParityMarkdownReport(report: HarnessParityReport): string {
   const lines = [
     `# OpenClaw Harness Parity - ${report.left.label} vs ${report.right.label}`,

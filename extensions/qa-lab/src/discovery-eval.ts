@@ -1,4 +1,4 @@
-// extensions/qa-lab/src discovery eval helpers and runtime behavior.
+// QA Lab discovery-eval helpers classify source/docs discovery scenario replies.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { readQaScenarioExecutionConfig } from "./scenario-catalog.js";
 
@@ -44,6 +44,7 @@ function confirmsDiscoveryFileRead(text: string) {
   return mentionsAllRefs && (confirmsRead || mentionsReadVerb);
 }
 
+/** Checks whether a discovery report includes the required triage labels. */
 export function hasDiscoveryLabels(text: string) {
   const lower = normalizeLowercaseStringOrEmpty(text);
   return (
@@ -54,6 +55,7 @@ export function hasDiscoveryLabels(text: string) {
   );
 }
 
+/** Checks whether a discovery report says required source/docs files were missing. */
 export function reportsMissingDiscoveryFiles(text: string) {
   const lower = normalizeLowercaseStringOrEmpty(text);
   if (confirmsDiscoveryFileRead(text)) {
@@ -67,6 +69,7 @@ export function reportsMissingDiscoveryFiles(text: string) {
   );
 }
 
+/** Checks whether a discovery report leaked unrelated QA suite scope. */
 export function reportsDiscoveryScopeLeak(text: string) {
   const lower = normalizeLowercaseStringOrEmpty(text);
   return DISCOVERY_SCOPE_LEAK_PHRASES.some((phrase) => lower.includes(phrase));

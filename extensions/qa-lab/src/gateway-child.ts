@@ -1,4 +1,4 @@
-// extensions/qa-lab/src gateway child helpers and runtime behavior.
+// QA Lab gateway child helpers launch isolated OpenClaw gateways for scenarios.
 import { spawn, type ChildProcess } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { createWriteStream, existsSync, type WriteStream } from "node:fs";
@@ -49,6 +49,7 @@ import { seedQaAgentWorkspace } from "./qa-agent-workspace.js";
 import { buildQaGatewayConfig, type QaThinkingLevel } from "./qa-gateway-config.js";
 import type { QaTransportAdapter } from "./qa-transport.js";
 
+/** CLI backend auth mode type accepted by QA gateway child startup. */
 export type { QaCliBackendAuthMode } from "./providers/env.js";
 const QA_GATEWAY_CHILD_STARTUP_MAX_ATTEMPTS = 5;
 const QA_GATEWAY_CHILD_RPC_STARTUP_TIMEOUT_MS = 30_000;
@@ -59,6 +60,7 @@ const QA_GATEWAY_CHILD_BLOCKED_SECRET_ENV_VARS = Object.freeze([
   "OPENCLAW_QA_CONVEX_SECRET_MAINTAINER",
 ]);
 
+/** Mutable filesystem/env context passed to restart-after-mutation hooks. */
 export type QaGatewayChildStateMutationContext = {
   configPath: string;
   runtimeEnv: NodeJS.ProcessEnv;
@@ -66,6 +68,7 @@ export type QaGatewayChildStateMutationContext = {
   tempRoot: string;
 };
 
+/** Command override used when QA should start a packaged or alternate gateway binary. */
 export type QaGatewayChildCommand = {
   executablePath: string;
   argsPrefix?: string[];
@@ -181,10 +184,12 @@ function appendQaGatewayTempRoot(details: string, tempRoot: string) {
     : `${details}\nQA gateway temp root preserved at ${tempRoot}`;
 }
 
+/** Resolves the provider mode used by a QA gateway child. */
 export function resolveQaGatewayChildProviderMode(providerMode?: QaProviderMode): QaProviderMode {
   return providerMode ?? DEFAULT_QA_PROVIDER_MODE;
 }
 
+/** Builds the sanitized environment passed to the isolated QA gateway child. */
 export function buildQaRuntimeEnv(params: {
   configPath: string;
   gatewayToken: string;
@@ -318,6 +323,7 @@ async function waitForQaGatewayRestartBoundary(params: {
   throw new Error(`qa gateway child did not reach restart boundary within ${timeoutMs}ms`);
 }
 
+/** Test-only seams for gateway child startup, cleanup, and provider staging logic. */
 export const testing = {
   assertQaArtifactDirWithinRepo,
   buildQaRuntimeEnv,
@@ -531,6 +537,7 @@ function isRetryableRpcStartupError(error: unknown) {
   );
 }
 
+/** Resolves the built Control UI root when QA gateway control UI should be enabled. */
 export function resolveQaControlUiRoot(params: { repoRoot: string; controlUiEnabled?: boolean }) {
   if (params.controlUiEnabled === false) {
     return undefined;
@@ -540,6 +547,7 @@ export function resolveQaControlUiRoot(params: { repoRoot: string; controlUiEnab
   return existsSync(indexPath) ? controlUiRoot : undefined;
 }
 
+/** Starts an isolated QA gateway child process and returns lifecycle/RPC controls. */
 export async function startQaGatewayChild(params: {
   repoRoot: string;
   command?: QaGatewayChildCommand;
@@ -840,6 +848,9 @@ export async function startQaGatewayChild(params: {
         if (!retryable) {
           throw error;
         }
+        // Port reuse and restart handshakes can race with other local gateway
+        // tests. Retry with a fresh port instead of preserving a flaky socket
+        // assignment across the rest of the suite.
         stdoutLog.write(
           `[qa-lab] gateway child startup attempt ${attempt}/${QA_GATEWAY_CHILD_STARTUP_MAX_ATTEMPTS} hit a transient startup race on port ${gatewayPort}; retrying with a new port\n`,
         );
@@ -974,6 +985,8 @@ export async function startQaGatewayChild(params: {
       async restartAfterStateMutation(
         mutateState: (context: QaGatewayChildStateMutationContext) => Promise<void>,
       ) {
+        // Full process replacement is intentional here: config/state mutation
+        // tests need startup code to reread files exactly as a real restart would.
         await activeRpcClient.stop().catch(() => {});
         await stopQaGatewayChildProcessTree(activeChild);
         await mutateState({
@@ -1065,4 +1078,5 @@ export async function startQaGatewayChild(params: {
     );
   }
 }
+/** Backward-compatible test seam for gateway-child unit tests. */
 export { testing as __testing };

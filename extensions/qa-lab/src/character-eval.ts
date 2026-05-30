@@ -1,4 +1,4 @@
-// extensions/qa-lab/src character eval helpers and runtime behavior.
+// QA Lab character-eval helpers run live model transcripts and judge rankings.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
@@ -30,6 +30,7 @@ const DEFAULT_JUDGE_MODEL_OPTIONS: Readonly<Record<string, QaCharacterModelOptio
 
 type QaCharacterRunStatus = "pass" | "fail";
 
+/** Per-model runtime overrides for character evaluation candidates and judges. */
 export type QaCharacterModelOptions = {
   thinkingDefault?: QaThinkingLevel;
   fastMode?: boolean;
@@ -54,6 +55,7 @@ type QaCharacterEvalRun = {
   error?: string;
 };
 
+/** Normalized ranking returned by a character evaluation judge model. */
 export type QaCharacterEvalJudgment = {
   model: string;
   rank: number;
@@ -104,6 +106,7 @@ type RunJudgeFn = (params: {
   timeoutMs: number;
 }) => Promise<string | null>;
 
+/** Options controlling candidate runs, judge runs, and character-eval artifacts. */
 export type QaCharacterEvalParams = {
   repoRoot?: string;
   outputDir?: string;
@@ -197,6 +200,9 @@ async function mapWithConcurrency<T, U>(
   const results = Array.from<U>({ length: items.length });
   let nextIndex = 0;
   const workerCount = Math.min(normalizeConcurrency(concurrency), items.length);
+  // Keep output ordering stable even when candidates finish out of order.
+  // Reports and judge prompts rely on index order matching the requested
+  // model list for blind labels and easy diffing.
   const workers = Array.from({ length: workerCount }, async () => {
     while (nextIndex < items.length) {
       const index = nextIndex;
@@ -502,6 +508,7 @@ function renderCharacterEvalReport(params: {
   return `${lines.join("\n")}\n`;
 }
 
+/** Runs the character evaluation matrix and writes Markdown/JSON artifacts. */
 export async function runQaCharacterEval(params: QaCharacterEvalParams) {
   const startedAt = new Date();
   const repoRoot = path.resolve(params.repoRoot ?? process.cwd());
