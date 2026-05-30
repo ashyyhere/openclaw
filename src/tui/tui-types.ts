@@ -18,16 +18,16 @@ export type TuiOptions = {
   forceProcessExitOnReturn?: boolean;
 };
 
-/** Shared type for Tui Exit Reason in src/tui. */
+/** Reason the TUI loop returned control to its caller. */
 export type TuiExitReason = "exit" | "return-to-crestodian";
 
-/** Shared type for Tui Result in src/tui. */
+/** Result returned after the TUI loop exits or hands a message back. */
 export type TuiResult = {
   exitReason: TuiExitReason;
   crestodianMessage?: string;
 };
 
-/** Shared type for Chat Event in src/tui. */
+/** Chat stream event forwarded from the backend to the terminal renderer. */
 export type ChatEvent = {
   runId: string;
   sessionKey: string;
@@ -37,7 +37,7 @@ export type ChatEvent = {
   errorMessage?: string;
 };
 
-/** Shared type for Btw Event in src/tui. */
+/** Backend-to-widget question event that needs visible terminal handling. */
 export type BtwEvent = {
   kind: "btw";
   runId?: string;
@@ -50,17 +50,17 @@ export type BtwEvent = {
   ts?: number;
 };
 
-/** Shared type for Agent Event in src/tui. */
+/** Raw agent stream event carried through the TUI event bus. */
 export type AgentEvent = {
   runId: string;
   stream: string;
   data?: Record<string, unknown>;
 };
 
-/** Shared type for Response Usage Mode in src/tui. */
+/** User-selected detail level for response usage display. */
 export type ResponseUsageMode = "on" | "off" | "tokens" | "full";
 
-/** Shared type for Session Info in src/tui. */
+/** Current session model, token, reasoning, and display metadata. */
 export type SessionInfo = {
   thinkingLevel?: string;
   thinkingLevels?: Array<{ id: string; label: string }>;
@@ -80,26 +80,26 @@ export type SessionInfo = {
   displayName?: string;
 };
 
-/** Shared type for Session Scope in src/tui. */
+/** Session selection policy used when resolving sender-specific chat state. */
 export type SessionScope = "per-sender" | "global";
 
-/** Shared type for Agent Summary in src/tui. */
+/** Lightweight agent entry used in TUI selectors. */
 export type AgentSummary = {
   id: string;
   name?: string;
 };
 
-/** Shared type for Queued Message Mode in src/tui. */
+/** How a queued user message should attach to the active or next run. */
 export type QueuedMessageMode = "steer" | "followUp";
 
-/** Shared type for Queued Message in src/tui. */
+/** User message buffered while a chat run is already active. */
 export type QueuedMessage = {
   runId: string;
   text: string;
   mode: QueuedMessageMode;
 };
 
-/** Shared type for Gateway Status Summary in src/tui. */
+/** Compact gateway health snapshot rendered in TUI status panels. */
 export type GatewayStatusSummary = {
   runtimeVersion?: string | null;
   linkChannel?: {
@@ -139,7 +139,7 @@ export type GatewayStatusSummary = {
   };
 };
 
-/** Shared type for Tui State Access in src/tui. */
+/** Mutable TUI state bag shared by input handlers, renderers, and backends. */
 export type TuiStateAccess = {
   agentDefaultId: string;
   sessionMainKey: string;
