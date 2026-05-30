@@ -1,6 +1,5 @@
 import type { OpenClawConfig } from "../config/types.js";
 
-/** Re-exported API for src/plugin-sdk, starting with normalize Plugins Config. */
 export { normalizePluginsConfig, resolveEffectiveEnableState } from "../plugins/config-state.js";
 
 /** Require runtime config and throw a context-labeled error when unavailable. */
@@ -45,5 +44,7 @@ export function resolveLivePluginConfigObject(
   if (typeof runtimeConfigLoader !== "function") {
     return startupPluginConfig;
   }
+  // Runtime config is the authority after startup so live reload paths do not
+  // keep serving stale plugin config from the initial manifest snapshot.
   return resolvePluginConfigObject(runtimeConfigLoader(), pluginId);
 }
