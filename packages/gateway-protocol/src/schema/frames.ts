@@ -1,9 +1,9 @@
-// packages/gateway-protocol/src/schema frames helpers and runtime behavior.
+// Gateway protocol schemas for connection handshake and top-level transport frames.
 import { Type } from "typebox";
 import { GatewayClientIdSchema, GatewayClientModeSchema, NonEmptyString } from "./primitives.js";
 import { SnapshotSchema, StateVersionSchema } from "./snapshot.js";
 
-/** Public constant for Tick Event Schema behavior in packages/gateway-protocol. */
+/** Heartbeat event emitted by the gateway transport. */
 export const TickEventSchema = Type.Object(
   {
     ts: Type.Integer({ minimum: 0 }),
@@ -11,7 +11,7 @@ export const TickEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Shutdown Event Schema behavior in packages/gateway-protocol. */
+/** Shutdown event sent before planned gateway restarts or exits. */
 export const ShutdownEventSchema = Type.Object(
   {
     reason: NonEmptyString,
@@ -20,7 +20,7 @@ export const ShutdownEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Connect Params Schema behavior in packages/gateway-protocol. */
+/** Client hello payload used to negotiate protocol, auth, capabilities, and identity. */
 export const ConnectParamsSchema = Type.Object(
   {
     minProtocol: Type.Integer({ minimum: 1 }),
@@ -74,7 +74,7 @@ export const ConnectParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Hello Ok Schema behavior in packages/gateway-protocol. */
+/** Successful handshake response with negotiated protocol, auth, policy, and snapshot. */
 export const HelloOkSchema = Type.Object(
   {
     type: Type.Literal("hello-ok"),
@@ -129,7 +129,7 @@ export const HelloOkSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Error Shape Schema behavior in packages/gateway-protocol. */
+/** Standard gateway error envelope carried by responses and connection failures. */
 export const ErrorShapeSchema = Type.Object(
   {
     code: NonEmptyString,
@@ -141,7 +141,7 @@ export const ErrorShapeSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Request Frame Schema behavior in packages/gateway-protocol. */
+/** RPC request frame sent by clients over the gateway transport. */
 export const RequestFrameSchema = Type.Object(
   {
     type: Type.Literal("req"),
@@ -152,7 +152,7 @@ export const RequestFrameSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Response Frame Schema behavior in packages/gateway-protocol. */
+/** RPC response frame paired with a request id. */
 export const ResponseFrameSchema = Type.Object(
   {
     type: Type.Literal("res"),
@@ -164,7 +164,7 @@ export const ResponseFrameSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Event Frame Schema behavior in packages/gateway-protocol. */
+/** Asynchronous event frame emitted by gateway state or runtime changes. */
 export const EventFrameSchema = Type.Object(
   {
     type: Type.Literal("event"),
@@ -179,7 +179,7 @@ export const EventFrameSchema = Type.Object(
 // Discriminated union of all top-level frames. Using a discriminator makes
 // downstream codegen (quicktype) produce tighter types instead of all-optional
 // blobs.
-/** Public constant for Gateway Frame Schema behavior in packages/gateway-protocol. */
+/** Discriminated union for every top-level gateway transport frame. */
 export const GatewayFrameSchema = Type.Union(
   [RequestFrameSchema, ResponseFrameSchema, EventFrameSchema],
   { discriminator: "type" },

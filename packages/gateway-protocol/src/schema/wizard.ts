@@ -1,4 +1,4 @@
-// packages/gateway-protocol/src/schema wizard helpers and runtime behavior.
+// Gateway protocol schemas for interactive setup wizard sessions.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
@@ -9,7 +9,7 @@ const WizardRunStatusSchema = Type.Union([
   Type.Literal("error"),
 ]);
 
-/** Public constant for Wizard Start Params Schema behavior in packages/gateway-protocol. */
+/** Params for starting a local or remote setup wizard run. */
 export const WizardStartParamsSchema = Type.Object(
   {
     mode: Type.Optional(Type.Union([Type.Literal("local"), Type.Literal("remote")])),
@@ -18,7 +18,7 @@ export const WizardStartParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Wizard Answer Schema behavior in packages/gateway-protocol. */
+/** Answer payload submitted for the current wizard step. */
 export const WizardAnswerSchema = Type.Object(
   {
     stepId: NonEmptyString,
@@ -27,7 +27,7 @@ export const WizardAnswerSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Wizard Next Params Schema behavior in packages/gateway-protocol. */
+/** Params for advancing a wizard session with an optional answer. */
 export const WizardNextParamsSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -43,13 +43,13 @@ const WizardSessionIdParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Wizard Cancel Params Schema behavior in packages/gateway-protocol. */
+/** Params for cancelling an active wizard session. */
 export const WizardCancelParamsSchema = WizardSessionIdParamsSchema;
 
-/** Public constant for Wizard Status Params Schema behavior in packages/gateway-protocol. */
+/** Params for reading the status of an active or finished wizard session. */
 export const WizardStatusParamsSchema = WizardSessionIdParamsSchema;
 
-/** Public constant for Wizard Step Option Schema behavior in packages/gateway-protocol. */
+/** Selectable option shown by wizard steps that present choices. */
 export const WizardStepOptionSchema = Type.Object(
   {
     value: Type.Unknown(),
@@ -59,7 +59,7 @@ export const WizardStepOptionSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Wizard Step Schema behavior in packages/gateway-protocol. */
+/** Client-renderable wizard step contract for prompts, progress, and actions. */
 export const WizardStepSchema = Type.Object(
   {
     id: NonEmptyString,
@@ -91,12 +91,12 @@ const WizardResultFields = {
   error: Type.Optional(Type.String()),
 };
 
-/** Public constant for Wizard Next Result Schema behavior in packages/gateway-protocol. */
+/** Result for advancing a wizard session, including the next step when not done. */
 export const WizardNextResultSchema = Type.Object(WizardResultFields, {
   additionalProperties: false,
 });
 
-/** Public constant for Wizard Start Result Schema behavior in packages/gateway-protocol. */
+/** Result for starting a wizard session, including its new session id. */
 export const WizardStartResultSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -105,7 +105,7 @@ export const WizardStartResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Wizard Status Result Schema behavior in packages/gateway-protocol. */
+/** Status result for a wizard session after clients reconnect or poll. */
 export const WizardStatusResultSchema = Type.Object(
   {
     status: WizardRunStatusSchema,

@@ -1,4 +1,4 @@
-// packages/gateway-protocol/src/schema protocol schemas helpers and runtime behavior.
+// Central TypeBox schema registry for gateway protocol methods, events, and frames.
 import type { TSchema } from "typebox";
 import {
   AgentEventSchema,
@@ -290,7 +290,7 @@ import {
   WizardStepSchema,
 } from "./wizard.js";
 
-/** Public constant for Protocol Schemas behavior in packages/gateway-protocol. */
+/** Registry of named TypeBox schemas shared by gateway clients and generated types. */
 export const ProtocolSchemas = {
   ConnectParams: ConnectParamsSchema,
   HelloOk: HelloOkSchema,

@@ -1,11 +1,11 @@
-// packages/gateway-protocol/src/schema secrets helpers and runtime behavior.
+// Gateway protocol schemas for secret reloads and command-scoped secret resolution.
 import { Type, type Static } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
-/** Public constant for Secrets Reload Params Schema behavior in packages/gateway-protocol. */
+/** Empty params contract for asking the gateway to reload secret providers. */
 export const SecretsReloadParamsSchema = Type.Object({}, { additionalProperties: false });
 
-/** Public constant for Secrets Resolve Params Schema behavior in packages/gateway-protocol. */
+/** Resolve request describing targets and allowed secret paths for one command. */
 export const SecretsResolveParamsSchema = Type.Object(
   {
     commandName: NonEmptyString,
@@ -26,10 +26,10 @@ export const SecretsResolveParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public type describing Secrets Resolve Params for packages/gateway-protocol. */
+/** Static TypeScript type for secret resolution requests. */
 export type SecretsResolveParams = Static<typeof SecretsResolveParamsSchema>;
 
-/** Public constant for Secrets Resolve Assignment Schema behavior in packages/gateway-protocol. */
+/** One resolved secret assignment returned with its target path segments. */
 export const SecretsResolveAssignmentSchema = Type.Object(
   {
     path: Type.Optional(NonEmptyString),
@@ -39,7 +39,7 @@ export const SecretsResolveAssignmentSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Secrets Resolve Result Schema behavior in packages/gateway-protocol. */
+/** Resolution result with assignments, diagnostics, and inactive reference paths. */
 export const SecretsResolveResultSchema = Type.Object(
   {
     ok: Type.Optional(Type.Boolean()),
@@ -50,5 +50,5 @@ export const SecretsResolveResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public type describing Secrets Resolve Result for packages/gateway-protocol. */
+/** Static TypeScript type for secret resolution results. */
 export type SecretsResolveResult = Static<typeof SecretsResolveResultSchema>;
