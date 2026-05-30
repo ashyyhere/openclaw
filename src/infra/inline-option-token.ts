@@ -1,5 +1,5 @@
-// infra inline option token helpers and runtime behavior.
-/** Shared type for Inline Option Token in src/infra. */
+// Parser for CLI option tokens that may carry an inline `--flag=value` payload.
+/** Parsed option token, preserving whether a value was supplied inline. */
 export type InlineOptionToken =
   | {
       name: string;
@@ -11,7 +11,7 @@ export type InlineOptionToken =
       inlineValue: string;
     };
 
-/** Reused helper for parse Inline Option Token behavior in src/infra. */
+/** Split one option token into its name and optional inline value. */
 export function parseInlineOptionToken(token: string): InlineOptionToken {
   const separatorIndex = token.indexOf("=");
   if (separatorIndex < 0) {

@@ -1,4 +1,4 @@
-// infra gateway processes helpers and runtime behavior.
+// Process inspection helpers for finding and signaling running gateway instances.
 import { spawnSync } from "node:child_process";
 import fsSync from "node:fs";
 import { uniqueValues } from "../shared/string-normalization.js";
@@ -9,7 +9,7 @@ import {
   readWindowsProcessArgsSync,
 } from "./windows-port-pids.js";
 
-/** Reused helper for read Gateway Process Args Sync behavior in src/infra. */
+/** Read argv for a process id using platform-specific process inspection. */
 export function readGatewayProcessArgsSync(pid: number): string[] | null {
   if (process.platform === "linux") {
     try {
@@ -35,7 +35,7 @@ export function readGatewayProcessArgsSync(pid: number): string[] | null {
   return null;
 }
 
-/** Reused helper for signal Verified Gateway Pid Sync behavior in src/infra. */
+/** Signal a process only after verifying its argv belongs to an OpenClaw gateway. */
 export function signalVerifiedGatewayPidSync(pid: number, signal: "SIGTERM" | "SIGUSR1"): void {
   const args = readGatewayProcessArgsSync(pid);
   if (!args || !isGatewayArgv(args, { allowGatewayBinary: true })) {
@@ -44,7 +44,7 @@ export function signalVerifiedGatewayPidSync(pid: number, signal: "SIGTERM" | "S
   process.kill(pid, signal);
 }
 
-/** Reused helper for find Verified Gateway Listener Pids On Port Sync behavior in src/infra. */
+/** Find listening pids on a port and keep only verified OpenClaw gateway processes. */
 export function findVerifiedGatewayListenerPidsOnPortSync(port: number): number[] {
   const rawPids =
     process.platform === "win32"
@@ -59,7 +59,7 @@ export function findVerifiedGatewayListenerPidsOnPortSync(port: number): number[
     });
 }
 
-/** Reused helper for format Gateway Pid List behavior in src/infra. */
+/** Format gateway pid lists for operator-facing messages. */
 export function formatGatewayPidList(pids: number[]): string {
   return pids.join(", ");
 }
