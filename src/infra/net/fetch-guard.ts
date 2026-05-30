@@ -1,4 +1,5 @@
-// infra/net fetch guard helpers and runtime behavior.
+// Guarded fetch implementation with SSRF checks, DNS pinning, redirect policy,
+// and optional trusted proxy dispatchers.
 import type { Dispatcher } from "undici";
 import { logWarn } from "../../logger.js";
 import { buildTimeoutAbortSignal } from "../../utils/fetch-timeout.js";
@@ -50,17 +51,17 @@ function resolveDispatcherTimeoutMs(fromParams: number | undefined): number | un
 
 type FetchLike = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 
-/** Reused constant for GUARDED FETCH MODE behavior in src/infra/net. */
+/** Supported guarded-fetch dispatcher safety modes. */
 export const GUARDED_FETCH_MODE = {
   STRICT: "strict",
   TRUSTED_ENV_PROXY: "trusted_env_proxy",
   TRUSTED_EXPLICIT_PROXY: "trusted_explicit_proxy",
 } as const;
 
-/** Shared type for Guarded Fetch Mode in src/infra/net. */
+/** Guarded-fetch mode selected from the mode constants. */
 export type GuardedFetchMode = (typeof GUARDED_FETCH_MODE)[keyof typeof GUARDED_FETCH_MODE];
 
-/** Shared type for Guarded Fetch Options in src/infra/net. */
+/** Public options for one guarded fetch request. */
 export type GuardedFetchOptions = {
   url: string;
   fetchImpl?: FetchLike;
@@ -96,7 +97,7 @@ export type GuardedFetchOptions = {
   auditContext?: string;
 };
 
-/** Shared type for Guarded Fetch Result in src/infra/net. */
+/** Response and cleanup handle returned by guarded fetch. */
 export type GuardedFetchResult = {
   response: Response;
   finalUrl: string;
@@ -108,7 +109,7 @@ type GuardedFetchInternalOptions = GuardedFetchOptions & {
   managedProxyBypass?: ConfiguredLocalOriginManagedProxyBypass;
 };
 
-/** Shared type for Guarded Fetch Configured Local Origin Options in src/infra/net. */
+/** Guarded fetch options for one configured local-origin managed-proxy bypass. */
 export type GuardedFetchConfiguredLocalOriginOptions = GuardedFetchOptions & {
   configuredLocalOriginBaseUrl: string;
 };
@@ -125,19 +126,19 @@ function isTruthyEnvValue(value: string | undefined): boolean {
   return value === "1" || value === "true" || value === "yes" || value === "on";
 }
 
-/** Reused helper for with Strict Guarded Fetch Mode behavior in src/infra/net. */
+/** Builds guarded-fetch options pinned to strict direct SSRF mode. */
 export function withStrictGuardedFetchMode(params: GuardedFetchPresetOptions): GuardedFetchOptions {
   return { ...params, mode: GUARDED_FETCH_MODE.STRICT };
 }
 
-/** Reused helper for with Trusted Env Proxy Guarded Fetch Mode behavior in src/infra/net. */
+/** Builds guarded-fetch options for trusted operator-controlled env proxy mode. */
 export function withTrustedEnvProxyGuardedFetchMode(
   params: GuardedFetchPresetOptions,
 ): GuardedFetchOptions {
   return { ...params, mode: GUARDED_FETCH_MODE.TRUSTED_ENV_PROXY };
 }
 
-/** Reused helper for with Trusted Explicit Proxy Guarded Fetch Mode behavior in src/infra/net. */
+/** Builds guarded-fetch options for trusted explicit proxy mode. */
 export function withTrustedExplicitProxyGuardedFetchMode(
   params: GuardedFetchPresetOptions,
 ): GuardedFetchOptions {
@@ -258,7 +259,7 @@ function isAmbientGlobalFetch(params: {
   );
 }
 
-/** Reused helper for retain Safe Headers For Cross Origin Redirect Headers behavior in src/infra/net. */
+/** Retains only cross-origin redirect-safe request headers. */
 export function retainSafeHeadersForCrossOriginRedirectHeaders(
   headers?: HeadersInit,
 ): Record<string, string> | undefined {
@@ -406,10 +407,10 @@ function rewriteRedirectInitForCrossOrigin(params: {
   };
 }
 
-/** Re-exported API for src/infra/net, starting with fetch With Runtime Dispatcher. */
+/** Runtime undici fetch helper re-exported for guarded-fetch callers. */
 export { fetchWithRuntimeDispatcher } from "./runtime-fetch.js";
 
-/** Reused helper for fetch With Ssr FGuard behavior in src/infra/net. */
+/** Performs a fetch with SSRF validation, DNS pinning, redirects, and cleanup. */
 export async function fetchWithSsrFGuard(params: GuardedFetchOptions): Promise<GuardedFetchResult> {
   const { managedProxyBypass: _ignoredManagedProxyBypass, ...publicParams } =
     params as GuardedFetchOptions & {
@@ -418,7 +419,7 @@ export async function fetchWithSsrFGuard(params: GuardedFetchOptions): Promise<G
   return await fetchWithSsrFGuardInternal(publicParams);
 }
 
-/** Reused helper for fetch Configured Local Origin With Ssr FGuard behavior in src/infra/net. */
+/** Performs guarded fetch with a managed-proxy bypass for one configured local origin. */
 export async function fetchConfiguredLocalOriginWithSsrFGuard({
   configuredLocalOriginBaseUrl,
   ...params
