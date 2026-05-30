@@ -1,11 +1,11 @@
-// Shared types for infra session cost usage types behavior.
+// Shared data shapes for transcript usage, cost, latency, and log summaries.
 import type { NormalizedUsage } from "../agents/usage.js";
 import type {
   SessionUsageTimePoint as SharedSessionUsageTimePoint,
   SessionUsageTimeSeries as SharedSessionUsageTimeSeries,
 } from "../shared/session-usage-timeseries-types.js";
 
-/** Shared type for Cost Breakdown in src/infra. */
+/** Cost split by usage token category when provider pricing is known. */
 export type CostBreakdown = {
   total?: number;
   input?: number;
@@ -14,7 +14,7 @@ export type CostBreakdown = {
   cacheWrite?: number;
 };
 
-/** Shared type for Parsed Usage Entry in src/infra. */
+/** Usage event extracted from a transcript or usage sidecar file. */
 export type ParsedUsageEntry = {
   usage: NormalizedUsage;
   costTotal?: number;
@@ -24,7 +24,7 @@ export type ParsedUsageEntry = {
   timestamp?: Date;
 };
 
-/** Shared type for Parsed Transcript Entry in src/infra. */
+/** Normalized transcript message plus usage, timing, and tool metadata. */
 export type ParsedTranscriptEntry = {
   message: Record<string, unknown>;
   role?: "user" | "assistant";
@@ -40,7 +40,7 @@ export type ParsedTranscriptEntry = {
   toolResultCounts: { total: number; errors: number };
 };
 
-/** Shared type for Cost Usage Totals in src/infra. */
+/** Aggregate token and cost totals over sessions or date ranges. */
 export type CostUsageTotals = {
   input: number;
   output: number;
@@ -60,7 +60,7 @@ type CostUsageDailyEntry = CostUsageTotals & {
   date: string;
 };
 
-/** Shared type for Cost Usage Summary in src/infra. */
+/** Date-bucketed cost usage summary with optional cache freshness metadata. */
 export type CostUsageSummary = {
   updatedAt: number;
   days: number;
@@ -75,17 +75,17 @@ export type CostUsageSummary = {
   };
 };
 
-/** Shared type for Usage Cache Status in src/infra. */
+/** Cache freshness metadata attached to cost usage summaries. */
 export type UsageCacheStatus = NonNullable<CostUsageSummary["cacheStatus"]>;
 
-/** Shared type for Session Daily Usage in src/infra. */
+/** Per-day token/cost totals for one session. */
 export type SessionDailyUsage = {
   date: string; // YYYY-MM-DD
   tokens: number;
   cost: number;
 };
 
-/** Shared type for Session Daily Message Counts in src/infra. */
+/** Per-day message, tool, and error counts for one session. */
 export type SessionDailyMessageCounts = {
   date: string; // YYYY-MM-DD
   total: number;
@@ -96,7 +96,7 @@ export type SessionDailyMessageCounts = {
   errors: number;
 };
 
-/** Shared type for Session Utc Quarter Hour Message Counts in src/infra. */
+/** UTC quarter-hour message counts used by usage activity mosaics. */
 export type SessionUtcQuarterHourMessageCounts = {
   date: string; // YYYY-MM-DD (UTC)
   quarterIndex: number; // 0-95, UTC quarter-hour bucket (index = floor((utcH * 60 + utcM) / 15))
@@ -108,7 +108,7 @@ export type SessionUtcQuarterHourMessageCounts = {
   errors: number;
 };
 
-/** Shared type for Session Utc Quarter Hour Token Usage in src/infra. */
+/** UTC quarter-hour token and cost totals used by usage mosaics. */
 export type SessionUtcQuarterHourTokenUsage = {
   date: string; // YYYY-MM-DD (UTC)
   quarterIndex: number; // 0-95, UTC quarter-hour bucket (index = floor((utcH * 60 + utcM) / 15))
@@ -124,7 +124,7 @@ export type SessionUtcQuarterHourTokenUsage = {
   totalCost: number;
 };
 
-/** Shared type for Session Latency Stats in src/infra. */
+/** Latency aggregate for assistant turns with duration data. */
 export type SessionLatencyStats = {
   count: number;
   avgMs: number;
@@ -133,12 +133,12 @@ export type SessionLatencyStats = {
   maxMs: number;
 };
 
-/** Shared type for Session Daily Latency in src/infra. */
+/** Per-day latency aggregate for one session. */
 export type SessionDailyLatency = SessionLatencyStats & {
   date: string; // YYYY-MM-DD
 };
 
-/** Shared type for Session Daily Model Usage in src/infra. */
+/** Per-day usage grouped by provider/model for one session. */
 export type SessionDailyModelUsage = {
   date: string; // YYYY-MM-DD
   provider?: string;
@@ -148,7 +148,7 @@ export type SessionDailyModelUsage = {
   count: number;
 };
 
-/** Shared type for Session Message Counts in src/infra. */
+/** Total message, tool, and error counts for one session. */
 export type SessionMessageCounts = {
   total: number;
   user: number;
@@ -158,14 +158,14 @@ export type SessionMessageCounts = {
   errors: number;
 };
 
-/** Shared type for Session Tool Usage in src/infra. */
+/** Tool-call frequency summary for one session. */
 export type SessionToolUsage = {
   totalCalls: number;
   uniqueTools: number;
   tools: Array<{ name: string; count: number }>;
 };
 
-/** Shared type for Session Model Usage in src/infra. */
+/** Provider/model usage summary for one session. */
 export type SessionModelUsage = {
   provider?: string;
   model?: string;
@@ -173,7 +173,7 @@ export type SessionModelUsage = {
   totals: CostUsageTotals;
 };
 
-/** Shared type for Session Cost Summary in src/infra. */
+/** Full usage, cost, activity, latency, tool, and model summary for one session. */
 export type SessionCostSummary = CostUsageTotals & {
   sessionId?: string;
   sessionFile?: string;
@@ -193,7 +193,7 @@ export type SessionCostSummary = CostUsageTotals & {
   latency?: SessionLatencyStats;
 };
 
-/** Shared type for Discovered Session in src/infra. */
+/** Session transcript discovered on disk for usage reporting. */
 export type DiscoveredSession = {
   sessionId: string;
   sessionFile: string;
@@ -201,13 +201,13 @@ export type DiscoveredSession = {
   firstUserMessage?: string;
 };
 
-/** Shared type for Session Usage Time Point in src/infra. */
+/** Shared time-series point for cumulative session usage charts. */
 export type SessionUsageTimePoint = SharedSessionUsageTimePoint;
 
-/** Shared type for Session Usage Time Series in src/infra. */
+/** Shared cumulative session usage time series. */
 export type SessionUsageTimeSeries = SharedSessionUsageTimeSeries;
 
-/** Shared type for Session Log Entry in src/infra. */
+/** Display-ready session log entry with optional usage/cost metadata. */
 export type SessionLogEntry = {
   timestamp: number;
   role: "user" | "assistant" | "tool" | "toolResult";
