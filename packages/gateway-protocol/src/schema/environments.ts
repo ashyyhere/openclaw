@@ -1,8 +1,8 @@
-// packages/gateway-protocol/src/schema environments helpers and runtime behavior.
+// Gateway protocol schemas for listing and inspecting runtime environments.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
-/** Public constant for Environment Status Schema behavior in packages/gateway-protocol. */
+/** Lifecycle state reported for an environment that can host agent work. */
 export const EnvironmentStatusSchema = Type.String({
   enum: ["available", "unavailable", "starting", "stopping", "error"],
 });
@@ -20,13 +20,13 @@ function createEnvironmentSummarySchema() {
   );
 }
 
-/** Public constant for Environment Summary Schema behavior in packages/gateway-protocol. */
+/** Public summary returned by environment list and status calls. */
 export const EnvironmentSummarySchema = createEnvironmentSummarySchema();
 
-/** Public constant for Environments List Params Schema behavior in packages/gateway-protocol. */
+/** Empty params contract for enumerating all known environments. */
 export const EnvironmentsListParamsSchema = Type.Object({}, { additionalProperties: false });
 
-/** Public constant for Environments List Result Schema behavior in packages/gateway-protocol. */
+/** Result contract for the environment catalog shown by gateway clients. */
 export const EnvironmentsListResultSchema = Type.Object(
   {
     environments: Type.Array(EnvironmentSummarySchema),
@@ -34,11 +34,11 @@ export const EnvironmentsListResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Environments Status Params Schema behavior in packages/gateway-protocol. */
+/** Params contract for querying one environment by stable id. */
 export const EnvironmentsStatusParamsSchema = Type.Object(
   { environmentId: NonEmptyString },
   { additionalProperties: false },
 );
 
-/** Public constant for Environments Status Result Schema behavior in packages/gateway-protocol. */
+/** Result contract for the current status snapshot of one environment. */
 export const EnvironmentsStatusResultSchema = createEnvironmentSummarySchema();

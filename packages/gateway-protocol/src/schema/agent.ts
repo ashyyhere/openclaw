@@ -1,4 +1,4 @@
-// packages/gateway-protocol/src/schema agent helpers and runtime behavior.
+// Gateway protocol schemas for agent runs, sends, polls, and run-stream events.
 import { Type } from "typebox";
 import { InputProvenanceSchema, NonEmptyString, SessionLabelString } from "./primitives.js";
 
@@ -12,7 +12,7 @@ const AGENT_INTERNAL_EVENT_SOURCES = [
 ] as const;
 const AGENT_INTERNAL_EVENT_STATUSES = ["ok", "timeout", "error", "unknown"] as const;
 
-/** Public constant for Agent Generated Attachment Schema behavior in packages/gateway-protocol. */
+/** Generated media/file attachment metadata emitted by child or internal agent events. */
 export const AgentGeneratedAttachmentSchema = Type.Object(
   {
     type: Type.Optional(Type.String({ enum: ["image", "audio", "video", "file"] })),
@@ -26,7 +26,7 @@ export const AgentGeneratedAttachmentSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Agent Internal Event Schema behavior in packages/gateway-protocol. */
+/** Internal task-completion event forwarded into a parent agent turn. */
 export const AgentInternalEventSchema = Type.Object(
   {
     type: Type.Literal(AGENT_INTERNAL_EVENT_TYPE_TASK_COMPLETION),
@@ -46,7 +46,7 @@ export const AgentInternalEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Agent Event Schema behavior in packages/gateway-protocol. */
+/** Stream event frame produced by an agent run. */
 export const AgentEventSchema = Type.Object(
   {
     runId: NonEmptyString,
@@ -60,7 +60,7 @@ export const AgentEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Message Action Tool Context Schema behavior in packages/gateway-protocol. */
+/** Channel/thread context forwarded to message tools so replies stay routed correctly. */
 export const MessageActionToolContextSchema = Type.Object(
   {
     currentChannelId: Type.Optional(Type.String()),
@@ -89,7 +89,7 @@ export const MessageActionToolContextSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Message Action Params Schema behavior in packages/gateway-protocol. */
+/** Gateway RPC payload for invoking a channel message action. */
 export const MessageActionParamsSchema = Type.Object(
   {
     channel: NonEmptyString,
@@ -112,7 +112,7 @@ export const MessageActionParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Send Params Schema behavior in packages/gateway-protocol. */
+/** Gateway send payload shared by channel implementations that deliver text or media. */
 export const SendParamsSchema = Type.Object(
   {
     to: NonEmptyString,
@@ -142,7 +142,7 @@ export const SendParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Poll Params Schema behavior in packages/gateway-protocol. */
+/** Gateway poll creation payload with common limits and channel-specific delivery hints. */
 export const PollParamsSchema = Type.Object(
   {
     to: NonEmptyString,
@@ -165,7 +165,7 @@ export const PollParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Agent Params Schema behavior in packages/gateway-protocol. */
+/** Main agent-run request payload accepted by the gateway. */
 export const AgentParamsSchema = Type.Object(
   {
     message: NonEmptyString,
@@ -221,7 +221,7 @@ export const AgentParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Agent Identity Params Schema behavior in packages/gateway-protocol. */
+/** Params for resolving the display identity for an agent or session. */
 export const AgentIdentityParamsSchema = Type.Object(
   {
     agentId: Type.Optional(NonEmptyString),
@@ -230,7 +230,7 @@ export const AgentIdentityParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Agent Identity Result Schema behavior in packages/gateway-protocol. */
+/** Public display identity returned to clients for agent attribution. */
 export const AgentIdentityResultSchema = Type.Object(
   {
     agentId: NonEmptyString,
@@ -244,7 +244,7 @@ export const AgentIdentityResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Agent Wait Params Schema behavior in packages/gateway-protocol. */
+/** Params for waiting on a run id until completion or timeout. */
 export const AgentWaitParamsSchema = Type.Object(
   {
     runId: NonEmptyString,
@@ -253,7 +253,7 @@ export const AgentWaitParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Wake Params Schema behavior in packages/gateway-protocol. */
+/** Wake request payload for immediate or next-heartbeat wake scheduling. */
 export const WakeParamsSchema = Type.Object(
   {
     mode: Type.Union([Type.Literal("now"), Type.Literal("next-heartbeat")]),

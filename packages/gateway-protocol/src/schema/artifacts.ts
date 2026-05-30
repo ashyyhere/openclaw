@@ -1,4 +1,4 @@
-// packages/gateway-protocol/src/schema artifacts helpers and runtime behavior.
+// Gateway protocol schemas for listing, inspecting, and downloading run artifacts.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
@@ -9,12 +9,12 @@ const ArtifactQueryParamsProperties = {
   agentId: Type.Optional(NonEmptyString),
 };
 
-/** Public constant for Artifact Query Params Schema behavior in packages/gateway-protocol. */
+/** Shared optional filters for narrowing artifact lookups to a session, run, task, or agent. */
 export const ArtifactQueryParamsSchema = Type.Object(ArtifactQueryParamsProperties, {
   additionalProperties: false,
 });
 
-/** Public constant for Artifact Get Params Schema behavior in packages/gateway-protocol. */
+/** Lookup params for endpoints that address one artifact inside the optional query scope. */
 export const ArtifactGetParamsSchema = Type.Object(
   {
     ...ArtifactQueryParamsProperties,
@@ -23,7 +23,7 @@ export const ArtifactGetParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Artifact Summary Schema behavior in packages/gateway-protocol. */
+/** Public metadata for an artifact without embedding the artifact payload itself. */
 export const ArtifactSummarySchema = Type.Object(
   {
     id: NonEmptyString,
@@ -46,10 +46,10 @@ export const ArtifactSummarySchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Artifacts List Params Schema behavior in packages/gateway-protocol. */
+/** Params contract for listing artifacts with the shared query filters. */
 export const ArtifactsListParamsSchema = ArtifactQueryParamsSchema;
 
-/** Public constant for Artifacts List Result Schema behavior in packages/gateway-protocol. */
+/** Result contract for artifact list responses. */
 export const ArtifactsListResultSchema = Type.Object(
   {
     artifacts: Type.Array(ArtifactSummarySchema),
@@ -57,10 +57,10 @@ export const ArtifactsListResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Artifacts Get Params Schema behavior in packages/gateway-protocol. */
+/** Params contract for fetching artifact metadata. */
 export const ArtifactsGetParamsSchema = ArtifactGetParamsSchema;
 
-/** Public constant for Artifacts Get Result Schema behavior in packages/gateway-protocol. */
+/** Result contract for fetching a single artifact summary. */
 export const ArtifactsGetResultSchema = Type.Object(
   {
     artifact: ArtifactSummarySchema,
@@ -68,10 +68,10 @@ export const ArtifactsGetResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Artifacts Download Params Schema behavior in packages/gateway-protocol. */
+/** Params contract for retrieving an artifact payload or download URL. */
 export const ArtifactsDownloadParamsSchema = ArtifactGetParamsSchema;
 
-/** Public constant for Artifacts Download Result Schema behavior in packages/gateway-protocol. */
+/** Download result contract; payloads may be inline base64 data or an external URL. */
 export const ArtifactsDownloadResultSchema = Type.Object(
   {
     artifact: ArtifactSummarySchema,

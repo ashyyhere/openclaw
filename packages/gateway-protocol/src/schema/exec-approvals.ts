@@ -1,8 +1,8 @@
-// packages/gateway-protocol/src/schema exec approvals helpers and runtime behavior.
+// Gateway protocol schemas for exec approval policy files and approval prompts.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
-/** Public constant for Exec Approvals Allowlist Entry Schema behavior in packages/gateway-protocol. */
+/** One persisted command allowlist rule, including optional audit fields from prior matches. */
 export const ExecApprovalsAllowlistEntrySchema = Type.Object(
   {
     id: Type.Optional(NonEmptyString),
@@ -24,12 +24,12 @@ const ExecApprovalsPolicyFields = {
   autoAllowSkills: Type.Optional(Type.Boolean()),
 };
 
-/** Public constant for Exec Approvals Defaults Schema behavior in packages/gateway-protocol. */
+/** Default exec approval policy applied before agent-specific overrides. */
 export const ExecApprovalsDefaultsSchema = Type.Object(ExecApprovalsPolicyFields, {
   additionalProperties: false,
 });
 
-/** Public constant for Exec Approvals Agent Schema behavior in packages/gateway-protocol. */
+/** Agent-specific exec approval policy and command allowlist. */
 export const ExecApprovalsAgentSchema = Type.Object(
   {
     ...ExecApprovalsPolicyFields,
@@ -38,7 +38,7 @@ export const ExecApprovalsAgentSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Exec Approvals File Schema behavior in packages/gateway-protocol. */
+/** Versioned on-disk exec approval configuration exchanged through the gateway. */
 export const ExecApprovalsFileSchema = Type.Object(
   {
     version: Type.Literal(1),
@@ -57,7 +57,7 @@ export const ExecApprovalsFileSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Exec Approvals Snapshot Schema behavior in packages/gateway-protocol. */
+/** File snapshot returned with path, hash, existence, and parsed policy content. */
 export const ExecApprovalsSnapshotSchema = Type.Object(
   {
     path: NonEmptyString,
@@ -68,10 +68,10 @@ export const ExecApprovalsSnapshotSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Exec Approvals Get Params Schema behavior in packages/gateway-protocol. */
+/** Empty params contract for reading the local exec approvals file. */
 export const ExecApprovalsGetParamsSchema = Type.Object({}, { additionalProperties: false });
 
-/** Public constant for Exec Approvals Set Params Schema behavior in packages/gateway-protocol. */
+/** Write params for replacing the local exec approvals file with optional hash guarding. */
 export const ExecApprovalsSetParamsSchema = Type.Object(
   {
     file: ExecApprovalsFileSchema,
@@ -80,7 +80,7 @@ export const ExecApprovalsSetParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Exec Approvals Node Get Params Schema behavior in packages/gateway-protocol. */
+/** Params contract for reading exec approvals from a paired node. */
 export const ExecApprovalsNodeGetParamsSchema = Type.Object(
   {
     nodeId: NonEmptyString,
@@ -88,7 +88,7 @@ export const ExecApprovalsNodeGetParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Exec Approvals Node Set Params Schema behavior in packages/gateway-protocol. */
+/** Write params for replacing a paired node's exec approvals file. */
 export const ExecApprovalsNodeSetParamsSchema = Type.Object(
   {
     nodeId: NonEmptyString,
@@ -98,7 +98,7 @@ export const ExecApprovalsNodeSetParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Exec Approval Get Params Schema behavior in packages/gateway-protocol. */
+/** Params contract for looking up one pending approval by request id. */
 export const ExecApprovalGetParamsSchema = Type.Object(
   {
     id: NonEmptyString,
@@ -106,7 +106,7 @@ export const ExecApprovalGetParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Exec Approval Request Params Schema behavior in packages/gateway-protocol. */
+/** Prompt payload describing a command request that needs an approval decision. */
 export const ExecApprovalRequestParamsSchema = Type.Object(
   {
     id: Type.Optional(NonEmptyString),
@@ -178,7 +178,7 @@ export const ExecApprovalRequestParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Exec Approval Resolve Params Schema behavior in packages/gateway-protocol. */
+/** Resolution payload for accepting, denying, or otherwise completing an approval request. */
 export const ExecApprovalResolveParamsSchema = Type.Object(
   {
     id: NonEmptyString,
