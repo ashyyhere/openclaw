@@ -1,6 +1,7 @@
-// test/vitest vitest process config helpers and runtime behavior.
+// Process Vitest config runs process tests after runtime-independent setup.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Creates the process Vitest project config. */
 export function createProcessVitestConfig(env?: Record<string, string | undefined>) {
   const config = createScopedVitestConfig(["src/process/**/*.test.ts"], {
     dir: "src",
@@ -21,4 +22,5 @@ export function createProcessVitestConfig(env?: Record<string, string | undefine
   };
 }
 
+/** Default process Vitest project config. */
 export default createProcessVitestConfig();
