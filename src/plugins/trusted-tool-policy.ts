@@ -35,6 +35,14 @@ type TrustedPolicyDecisionFieldRead =
       ok: false;
     };
 
+type TrustedPolicyApproval = NonNullable<PluginHookBeforeToolCallResult["requireApproval"]>;
+
+type TrustedPolicyApprovalField = keyof TrustedPolicyApproval;
+
+const TRUSTED_POLICY_APPROVAL_SEVERITIES = new Set(["info", "warning", "critical"]);
+const TRUSTED_POLICY_APPROVAL_TIMEOUT_BEHAVIORS = new Set(["allow", "deny"]);
+const TRUSTED_POLICY_APPROVAL_DECISIONS = new Set(["allow-once", "allow-always", "deny"]);
+
 export function hasTrustedToolPolicies(): boolean {
   return copyTrustedPolicyRegistrations(getActivePluginRegistry()).length > 0;
 }
@@ -186,6 +194,133 @@ function readPlainTrustedPolicyParams(value: unknown):
   }
 }
 
+function readTrustedPolicyApprovalField(
+  approval: unknown,
+  field: TrustedPolicyApprovalField,
+): TrustedPolicyDecisionFieldRead {
+  if ((typeof approval !== "object" && typeof approval !== "function") || approval === null) {
+    return { ok: true, present: false, value: undefined };
+  }
+  try {
+    if (!(field in approval)) {
+      return { ok: true, present: false, value: undefined };
+    }
+    return {
+      ok: true,
+      present: true,
+      value: (approval as Record<string, unknown>)[field],
+    };
+  } catch {
+    return { ok: false };
+  }
+}
+
+function normalizeTrustedPolicyApproval(value: unknown):
+  | {
+      ok: true;
+      approval: TrustedPolicyApproval;
+    }
+  | {
+      ok: false;
+      detail: string;
+    } {
+  try {
+    if (!isPlainObject(value)) {
+      return { ok: false, detail: "policy decision is malformed" };
+    }
+  } catch {
+    return { ok: false, detail: "policy decision has unreadable requireApproval" };
+  }
+
+  const title = readTrustedPolicyApprovalField(value, "title");
+  const description = readTrustedPolicyApprovalField(value, "description");
+  if (!title.ok || !description.ok) {
+    return { ok: false, detail: "policy decision has unreadable requireApproval" };
+  }
+  if (typeof title.value !== "string" || typeof description.value !== "string") {
+    return { ok: false, detail: "policy decision is malformed" };
+  }
+
+  const severity = readTrustedPolicyApprovalField(value, "severity");
+  const timeoutMs = readTrustedPolicyApprovalField(value, "timeoutMs");
+  const timeoutBehavior = readTrustedPolicyApprovalField(value, "timeoutBehavior");
+  const allowedDecisions = readTrustedPolicyApprovalField(value, "allowedDecisions");
+  const pluginId = readTrustedPolicyApprovalField(value, "pluginId");
+  const onResolution = readTrustedPolicyApprovalField(value, "onResolution");
+  if (
+    !severity.ok ||
+    !timeoutMs.ok ||
+    !timeoutBehavior.ok ||
+    !allowedDecisions.ok ||
+    !pluginId.ok ||
+    !onResolution.ok
+  ) {
+    return { ok: false, detail: "policy decision has unreadable requireApproval" };
+  }
+
+  const approval: TrustedPolicyApproval = {
+    title: title.value,
+    description: description.value,
+  };
+
+  if (severity.present && severity.value !== undefined) {
+    if (
+      typeof severity.value !== "string" ||
+      !TRUSTED_POLICY_APPROVAL_SEVERITIES.has(severity.value)
+    ) {
+      return { ok: false, detail: "policy decision is malformed" };
+    }
+    approval.severity = severity.value as TrustedPolicyApproval["severity"];
+  }
+  if (timeoutMs.present && timeoutMs.value !== undefined) {
+    if (typeof timeoutMs.value !== "number" || !Number.isFinite(timeoutMs.value)) {
+      return { ok: false, detail: "policy decision is malformed" };
+    }
+    approval.timeoutMs = timeoutMs.value;
+  }
+  if (timeoutBehavior.present && timeoutBehavior.value !== undefined) {
+    if (
+      typeof timeoutBehavior.value !== "string" ||
+      !TRUSTED_POLICY_APPROVAL_TIMEOUT_BEHAVIORS.has(timeoutBehavior.value)
+    ) {
+      return { ok: false, detail: "policy decision is malformed" };
+    }
+    approval.timeoutBehavior = timeoutBehavior.value as TrustedPolicyApproval["timeoutBehavior"];
+  }
+  if (allowedDecisions.present && allowedDecisions.value !== undefined) {
+    try {
+      if (!Array.isArray(allowedDecisions.value)) {
+        return { ok: false, detail: "policy decision is malformed" };
+      }
+      const decisions: NonNullable<TrustedPolicyApproval["allowedDecisions"]> = [];
+      for (let index = 0; index < allowedDecisions.value.length; index += 1) {
+        const decision = allowedDecisions.value[index];
+        if (typeof decision !== "string" || !TRUSTED_POLICY_APPROVAL_DECISIONS.has(decision)) {
+          return { ok: false, detail: "policy decision is malformed" };
+        }
+        decisions.push(decision as NonNullable<TrustedPolicyApproval["allowedDecisions"]>[number]);
+      }
+      approval.allowedDecisions = decisions;
+    } catch {
+      return { ok: false, detail: "policy decision has unreadable requireApproval" };
+    }
+  }
+  if (pluginId.present && pluginId.value !== undefined) {
+    if (typeof pluginId.value !== "string") {
+      return { ok: false, detail: "policy decision is malformed" };
+    }
+    approval.pluginId = pluginId.value;
+  }
+  if (onResolution.present && onResolution.value !== undefined) {
+    if (typeof onResolution.value !== "function") {
+      return { ok: false, detail: "policy decision is malformed" };
+    }
+    approval.onResolution = onResolution.value as TrustedPolicyApproval["onResolution"];
+  }
+
+  return { ok: true, approval };
+}
+
 function isPlainTrustedPolicyDecision(decision: unknown): boolean {
   try {
     return isPlainObject(decision);
@@ -318,10 +453,11 @@ export async function runTrustedToolPolicies(
     if (!allow.ok) {
       return trustedPolicyFailureResult(registration, "policy decision has unreadable allow");
     }
-    if (allow.present && typeof allow.value !== "boolean") {
+    const hasAllow = allow.present && allow.value !== undefined;
+    if (hasAllow && typeof allow.value !== "boolean") {
       return trustedPolicyFailureResult(registration, "policy decision is malformed");
     }
-    if (allow.present && allow.value === false) {
+    if (hasAllow && allow.value === false) {
       return {
         block: true,
         blockReason:
@@ -335,10 +471,11 @@ export async function runTrustedToolPolicies(
     if (!block.ok) {
       return trustedPolicyFailureResult(registration, "policy decision has unreadable block");
     }
-    if (block.present && typeof block.value !== "boolean") {
+    const hasBlock = block.present && block.value !== undefined;
+    if (hasBlock && typeof block.value !== "boolean") {
       return trustedPolicyFailureResult(registration, "policy decision is malformed");
     }
-    if (block.present && block.value === true) {
+    if (hasBlock && block.value === true) {
       return {
         block: true,
         blockReason:
@@ -354,7 +491,8 @@ export async function runTrustedToolPolicies(
     if (!params.ok) {
       return trustedPolicyFailureResult(registration, "policy decision has unreadable params");
     }
-    const plainParams = params.present ? readPlainTrustedPolicyParams(params.value) : undefined;
+    const hasParams = params.present && params.value !== undefined;
+    const plainParams = hasParams ? readPlainTrustedPolicyParams(params.value) : undefined;
     if (plainParams && !plainParams.ok) {
       return trustedPolicyFailureResult(registration, "policy decision has unreadable params");
     }
@@ -387,11 +525,18 @@ export async function runTrustedToolPolicies(
         "policy decision has unreadable requireApproval",
       );
     }
+    const hasRequireApproval = requireApproval.present && requireApproval.value !== undefined;
     if (!allow.present && !block.present && !params.present && !requireApproval.present) {
       return trustedPolicyFailureResult(registration, "policy decision is malformed");
     }
-    if (requireApproval.present && requireApproval.value && !approval) {
-      approval = requireApproval.value as PluginHookBeforeToolCallResult["requireApproval"];
+    if (hasRequireApproval) {
+      const normalizedApproval = normalizeTrustedPolicyApproval(requireApproval.value);
+      if (!normalizedApproval.ok) {
+        return trustedPolicyFailureResult(registration, normalizedApproval.detail);
+      }
+      if (!approval) {
+        approval = normalizedApproval.approval;
+      }
     }
   }
   if (!hasAdjustedParams && !approval) {

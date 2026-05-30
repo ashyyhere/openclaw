@@ -543,6 +543,7 @@ describe("host-hook fixture plugin contract", () => {
     ["empty object", {} as never],
     ["non-boolean allow", { allow: "yes" } as never],
     ["non-boolean block", { block: "no" } as never],
+    ["requireApproval", { requireApproval: { timeoutBehavior: "allow" } } as never],
   ])("fails closed when a trusted policy returns malformed %s", async (_label, decision) => {
     const registry = createEmptyPluginRegistry();
     registry.trustedToolPolicies = [
@@ -564,6 +565,99 @@ describe("host-hook fixture plugin contract", () => {
     ).resolves.toEqual({
       block: true,
       blockReason: "blocked by fuzzpolicy: policy decision is malformed",
+    });
+  });
+
+  it("fails closed when a trusted policy returns unreadable requireApproval", async () => {
+    const registry = createEmptyPluginRegistry();
+    registry.trustedToolPolicies = [
+      {
+        pluginId: "fuzzplugin",
+        pluginName: "Fuzz Plugin",
+        source: "test",
+        policy: {
+          id: "fuzzpolicy",
+          description: "synthetic trusted policy",
+          evaluate: () =>
+            Object.defineProperty({}, "requireApproval", {
+              enumerable: true,
+              get() {
+                throw new Error("fuzzplugin approval payload is unreadable");
+              },
+            }),
+        },
+      },
+    ];
+    setActivePluginRegistry(registry);
+
+    await expect(
+      runTrustedToolPolicies({ toolName: "exec", params: {} }, { toolName: "exec" }),
+    ).resolves.toEqual({
+      block: true,
+      blockReason: "blocked by fuzzpolicy: policy decision has unreadable requireApproval",
+    });
+  });
+
+  it("treats undefined optional trusted policy decision fields as no-ops", async () => {
+    const registry = createEmptyPluginRegistry();
+    registry.trustedToolPolicies = [
+      {
+        pluginId: "mockplugin",
+        pluginName: "Mock Plugin",
+        source: "test",
+        policy: {
+          id: "mockpolicy",
+          description: "synthetic trusted policy",
+          evaluate: () => ({
+            allow: undefined,
+            block: undefined,
+            params: undefined,
+            requireApproval: undefined,
+          }),
+        },
+      },
+    ];
+    setActivePluginRegistry(registry);
+
+    await expect(
+      runTrustedToolPolicies({ toolName: "exec", params: {} }, { toolName: "exec" }),
+    ).resolves.toBeUndefined();
+  });
+
+  it("omits undefined optional trusted policy approval fields", async () => {
+    const registry = createEmptyPluginRegistry();
+    registry.trustedToolPolicies = [
+      {
+        pluginId: "mockplugin",
+        pluginName: "Mock Plugin",
+        source: "test",
+        policy: {
+          id: "mockpolicy",
+          description: "synthetic trusted policy",
+          evaluate: () => ({
+            requireApproval: {
+              title: "Approve tool",
+              description: "Approve synthetic tool",
+              severity: undefined,
+              timeoutMs: undefined,
+              timeoutBehavior: undefined,
+              allowedDecisions: undefined,
+              pluginId: undefined,
+              onResolution: undefined,
+            },
+          }),
+        },
+      },
+    ];
+    setActivePluginRegistry(registry);
+
+    await expect(
+      runTrustedToolPolicies({ toolName: "exec", params: {} }, { toolName: "exec" }),
+    ).resolves.toEqual({
+      requireApproval: {
+        title: "Approve tool",
+        description: "Approve synthetic tool",
+      },
     });
   });
 
