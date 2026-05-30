@@ -5,13 +5,13 @@
  */
 
 export type { AuthProfileStore } from "../agents/auth-profiles/types.js";
-/** Re-exported API for src/plugin-sdk, starting with Fallback Attempt. */
+/** Model fallback attempt type reused by music providers. */
 export type { FallbackAttempt } from "../agents/model-fallback.types.js";
-/** Re-exported API for src/plugin-sdk, starting with Open Claw Config. */
+/** OpenClaw config type accepted by music provider setup/runtime helpers. */
 export type { OpenClawConfig } from "../config/types.openclaw.js";
-/** Re-exported API for src/plugin-sdk, starting with Music Generation Provider Plugin. */
+/** Plugin contract type for music generation providers. */
 export type { MusicGenerationProviderPlugin } from "../plugins/types.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Music generation provider, request, result, and asset types. */
 export type {
   GeneratedMusicAsset,
   MusicGenerationOutputFormat,
@@ -22,21 +22,21 @@ export type {
   MusicGenerationSourceImage,
 } from "../music-generation/types.js";
 
-/** Re-exported API for src/plugin-sdk, starting with describe Failover Error. */
+/** Failover error helpers reused by provider-facing music generation code. */
 export { describeFailoverError, isFailoverError } from "../agents/failover-error.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Agent model fallback selection helpers for provider routing. */
 export {
   resolveAgentModelFallbackValues,
   resolveAgentModelPrimaryValue,
 } from "../config/model-input.js";
-/** Re-exported API for src/plugin-sdk, starting with create Subsystem Logger. */
+/** Subsystem logger factory for music generation providers. */
 export { createSubsystemLogger } from "../logging/subsystem.js";
-/** Re-exported API for src/plugin-sdk, starting with parse Music Generation Model Ref. */
+/** Parser for provider/model refs used by music generation requests. */
 export { parseMusicGenerationModelRef } from "../music-generation/model-ref.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Music generation provider registry accessors. */
 export {
   getMusicGenerationProvider,
   listMusicGenerationProviders,
 } from "../music-generation/provider-registry.js";
-/** Re-exported API for src/plugin-sdk, starting with get Provider Env Vars. */
+/** Provider environment variable resolver for music credentials. */
 export { getProviderEnvVars } from "../secrets/provider-env-vars.js";
