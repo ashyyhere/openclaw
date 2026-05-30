@@ -1,38 +1,38 @@
 // Canonical shared prelude for channel-oriented plugin SDK surfaces.
 // Keep `core` and channel-specific SDK entrypoints derived from this module
 // so bundled channel entrypoints do not drift across overlapping exports.
-/** Re-exported API for src/plugin-sdk, starting with Channel Plugin. */
+/** Channel plugin registration contract. */
 export type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
-/** Re-exported API for src/plugin-sdk, starting with Channel Message Action Context. */
+/** Runtime context passed to channel message actions. */
 export type { ChannelMessageActionContext } from "../channels/plugins/types.public.js";
-/** Re-exported API for src/plugin-sdk, starting with Plugin Runtime. */
+/** Trusted plugin runtime surface available to channel plugins. */
 export type { PluginRuntime } from "../plugins/runtime/types.js";
-/** Re-exported API for src/plugin-sdk, starting with Open Claw Plugin Api. */
+/** Top-level OpenClaw plugin API contract. */
 export type { OpenClawPluginApi } from "../plugins/types.js";
 
-/** Re-exported API for src/plugin-sdk, starting with empty Plugin Config Schema. */
+/** Empty schema helper for plugins without custom config fields. */
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
 
-/** Re-exported API for src/plugin-sdk, starting with DEFAULT ACCOUNT ID. */
+/** Account id helpers shared by channel config and setup code. */
 export { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../routing/session-key.js";
 
-/** Re-exported API for src/plugin-sdk. */
+/** Account setup migration and display-name helpers. */
 export {
   applyAccountNameToChannelSection,
   migrateBaseNameToDefaultAccount,
 } from "../channels/plugins/setup-helpers.js";
-/** Re-exported API for src/plugin-sdk, starting with build Channel Config Schema. */
+/** Builds the standard config schema for account-based channel plugins. */
 export { buildChannelConfigSchema } from "../channels/plugins/config-schema.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Helpers for mutating account entries in channel config sections. */
 export {
   clearAccountEntryFields,
   deleteAccountFromConfigSection,
   setAccountEnabledInConfigSection,
 } from "../channels/plugins/config-helpers.js";
-/** Re-exported API for src/plugin-sdk, starting with format Pairing Approve Hint. */
+/** Formats pairing approval hints for channel setup/status responses. */
 export { formatPairingApproveHint } from "../channels/plugins/helpers.js";
-/** Re-exported API for src/plugin-sdk, starting with PAIRING APPROVED MESSAGE. */
+/** Standard pairing approval confirmation text. */
 export { PAIRING_APPROVED_MESSAGE } from "../channels/plugins/pairing-message.js";
 
-/** Re-exported API for src/plugin-sdk, starting with get Chat Channel Meta. */
+/** Reads chat channel display metadata by channel id. */
 export { getChatChannelMeta } from "../channels/chat-meta.js";

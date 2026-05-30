@@ -1,5 +1,6 @@
-// src/plugin-sdk command auth native helpers and runtime behavior.
-/** Re-exported API for src/plugin-sdk. */
+// Native command authorization SDK surface. Exposes command registry parsing,
+// detection, gating, session target, model override, and plugin command helpers.
+/** Command registry lookup, parsing, serialization, and menu helpers. */
 export {
   buildCommandTextFromArgs,
   findCommandByNativeName,
@@ -14,7 +15,7 @@ export {
   resolveCommandArgChoices,
   resolveCommandArgMenu,
 } from "../auto-reply/commands-registry.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Command definition and argument contracts. */
 export type {
   ChatCommandDefinition,
   CommandArgDefinition,
@@ -22,30 +23,30 @@ export type {
   CommandArgs,
   NativeCommandSpec,
 } from "../auto-reply/commands-registry.js";
-/** Re-exported API for src/plugin-sdk, starting with Command Args Parsing. */
+/** Command argument parsing strategy contract. */
 export type { CommandArgsParsing } from "../auto-reply/commands-registry.types.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Control-command detection helpers. */
 export {
   hasControlCommand,
   shouldComputeCommandAuthorized,
 } from "../auto-reply/command-detection.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Command authorizer composition and gate resolution helpers. */
 export {
   resolveCommandAuthorizedFromAuthorizers,
   resolveControlCommandGate,
 } from "../channels/command-gating.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Native Command Session Targets. */
+/** Resolves sessions affected by native command invocations. */
 export { resolveNativeCommandSessionTargets } from "../channels/native-command-session-targets.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Command authorization resolver and result contract. */
 export {
   resolveCommandAuthorization,
   type CommandAuthorization,
 } from "../auto-reply/command-auth.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Stored Model Override. */
+/** Resolves stored model overrides used by reply commands. */
 export { resolveStoredModelOverride } from "../auto-reply/reply/stored-model-override.js";
-/** Re-exported API for src/plugin-sdk, starting with Models Provider Data. */
+/** Provider/model data shape used by model-list commands. */
 export type { ModelsProviderData } from "../auto-reply/reply/commands-models.js";
-/** Re-exported API for src/plugin-sdk, starting with list Skill Commands For Agents. */
+/** Lists skill-backed chat commands available to agents. */
 export { listSkillCommandsForAgents } from "../skills/discovery/chat-commands.js";
-/** Re-exported API for src/plugin-sdk, starting with list Provider Plugin Command Specs. */
+/** Lists native command specs contributed by provider plugins. */
 export { listProviderPluginCommandSpecs } from "../plugins/command-specs.js";

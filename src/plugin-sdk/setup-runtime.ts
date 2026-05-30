@@ -1,16 +1,16 @@
 /** Runtime SDK barrel for setup wizard contracts and config helpers. */
 export type { OpenClawConfig } from "../config/config.js";
-/** Re-exported API for src/plugin-sdk, starting with Wizard Prompter. */
+/** Prompting interface used by setup wizards. */
 export type { WizardPrompter } from "../wizard/prompts.js";
-/** Re-exported API for src/plugin-sdk, starting with create Clack Prompter. */
+/** Clack-backed prompt adapter for interactive setup flows. */
 export { createClackPrompter } from "../wizard/clack-prompter.js";
-/** Re-exported API for src/plugin-sdk, starting with create Setup Translator. */
+/** Factory for localized setup wizard text. */
 export { createSetupTranslator } from "../wizard/i18n/index.js";
-/** Re-exported API for src/plugin-sdk, starting with Setup Translator. */
+/** Setup wizard translation contracts. */
 export type { SetupTranslator, WizardI18nParams } from "../wizard/i18n/index.js";
-/** Re-exported API for src/plugin-sdk, starting with Channel Setup Adapter. */
+/** Adapter contract for channel setup implementations. */
 export type { ChannelSetupAdapter } from "../channels/plugins/types.adapters.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Declarative channel setup wizard field and policy types. */
 export type {
   ChannelSetupDmPolicy,
   ChannelSetupWizard,
@@ -18,17 +18,17 @@ export type {
   ChannelSetupWizardTextInput,
 } from "../channels/plugins/setup-wizard-types.js";
 
-/** Re-exported API for src/plugin-sdk, starting with DEFAULT ACCOUNT ID. */
+/** Default account id used by account-scoped setup helpers. */
 export { DEFAULT_ACCOUNT_ID } from "../routing/session-key.js";
 
-/** Re-exported API for src/plugin-sdk. */
+/** Account setup adapter wrappers and input presence validation helpers. */
 export {
   createEnvPatchedAccountSetupAdapter,
   createPatchedAccountSetupAdapter,
   createSetupInputPresenceValidator,
 } from "../channels/plugins/setup-helpers.js";
 
-/** Re-exported API for src/plugin-sdk. */
+/** Shared channel setup sections, parsers, prompts, and config patch helpers. */
 export {
   createAccountScopedAllowFromSection,
   createAccountScopedGroupAccessSection,
@@ -51,12 +51,12 @@ export {
   splitSetupEntries,
 } from "../channels/plugins/setup-wizard-helpers.js";
 
-/** Re-exported API for src/plugin-sdk, starting with create Allowlist Setup Wizard Proxy. */
+/** Proxy for allowlist-oriented channel setup wizards. */
 export { createAllowlistSetupWizardProxy } from "../channels/plugins/setup-wizard-proxy.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Binary path text input helpers for delegated setup wizards. */
 export {
   createCliPathTextInput,
   createDelegatedTextInputShouldPrompt,
 } from "../channels/plugins/setup-wizard-binary.js";
-/** Re-exported API for src/plugin-sdk, starting with create Delegated Setup Wizard Proxy. */
+/** Proxy for setup wizards delegated to external binaries or runtimes. */
 export { createDelegatedSetupWizardProxy } from "../channels/plugins/setup-wizard-proxy.js";
