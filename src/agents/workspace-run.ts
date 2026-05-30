@@ -68,12 +68,12 @@ function resolveRunAgentId(params: {
   };
 }
 
-/** Reused helper for redact Run Identifier behavior in src/agents. */
+/** Redact session/run identifiers before logging workspace resolution events. */
 export function redactRunIdentifier(value: string | undefined): string {
   return redactIdentifier(value, { len: 12 });
 }
 
-/** Reused helper for resolve Run Workspace Dir behavior in src/agents. */
+/** Resolve the workspace directory for one run with safe fallback handling. */
 export function resolveRunWorkspaceDir(params: {
   workspaceDir: unknown;
   sessionKey?: string;

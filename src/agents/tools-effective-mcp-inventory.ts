@@ -85,7 +85,7 @@ function buildMcpToolInventoryEntries(
   );
 }
 
-/** Reused helper for build Runtime Compatible Mcp Tool Inventory behavior in src/agents. */
+/** Build MCP tool inventory entries after runtime compatibility filtering. */
 export function buildRuntimeCompatibleMcpToolInventory(params: {
   tools: readonly AnyAgentTool[];
   cfg: OpenClawConfig;

@@ -119,7 +119,7 @@ function disambiguateLabels(entries: EffectiveToolInventoryEntry[]): EffectiveTo
   });
 }
 
-/** Reused helper for build Effective Tool Inventory Entries behavior in src/agents. */
+/** Convert normalized agent tools into display-ready effective inventory entries. */
 export function buildEffectiveToolInventoryEntries(
   tools: readonly AnyAgentTool[],
   rawToolsByName: ReadonlyMap<string, AnyAgentTool> = new Map(),
@@ -161,7 +161,7 @@ export function buildEffectiveToolInventoryEntries(
   );
 }
 
-/** Reused helper for build Runtime Compatible Tool Inventory behavior in src/agents. */
+/** Build tool inventory entries and notices after provider schema filtering. */
 export function buildRuntimeCompatibleToolInventory(params: {
   tools: readonly AnyAgentTool[];
   cfg: OpenClawConfig;
@@ -197,5 +197,5 @@ export function buildRuntimeCompatibleToolInventory(params: {
   };
 }
 
-/** Re-exported API for src/agents, starting with build Effective Tool Inventory Groups. */
+/** Group effective tool inventory entries for UI/API consumers. */
 export { buildEffectiveToolInventoryGroups };

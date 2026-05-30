@@ -5,7 +5,7 @@ import {
 } from "../shared/string-coerce.js";
 
 const TOOL_NAME_SAFE_RE = /[^A-Za-z0-9_-]/g;
-/** Reused constant for TOOL NAME SEPARATOR behavior in src/agents. */
+/** Separator used when composing provider-safe bundled MCP tool names. */
 export const TOOL_NAME_SEPARATOR = "__";
 const TOOL_NAME_MAX_PREFIX = 30;
 const TOOL_NAME_MAX_TOTAL = 64;

@@ -1,3 +1,4 @@
+// Builds auth health summaries for stored provider credentials and provider rollups.
 import {
   findNormalizedProviderValue,
   normalizeProviderId,
@@ -19,7 +20,7 @@ import { resolveProviderIdForAuth } from "./provider-auth-aliases.js";
 
 type AuthProfileSource = "store";
 
-/** Shared type for Auth Profile Health Status in src/agents. */
+/** Health state for one stored provider auth profile. */
 export type AuthProfileHealthStatus = "ok" | "expiring" | "expired" | "missing" | "static";
 
 type AuthProfileHealth = {
@@ -34,10 +35,10 @@ type AuthProfileHealth = {
   label: string;
 };
 
-/** Shared type for Auth Provider Health Status in src/agents. */
+/** Rollup health state for all usable profiles under one provider. */
 export type AuthProviderHealthStatus = "ok" | "expiring" | "expired" | "missing" | "static";
 
-/** Shared type for Auth Provider Health in src/agents. */
+/** Provider-level auth health rollup plus effective and raw profile entries. */
 export type AuthProviderHealth = {
   provider: string;
   status: AuthProviderHealthStatus;
@@ -51,7 +52,7 @@ export type AuthProviderHealth = {
   profiles: AuthProfileHealth[];
 };
 
-/** Shared type for Auth Health Summary in src/agents. */
+/** Auth health report emitted for providers and stored profiles. */
 export type AuthHealthSummary = {
   now: number;
   warnAfterMs: number;
@@ -59,7 +60,7 @@ export type AuthHealthSummary = {
   providers: AuthProviderHealth[];
 };
 
-/** Reused constant for DEFAULT OAUTH WARN MS behavior in src/agents. */
+/** Default threshold for warning about OAuth credentials near expiry. */
 export const DEFAULT_OAUTH_WARN_MS = 24 * 60 * 60 * 1000;
 
 function resolveAuthProfileSource(_profileId: string): AuthProfileSource {
