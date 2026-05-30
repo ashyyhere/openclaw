@@ -14,7 +14,7 @@ import { normalizeAgentId } from "../routing/session-key.js";
 import { normalizeOptionalString, resolvePrimaryStringValue } from "../shared/string-coerce.js";
 import { uniqueStrings } from "../shared/string-normalization.js";
 
-/** Shared type for Agent Summary in src/commands. */
+/** Agent row assembled for CLI listings and agent configuration commands. */
 export type AgentSummary = {
   id: string;
   name?: string;
@@ -33,12 +33,12 @@ export type AgentSummary = {
 
 type AgentEntry = NonNullable<NonNullable<OpenClawConfig["agents"]>["list"]>[number];
 
-/** Shared type for Agent Identity in src/commands. */
+/** Agent identity file shape surfaced by agent config commands. */
 export type AgentIdentity = AgentIdentityFile;
-/** Re-exported API for src/commands, starting with list Agent Entries. */
+/** Config agent-list normalizer shared by command handlers. */
 export { listAgentEntries };
 
-/** Reused helper for find Agent Entry Index behavior in src/commands. */
+/** Find a configured agent entry by normalized id. */
 export function findAgentEntryIndex(list: AgentEntry[], agentId: string): number {
   const id = normalizeAgentId(agentId);
   return list.findIndex((entry) => normalizeAgentId(entry.id) === id);
@@ -55,7 +55,7 @@ function resolveAgentModel(cfg: OpenClawConfig, agentId: string) {
   return resolvePrimaryStringValue(cfg.agents?.defaults?.model);
 }
 
-/** Reused helper for load Agent Identity behavior in src/commands. */
+/** Load a workspace identity only when it has user-visible values. */
 export function loadAgentIdentity(workspace: string): AgentIdentity | null {
   const parsed = loadAgentIdentityFromWorkspace(workspace);
   if (!parsed) {
@@ -64,7 +64,7 @@ export function loadAgentIdentity(workspace: string): AgentIdentity | null {
   return identityHasValues(parsed) ? parsed : null;
 }
 
-/** Reused helper for build Agent Summaries behavior in src/commands. */
+/** Build CLI-ready agent summaries from config, identities, and bindings. */
 export function buildAgentSummaries(cfg: OpenClawConfig): AgentSummary[] {
   const defaultAgentId = normalizeAgentId(resolveDefaultAgentId(cfg));
   const configuredAgents = listAgentEntries(cfg);
@@ -110,7 +110,7 @@ export function buildAgentSummaries(cfg: OpenClawConfig): AgentSummary[] {
   });
 }
 
-/** Reused helper for apply Agent Config behavior in src/commands. */
+/** Add or update one agent config entry while preserving existing fields. */
 export function applyAgentConfig(
   cfg: OpenClawConfig,
   params: {
@@ -154,7 +154,7 @@ export function applyAgentConfig(
   };
 }
 
-/** Reused helper for prune Agent Config behavior in src/commands. */
+/** Remove one agent entry and its route/tool allowlist references. */
 export function pruneAgentConfig(
   cfg: OpenClawConfig,
   agentId: string,

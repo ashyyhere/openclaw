@@ -11,14 +11,14 @@ import type {
 } from "./types.adapters.js";
 import type { ChannelId } from "./types.public.js";
 
-/** Shared type for Configured Binding Conversation in src/channels/plugins. */
+/** Conversation reference matched by configured channel bindings. */
 export type ConfiguredBindingConversation = ConversationRef;
-/** Shared type for Configured Binding Channel in src/channels/plugins. */
+/** Channel id used by configured binding rules. */
 export type ConfiguredBindingChannel = ChannelId;
-/** Shared type for Configured Binding Rule Config in src/channels/plugins. */
+/** Config binding rule shape loaded from OpenClaw config. */
 export type ConfiguredBindingRuleConfig = AgentBinding;
 
-/** Shared type for Stateful Binding Target Descriptor in src/channels/plugins. */
+/** Persistable descriptor for a binding target owned by a stateful driver. */
 export type StatefulBindingTargetDescriptor = {
   kind: "stateful";
   driverId: string;
@@ -27,13 +27,13 @@ export type StatefulBindingTargetDescriptor = {
   label?: string;
 };
 
-/** Shared type for Configured Binding Record Resolution in src/channels/plugins. */
+/** Stored binding record paired with its stateful target descriptor. */
 export type ConfiguredBindingRecordResolution = {
   record: SessionBindingRecord;
   statefulTarget: StatefulBindingTargetDescriptor;
 };
 
-/** Shared type for Configured Binding Target Factory in src/channels/plugins. */
+/** Factory that materializes a stateful binding target for a conversation. */
 export type ConfiguredBindingTargetFactory = {
   driverId: string;
   materialize: (params: {
@@ -42,7 +42,7 @@ export type ConfiguredBindingTargetFactory = {
   }) => ConfiguredBindingRecordResolution;
 };
 
-/** Shared type for Compiled Configured Binding in src/channels/plugins. */
+/** Configured binding rule after channel/provider matching and target compilation. */
 export type CompiledConfiguredBinding = {
   channel: ConfiguredBindingChannel;
   accountPattern?: string;
@@ -54,7 +54,7 @@ export type CompiledConfiguredBinding = {
   targetFactory: ConfiguredBindingTargetFactory;
 };
 
-/** Shared type for Configured Binding Resolution in src/channels/plugins. */
+/** Full binding resolution returned after matching an inbound conversation. */
 export type ConfiguredBindingResolution = ConfiguredBindingRecordResolution & {
   conversation: ConfiguredBindingConversation;
   compiledBinding: CompiledConfiguredBinding;

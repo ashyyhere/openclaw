@@ -5,18 +5,18 @@ import type {
   StatefulBindingTargetDescriptor,
 } from "./binding-types.js";
 
-/** Shared type for Stateful Binding Target Ready Result in src/channels/plugins. */
+/** Readiness result for a stateful binding target driver. */
 export type StatefulBindingTargetReadyResult = { ok: true } | { ok: false; error: string };
-/** Shared type for Stateful Binding Target Session Result in src/channels/plugins. */
+/** Session resolution result for a stateful binding target driver. */
 export type StatefulBindingTargetSessionResult =
   | { ok: true; sessionKey: string }
   | { ok: false; sessionKey: string; error: string };
-/** Shared type for Stateful Binding Target Reset Result in src/channels/plugins. */
+/** In-place reset result for a stateful binding target. */
 export type StatefulBindingTargetResetResult =
   | { ok: true }
   | { ok: false; skipped?: boolean; error?: string };
 
-/** Shared type for Stateful Binding Target Driver in src/channels/plugins. */
+/** Driver contract for binding targets backed by mutable external session state. */
 export type StatefulBindingTargetDriver = {
   id: string;
   ensureReady: (params: {
@@ -46,7 +46,7 @@ function listStatefulBindingTargetDrivers(): StatefulBindingTargetDriver[] {
   return [...registeredStatefulBindingTargetDrivers.values()];
 }
 
-/** Reused helper for register Stateful Binding Target Driver behavior in src/channels/plugins. */
+/** Register a stateful binding target driver by id. */
 export function registerStatefulBindingTargetDriver(driver: StatefulBindingTargetDriver): void {
   const id = driver.id.trim();
   if (!id) {
@@ -60,12 +60,12 @@ export function registerStatefulBindingTargetDriver(driver: StatefulBindingTarge
   registeredStatefulBindingTargetDrivers.set(id, normalized);
 }
 
-/** Reused helper for unregister Stateful Binding Target Driver behavior in src/channels/plugins. */
+/** Remove a registered stateful binding target driver. */
 export function unregisterStatefulBindingTargetDriver(id: string): void {
   registeredStatefulBindingTargetDrivers.delete(id.trim());
 }
 
-/** Reused helper for get Stateful Binding Target Driver behavior in src/channels/plugins. */
+/** Look up a registered stateful binding target driver. */
 export function getStatefulBindingTargetDriver(id: string): StatefulBindingTargetDriver | null {
   const normalizedId = id.trim();
   if (!normalizedId) {
@@ -74,7 +74,7 @@ export function getStatefulBindingTargetDriver(id: string): StatefulBindingTarge
   return registeredStatefulBindingTargetDrivers.get(normalizedId) ?? null;
 }
 
-/** Reused helper for resolve Stateful Binding Target By Session Key behavior in src/channels/plugins. */
+/** Resolve a stateful binding target descriptor from a session key across drivers. */
 export function resolveStatefulBindingTargetBySessionKey(params: {
   cfg: OpenClawConfig;
   sessionKey: string;

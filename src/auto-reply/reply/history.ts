@@ -2,9 +2,9 @@
 import type { HistoryEntry, HistoryMediaEntry } from "./history.types.js";
 import { CURRENT_MESSAGE_MARKER } from "./mentions.js";
 
-/** Reused constant for HISTORY CONTEXT MARKER behavior in src/auto-reply/reply. */
+/** Marker heading for previous chat messages included in prompt context. */
 export const HISTORY_CONTEXT_MARKER = "[Chat messages since your last reply - for context]";
-/** Reused constant for DEFAULT GROUP HISTORY LIMIT behavior in src/auto-reply/reply. */
+/** Default number of group-chat messages retained for reply context. */
 export const DEFAULT_GROUP_HISTORY_LIMIT = 50;
 
 /** Maximum number of group history keys to retain (LRU eviction when exceeded). */
@@ -31,10 +31,10 @@ export function evictOldHistoryKeys<T>(
   }
 }
 
-/** Re-exported API for src/auto-reply/reply, starting with History Entry. */
+/** History entry and media entry types exported with history helpers. */
 export type { HistoryEntry, HistoryMediaEntry } from "./history.types.js";
 
-/** Reused helper for build History Context behavior in src/auto-reply/reply. */
+/** Build the prompt section that separates history from the current message. */
 export function buildHistoryContext(params: {
   historyText: string;
   currentMessage: string;
@@ -50,7 +50,7 @@ export function buildHistoryContext(params: {
   );
 }
 
-/** Reused helper for append History Entry behavior in src/auto-reply/reply. */
+/** Append one entry to a bounded per-conversation history map. */
 export function appendHistoryEntry<T extends HistoryEntry>(params: {
   historyMap: Map<string, T[]>;
   historyKey: string;
@@ -130,7 +130,7 @@ function isImageHistoryMediaEntry(entry: HistoryMediaEntry): boolean {
   return entry.kind === "image" || contentType?.startsWith("image/") === true;
 }
 
-/** Reused helper for normalize History Media Entries behavior in src/auto-reply/reply. */
+/** Normalize local image media entries for bounded history retention. */
 export function normalizeHistoryMediaEntries(params: {
   media?: readonly HistoryMediaEntry[] | null;
   limit?: number;
@@ -279,7 +279,7 @@ export function buildInboundHistoryFromMap<T extends HistoryEntry>(params: {
   });
 }
 
-/** Reused helper for build Inbound History From Entries behavior in src/auto-reply/reply. */
+/** Project stored history entries into the inbound-history payload shape. */
 export function buildInboundHistoryFromEntries(params: {
   entries: readonly HistoryEntry[];
   limit: number;
@@ -367,7 +367,7 @@ export function clearHistoryEntriesIfEnabled(params: {
   clearHistoryEntries({ historyMap: params.historyMap, historyKey: params.historyKey });
 }
 
-/** Reused helper for build History Context From Entries behavior in src/auto-reply/reply. */
+/** Build history prompt context from a supplied entry list. */
 export function buildHistoryContextFromEntries(params: {
   entries: HistoryEntry[];
   currentMessage: string;

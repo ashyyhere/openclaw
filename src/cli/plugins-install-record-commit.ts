@@ -29,12 +29,12 @@ function mergeUnsetPaths(
   return merged.length > 0 ? merged : undefined;
 }
 
-/** Reused helper for has Pending Plugin Install Records behavior in src/cli. */
+/** Return whether config still contains legacy pending plugin install records. */
 export function hasPendingPluginInstallRecords(config: OpenClawConfig): boolean {
   return Object.keys(config.plugins?.installs ?? {}).length > 0;
 }
 
-/** Reused helper for unchanged Pending Plugin Install Record Ids behavior in src/cli. */
+/** List pending install records unchanged from the base config snapshot. */
 export function unchangedPendingPluginInstallRecordIds(
   config: OpenClawConfig,
   baseConfig: OpenClawConfig,
@@ -45,7 +45,7 @@ export function unchangedPendingPluginInstallRecordIds(
     .map(([pluginId]) => pluginId);
 }
 
-/** Reused helper for strip Pending Plugin Install Records behavior in src/cli. */
+/** Remove pending plugin install records from authored config. */
 export function stripPendingPluginInstallRecords(
   config: OpenClawConfig,
   pluginIds?: Iterable<string>,
@@ -128,7 +128,7 @@ async function commitPluginInstallRecordsWithWriter(params: {
   }
 }
 
-/** Reused helper for commit Plugin Install Records With Config behavior in src/cli. */
+/** Persist install records, then write the config that no longer embeds them. */
 export async function commitPluginInstallRecordsWithConfig(params: {
   previousInstallRecords?: Record<string, PluginInstallRecord>;
   nextInstallRecords: Record<string, PluginInstallRecord>;
@@ -148,7 +148,7 @@ export async function commitPluginInstallRecordsWithConfig(params: {
   });
 }
 
-/** Reused helper for commit Config Write With Pending Plugin Installs behavior in src/cli. */
+/** Commit config while moving embedded plugin install records into the install index. */
 export async function commitConfigWriteWithPendingPluginInstalls(params: {
   nextConfig: OpenClawConfig;
   writeOptions?: ConfigWriteOptions;
@@ -193,7 +193,7 @@ export async function commitConfigWriteWithPendingPluginInstalls(params: {
   };
 }
 
-/** Reused helper for commit Config With Pending Plugin Installs behavior in src/cli. */
+/** Replace the config file after extracting pending plugin install records. */
 export async function commitConfigWithPendingPluginInstalls(params: {
   nextConfig: OpenClawConfig;
   baseHash?: string;
@@ -217,7 +217,7 @@ export async function commitConfigWithPendingPluginInstalls(params: {
   });
 }
 
-/** Reused helper for transform Config With Pending Plugin Installs behavior in src/cli. */
+/** Transform config with retry while extracting plugin install records at commit time. */
 export async function transformConfigWithPendingPluginInstalls<T = void>(
   params: Omit<TransformConfigFileWithRetryParams<T>, "commit">,
 ): Promise<ConfigMutationResult<T>> {
@@ -254,7 +254,7 @@ export async function transformConfigWithPendingPluginInstalls<T = void>(
   });
 }
 
-/** Reused helper for mutate Config With Pending Plugin Installs behavior in src/cli. */
+/** Mutate a cloned config draft and commit with pending plugin install extraction. */
 export async function mutateConfigWithPendingPluginInstalls<T = void>(
   params: Omit<TransformConfigFileWithRetryParams<T>, "commit" | "transform"> & {
     mutate: (draft: OpenClawConfig, context: ConfigMutationContext) => Promise<T | void> | T | void;

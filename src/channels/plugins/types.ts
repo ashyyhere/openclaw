@@ -1,17 +1,17 @@
 /** Internal barrel for channel plugin runtime types and capabilities. */
 import type { ChannelMessageActionName as ChannelMessageActionNameFromList } from "./message-action-names.js";
 
-/** Re-exported API for src/channels/plugins, starting with CHANNEL MESSAGE ACTION NAMES. */
+/** Canonical channel message action names exposed through the channel plugin barrel. */
 export { CHANNEL_MESSAGE_ACTION_NAMES } from "./message-action-names.js";
-/** Re-exported API for src/channels/plugins, starting with CHANNEL MESSAGE CAPABILITIES. */
+/** Canonical channel message capabilities exposed through the channel plugin barrel. */
 export { CHANNEL_MESSAGE_CAPABILITIES } from "./message-capabilities.js";
 
-/** Shared type for Channel Message Action Name in src/channels/plugins. */
+/** Channel message action name union derived from the canonical action list. */
 export type ChannelMessageActionName = ChannelMessageActionNameFromList;
-/** Re-exported API for src/channels/plugins, starting with Channel Message Capability. */
+/** Channel message capability union exported for plugin adapters. */
 export type { ChannelMessageCapability } from "./message-capabilities.js";
 
-/** Re-exported API for src/channels/plugins. */
+/** Channel adapter interfaces exported for internal plugin runtime composition. */
 export type {
   ChannelActionAvailabilityState,
   ChannelApprovalAdapter,
@@ -55,9 +55,9 @@ export type {
   ChannelSetupAdapter,
   ChannelStatusAdapter,
 } from "./types.adapters.js";
-/** Re-exported API for src/channels/plugins, starting with Channel Runtime Surface. */
+/** Channel runtime surface enum/type exported for channel capability routing. */
 export type { ChannelRuntimeSurface } from "./channel-runtime-surface.types.js";
-/** Re-exported API for src/channels/plugins. */
+/** Core channel plugin types exported by the internal channel plugin barrel. */
 export type {
   ChannelAccountSnapshot,
   ChannelAccountState,
@@ -97,5 +97,5 @@ export type {
   BaseTokenResolution,
 } from "./types.core.js";
 
-/** Re-exported API for src/channels/plugins, starting with Channel Plugin. */
+/** Channel plugin manifest/runtime contract exported by the internal barrel. */
 export type { ChannelPlugin } from "./types.plugin.js";

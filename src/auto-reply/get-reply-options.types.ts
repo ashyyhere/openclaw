@@ -5,7 +5,7 @@ import type { UserTurnTranscriptRecorder } from "../sessions/user-turn-transcrip
 import type { ReplyPayload } from "./reply-payload.js";
 import type { TypingController } from "./reply/typing.js";
 
-/** Shared type for Block Reply Context in src/auto-reply. */
+/** Metadata passed when a logical reply block is queued or delivered. */
 export type BlockReplyContext = {
   abortSignal?: AbortSignal;
   timeoutMs?: number;
@@ -20,7 +20,7 @@ export type ModelSelectedContext = {
   thinkLevel: string | undefined;
 };
 
-/** Shared type for Typing Policy in src/auto-reply. */
+/** Typing-indicator policy selected by reply source and run type. */
 export type TypingPolicy =
   | "auto"
   | "user_message"
@@ -28,33 +28,33 @@ export type TypingPolicy =
   | "internal_webchat"
   | "heartbeat";
 
-/** Shared type for Reply Threading Policy in src/auto-reply. */
+/** Per-turn reply threading override. */
 export type ReplyThreadingPolicy = {
   /** Override implicit reply-to-current behavior for the current turn. */
   implicitCurrentMessage?: "default" | "allow" | "deny";
 };
 
-/** Shared type for Source Reply Delivery Mode in src/auto-reply. */
+/** Delivery mode for replies produced by the source channel turn. */
 export type SourceReplyDeliveryMode = "automatic" | "message_tool_only";
 
-/** Shared type for Queued Reply Delivery Correlation in src/auto-reply. */
+/** Correlates queued reply delivery with an external lifecycle owner. */
 export type QueuedReplyDeliveryCorrelation = {
   begin: () => (() => void) | void;
 };
 
-/** Shared type for Queued Reply Lifecycle in src/auto-reply. */
+/** Hooks for queued reply lifecycle transitions. */
 export type QueuedReplyLifecycle = {
   onEnqueued?: () => void;
   onComplete?: () => void;
 };
 
-/** Shared type for Partial Reply Payload in src/auto-reply. */
+/** Incremental reply payload emitted during streaming output. */
 export type PartialReplyPayload = Pick<ReplyPayload, "text" | "mediaUrls"> & {
   delta?: string;
   replace?: true;
 };
 
-/** Shared type for Get Reply Options in src/auto-reply. */
+/** Full option bag controlling one auto-reply orchestration run. */
 export type GetReplyOptions = {
   /** Override run id for agent events (defaults to random UUID). */
   runId?: string;

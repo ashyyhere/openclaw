@@ -105,7 +105,7 @@ async function withSingleTargetValue<T>(params: {
   return await params.run(resolved);
 }
 
-/** Reused helper for handle Acp Status Action behavior in src/auto-reply/reply. */
+/** Handle the ACP status command for the selected target session. */
 export async function handleAcpStatusAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -185,7 +185,7 @@ export async function handleAcpStatusAction(
   });
 }
 
-/** Reused helper for handle Acp Set Mode Action behavior in src/auto-reply/reply. */
+/** Handle ACP runtime mode updates for the selected target session. */
 export async function handleAcpSetModeAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -218,7 +218,7 @@ export async function handleAcpSetModeAction(
   });
 }
 
-/** Reused helper for handle Acp Set Action behavior in src/auto-reply/reply. */
+/** Handle generic ACP runtime option updates, including cwd as a special case. */
 export async function handleAcpSetAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -268,7 +268,7 @@ export async function handleAcpSetAction(
   });
 }
 
-/** Reused helper for handle Acp Cwd Action behavior in src/auto-reply/reply. */
+/** Handle ACP current-working-directory updates for the selected target session. */
 export async function handleAcpCwdAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -301,7 +301,7 @@ export async function handleAcpCwdAction(
   });
 }
 
-/** Reused helper for handle Acp Permissions Action behavior in src/auto-reply/reply. */
+/** Handle ACP approval/permissions profile updates for a target session. */
 export async function handleAcpPermissionsAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -335,7 +335,7 @@ export async function handleAcpPermissionsAction(
   });
 }
 
-/** Reused helper for handle Acp Timeout Action behavior in src/auto-reply/reply. */
+/** Handle ACP runtime timeout updates for a target session. */
 export async function handleAcpTimeoutAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -369,7 +369,7 @@ export async function handleAcpTimeoutAction(
   });
 }
 
-/** Reused helper for handle Acp Model Action behavior in src/auto-reply/reply. */
+/** Handle ACP model selection updates for a target session. */
 export async function handleAcpModelAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -403,7 +403,7 @@ export async function handleAcpModelAction(
   });
 }
 
-/** Reused helper for handle Acp Reset Options Action behavior in src/auto-reply/reply. */
+/** Reset ACP runtime options for the selected target session. */
 export async function handleAcpResetOptionsAction(
   params: HandleCommandsParams,
   restTokens: string[],

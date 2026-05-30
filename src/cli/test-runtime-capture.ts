@@ -3,7 +3,7 @@ import { vi } from "vitest";
 import type { OutputRuntimeEnv } from "../runtime.js";
 import type { MockFn } from "../test-utils/vitest-mock-fn.js";
 
-/** Shared type for Cli Mock Output Runtime in src/cli. */
+/** Vitest mock-backed output runtime used by CLI command tests. */
 export type CliMockOutputRuntime = OutputRuntimeEnv & {
   log: MockFn<OutputRuntimeEnv["log"]>;
   error: MockFn<OutputRuntimeEnv["error"]>;
@@ -12,7 +12,7 @@ export type CliMockOutputRuntime = OutputRuntimeEnv & {
   writeStdout: MockFn<OutputRuntimeEnv["writeStdout"]>;
 };
 
-/** Shared type for Cli Runtime Capture in src/cli. */
+/** Captured CLI output buffers plus the mock runtime that writes to them. */
 export type CliRuntimeCapture = {
   runtimeLogs: string[];
   runtimeErrors: string[];
@@ -34,7 +34,7 @@ function stringifyRuntimeJson(value: unknown, space = 2): string {
   return JSON.stringify(value, null, space > 0 ? space : undefined);
 }
 
-/** Reused helper for create Cli Runtime Capture behavior in src/cli. */
+/** Create a mock output runtime and mutable buffers for CLI assertions. */
 export function createCliRuntimeCapture(): CliRuntimeCapture {
   const runtimeLogs: string[] = [];
   const runtimeErrors: string[] = [];
@@ -67,7 +67,7 @@ export function createCliRuntimeCapture(): CliRuntimeCapture {
   };
 }
 
-/** Reused helper for mock Runtime Module behavior in src/cli. */
+/** Overlay a test runtime onto a lazily loaded runtime module. */
 export async function mockRuntimeModule<TModule extends { defaultRuntime: OutputRuntimeEnv }>(
   loadActual: () => Promise<TModule>,
   defaultRuntime: TModule["defaultRuntime"],
@@ -82,23 +82,23 @@ export async function mockRuntimeModule<TModule extends { defaultRuntime: Output
   };
 }
 
-/** Reused helper for spy Runtime Logs behavior in src/cli. */
+/** Silence and capture runtime log calls in tests. */
 export function spyRuntimeLogs(runtime: Pick<OutputRuntimeEnv, "log">) {
   return vi.spyOn(runtime, "log").mockImplementation(() => {});
 }
 
-/** Reused helper for spy Runtime Errors behavior in src/cli. */
+/** Silence and capture runtime error calls in tests. */
 export function spyRuntimeErrors(runtime: Pick<OutputRuntimeEnv, "error">) {
   return vi.spyOn(runtime, "error").mockImplementation(() => {});
 }
 
-/** Reused helper for spy Runtime Json behavior in src/cli. */
+/** Silence and capture runtime JSON writes in tests. */
 export function spyRuntimeJson(runtime: Pick<OutputRuntimeEnv, "writeJson">) {
   return vi.spyOn(runtime, "writeJson").mockImplementation(() => {});
 }
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Test helper lets callers ascribe captured JSON shape.
-/** Reused helper for first Written Json Arg behavior in src/cli. */
+/** Return the first value passed to a mocked `writeJson` call. */
 export function firstWrittenJsonArg<T>(writeJson: MockCallsWithFirstArg): T | null {
   return (writeJson.mock.calls.at(0)?.[0] ?? null) as T | null;
 }
